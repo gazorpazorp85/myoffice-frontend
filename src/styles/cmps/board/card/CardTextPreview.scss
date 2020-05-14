@@ -1,0 +1,66 @@
+.card-preview-container {
+    cursor: pointer !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    border-radius: 4px;
+    background-color: $clr4;
+    box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+    max-width: 256px;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 0 5px;
+
+    &:hover {
+        box-shadow: 0px 3px 5px -3px #00000082;
+        background: rgba(255, 255, 255, 0.527);
+    }
+
+    &.isDragging {
+        background-color: rgba(253, 253, 253, 0.685);
+    }
+}
+
+.card-title {
+    justify-content: space-between;
+    padding: 2px 0;
+    width: 100%;
+    font-family: sans-serif;
+    min-height: rem(34px);
+    color: #172b4d;
+}
+
+.card-edit-icon-container {
+    position: absolute;
+    align-self: flex-end;
+    width: 20px;
+    height: 20px;
+    padding-top: 4px;
+    padding-inline-start: 4px;
+}
+
+.card-edit-icon {
+    &.MuiSvgIcon-root {
+        width: 16px;
+        height: 16px;
+        color: rgb(48, 48, 48);
+        transition: 0.2s;
+    }
+
+    &:hover {
+        background-color: rgba(2, 2, 2, 0.288);
+        color: rgb(255, 255, 255);
+    }
+}
+
+.card-details-container {
+    border-top: 1px solid rgba(255, 255, 255, 0.527);
+}
+
+.card-details-container :not(:last-child) {
+    margin-inline-end: 10px;
+}
+
+.card-detail-info {
+    align-items: center;
+}

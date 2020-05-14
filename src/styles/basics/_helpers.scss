@@ -1,0 +1,121 @@
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+// flex helpers
+
+.flex {
+    display: flex;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.center {
+    justify-content: center;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.full {
+    flex: 1;
+}
+
+.row-reverse {
+    flex-direction: row-reverse;
+}
+
+// view helpers
+
+.bold {
+    font-weight: 800;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+// list helpers
+
+.clean-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+//grid helpers
+
+.grid-item {
+    display: grid;
+}
+
+//colors
+
+.small-label {
+    height: 10px;
+    width: 44px;
+    margin-top: 4px;
+    margin-inline-end: 4px;
+    border-radius: 4px;
+}
+
+.small-label:last-child{
+    margin-inline-end: 0px;
+}
+
+.label-color-1 {
+    background-color: rgb(3, 187, 12);
+}
+
+.label-color-2 {
+    background-color: rgb(255, 175, 70);
+}
+
+.label-color-3 {
+    background-color: rgb(199, 23, 23);
+}
+
+.label-color-4 {
+    background-color: rgb(97, 94, 255);
+}
+
+.label-color-5 {
+    background-color: rgb(230, 54, 230);
+}
+
+.label-color-6 {
+    background-color: rgb(0, 247, 255);
+}
+
+// icon
+
+.team-member-icon {
+    height: 40px;
+    width: 40px;
+    color: #172b4d;
+    background-color: rgba(223, 225, 230, 0.8);
+    font-size: 17px;
+    font-weight: 800;
+    border-radius: 50%;
+    margin-inline-end: 10px;
+    text-transform: uppercase;
+}

@@ -1,0 +1,10 @@
+.card-form {
+    padding: 4px;
+
+    textarea {
+        font-family: inherit;
+        max-height: 120px;
+        resize: none;
+        overflow-x: hidden;
+    }
+}

@@ -1,0 +1,34 @@
+// Setup
+@import "setup/functions";
+@import "setup/mixins";
+@import "setup/variables";
+
+// Basics
+@import "basics/base";
+@import "basics/buttons";
+@import "basics/helpers";
+@import "basics/input";
+@import "basics/layout";
+@import "basics/modal";
+@import "basics/typography";
+
+//Component
+@import "cmps/LoadPage.scss";
+@import "cmps/Login.scss";
+@import "cmps/StatusBar.scss";
+@import "cmps/board/AddListForm.scss";
+@import "cmps/board/BoardBar.scss";
+@import "cmps/board/BoardHistory.scss";
+@import "cmps/board/BoardLists.scss";
+@import "cmps/board/BoardMembers.scss";
+@import "cmps/board/BoardMembersPreview.scss";
+@import "cmps/board/SplashMenu.scss";
+@import "cmps/board/card/CardForm.scss";
+@import "cmps/board/card/CardTextPreview.scss";
+@import "cmps/board/card/CardsList.scss";
+@import "cmps/board/list/ListMenu.scss";
+@import "cmps/board/miniCard/MiniCardTextDetails.scss";
+
+//pages
+@import "pages/Home.scss";
+@import "pages/Board.scss";

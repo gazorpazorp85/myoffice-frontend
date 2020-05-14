@@ -1,0 +1,138 @@
+button {
+    cursor: pointer;
+    font-family: inherit;
+    font-size: rem(18px);
+    background-color: $btnclr1;
+    color: $clr4;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    margin-top: 10px;
+
+    &:hover {
+        background-color: $btnclr2;
+    }
+
+    &.logout {
+        background-color: $btnclr3;
+
+        &:hover {
+            background-color: $btnclr4;
+        }
+    }
+    &.submit-form {
+        height: 32px;
+        // color: $clr4;
+        // background-color: $btnclr1;
+        // padding: 5px 10px;
+        font-size: rem(14px);
+        margin-top: 0;
+        margin-inline-end: 4px;
+    }
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-transform: capitalize;
+    border-radius: 4px;
+
+    &.home-login {
+        height: 40px;
+
+        .MuiSvgIcon-root {
+            height: 32px;
+            width: 32px;
+        }
+        & div {
+            margin-inline-end: 5px;
+            font-size: 20px;
+            line-height: 40px;
+        }
+    }
+    &.home-logout {
+        height: 40px;
+        width: 40px;
+        align-self: center;
+        margin: 0 10px;
+
+        .MuiSvgIcon-root {
+            height: 32px;
+            width: 32px;
+        }
+    }
+    &.home-login:hover,
+    &.home-logout:hover {
+        color: $clr3;
+        background-color: $clr1;
+    }
+    &.get-started {
+        height: 60px;
+        width: 178px;
+        color: $clr4;
+        background-color: $btnclr1;
+        border-radius: 24px;
+        font-size: rem(18px);
+        transition: 0.4s;
+
+        &:hover {
+            background-color: $btnclr2;
+            box-shadow: 0px 0px 20px 1px rgba(255, 255, 255, 0.185);
+        }
+    }
+    &.go-back {
+        height: 40px;
+        width: 40px;
+        transition: 0.3s;
+    }
+    &.add-members,
+    &.change-bg,
+    &.show-history {
+        padding: 0 10px;
+
+        :last-child {
+            margin-inline-end: 10px;
+        }
+    }
+    &.search-img {
+        height: 40px;
+        width: 40px;
+        // background-color: #c8c8c7;
+        background-color: #b5b5b1;
+        color: $clr3;
+        transition: 0.3s;
+    }
+    &.upload-img {
+        width: 50%;
+        background-color: #b5b5b1;
+        color: $clr3;
+        transition: 0.3s;
+    }
+    &.go-back:hover,
+    &.add-members:hover,
+    &.change-bg:hover,
+    &.show-history:hover,
+    &.search-img:hover,
+    &.upload-img:hover {
+        background-color: #686868d3;
+    }
+    &.add-list {
+        height: 30px;
+        min-width: 200px;
+        transition: 0.2s;
+        font-size: rem(14px);
+        border: 1px solid #0000000d;
+        padding: 5px;
+    }
+    &.title-menu {
+        height: 30px;
+        padding: 10px 10px 20px 10px;
+        &:hover {
+            background: rgba(177, 177, 177, 0.5);
+            font-weight: 600;
+        }
+    }
+}

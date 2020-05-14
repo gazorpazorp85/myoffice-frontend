@@ -1,0 +1,41 @@
+.modal-rtl-enter {
+  opacity: 0;
+  transform: translate(100%, 0);
+}
+
+.modal-rtl-enter-active {
+  opacity: 1;
+  transform: translate(0, 0);
+  transition: 0.7s ease;
+}
+
+.modal-rtl-exit {
+  opacity: 1;
+}
+
+.modal-rtl-exit-active {
+  opacity: 0;
+  transform: translate(100%, 0);
+  transition: 0.7s ease;
+}
+
+.modal-ltr-enter {
+  opacity: 0;
+  transform: translate(-100%, 0);
+}
+
+.modal-ltr-enter-active {
+  opacity: 1;
+  transform: translate(0, 0);
+  transition: 0.7s ease;
+}
+
+.modal-ltr-exit {
+  opacity: 1;
+}
+
+.modal-ltr-exit-active {
+  opacity: 0;
+  transform: translate(-100%, 0);
+  transition: 0.7s ease;
+}

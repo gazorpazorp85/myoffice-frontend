@@ -1,0 +1,9 @@
+.board-member-preview-container {
+    text-transform: capitalize;
+    padding: 10px;
+    border-bottom: 1px solid rgba(92, 92, 92, 0.288);
+
+    &:hover {
+        background: rgba(124, 124, 124, 0.438);
+    }
+}

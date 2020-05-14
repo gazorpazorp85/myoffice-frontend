@@ -1,0 +1,8 @@
+.board-bar {
+    max-height: 50px;
+    padding: 5px 20px;
+}
+
+.board-bar :not(:last-child) {
+    margin-inline-end: 10px;
+}

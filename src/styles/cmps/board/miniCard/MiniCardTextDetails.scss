@@ -1,0 +1,43 @@
+.mini-card-details-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    // z-index: 1;
+}
+
+.mini-card-screen {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: $clr2;
+}
+
+.mini-card-details {
+    position: relative;
+    // z-index: 1;
+    width: 252px;
+    border-radius: 4px;
+    background-color: $clr4;
+    border: 1px solid #d5d5d5c9;
+}
+
+.mini-card-textarea {
+    position: relative;
+    margin-bottom: unset;
+    outline: transparent;
+    min-height: 32px;
+    width: 252px;
+    line-height: 1.6;
+    bottom: 1px;
+    // z-index: 1;
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.save-mini-card-btn {
+    position: fixed;
+}

@@ -1,0 +1,27 @@
+.board-container {
+    height: 100%;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.lists-container {
+    width: 100%;
+    height: 100%;
+    padding: 0 20px;
+    overflow-x: auto;
+}
+
+.dark {
+    color: $clr4;
+    background-color: #0000006b;
+}
+
+.light {
+    color: $clr3;
+    background-color: #ffffff81;
+
+    &:hover {
+        background-color: #9e9e9e7a;
+    }
+}
