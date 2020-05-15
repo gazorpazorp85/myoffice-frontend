@@ -7,7 +7,7 @@ import CardForm from './card/CardForm';
 import CardsList from './list/CardsList';
 import ListMenu from './list/ListMenu';
 
-import MiniCardDynamicComponent from './miniCard/MiniCardDynamicComponent';
+import MiniCardDetails from './miniCard/MiniCardDetails';
 
 export default class BoardLists extends Component {
 
@@ -29,8 +29,6 @@ export default class BoardLists extends Component {
     componentDidUpdate(prevProps) {
         if (prevProps.direction !== this.props.direction) {
             this.setState({ listsOrder: this.state.listsOrder.reverse() });
-        } else if (prevProps.board.listsOrder !== this.props.board.listsOrder) {
-            this.directionHandler(this.props.direction, this.props.board.direction, [...this.props.board.listsOrder]);
         }
     }
 
@@ -60,17 +58,18 @@ export default class BoardLists extends Component {
             destination.index === source.index) return;
 
         let newBoard = { ...board };
+        const notificationType = 'success';
 
         if (type === 'list') {
             let newListsOrder = direction === 'rtl' ? [...newBoard.listsOrder].reverse() : [...newBoard.listsOrder];
             newListsOrder.splice(source.index, 1);
             newListsOrder.splice(destination.index, 0, draggableId);
-            newBoard = { ...newBoard, listsOrder: direction === 'rtl' ? newListsOrder.reverse() : newListsOrder };
+            newBoard.listsOrder = direction === 'rtl' ? newListsOrder.reverse() : newListsOrder;
             const listTitle = board.lists[draggableId].title;
             const historyItem = { user: user.username, item: listTitle, key1: 'theList', key2: 'listMoved' };
             const msg = `${window.i18nData.theList}${listTitle}${window.i18nData.listMoved}${user.username}`;
-            const notificationType = 'success';
             updateBoard(newBoard, msg, notificationType, historyItem);
+            this.setState({ listsOrder: newBoard.listsOrder });
             console.log('boardList List Movement: ', newBoard);
             return;
         }
@@ -79,7 +78,7 @@ export default class BoardLists extends Component {
         const finishList = board.lists[destination.droppableId];
         const newStartCardIds = [...startingList.cardIds];
         const newList = { ...startingList, cardIds: newStartCardIds };
-        const cardTitle = board.cards[draggableId].title;
+        const cardTitle = board.cards[draggableId].title ? board.cards[draggableId].title : board.cards[draggableId].type;
         newStartCardIds.splice(source.index, 1);
 
         if (startingList === finishList) {
@@ -95,7 +94,6 @@ export default class BoardLists extends Component {
         }
 
         const msg = `${window.i18nData.theList}${cardTitle}${window.i18nData.listMoved}${user.username}`;
-        const notificationType = 'success';
         const historyItem = { user: user.username, item: cardTitle, key1: 'theCard', key2: 'cardMoved' };
         updateBoard(newBoard, msg, notificationType, historyItem);
     }
@@ -123,8 +121,7 @@ export default class BoardLists extends Component {
 
     }
 
-    toggleAddCardFormHandler = (ev, listId) => {
-        ev.stopPropagation();
+    toggleAddCardFormHandler = (listId) => {
         this.setState(prevState => ({ toggleAddCardForm: !prevState.toggleAddCardForm, selectedListId: prevState.selectedListId === listId ? '' : listId }))
     }
 
@@ -168,7 +165,8 @@ export default class BoardLists extends Component {
                                                                 <div>...</div>
                                                             </div>
                                                         </div>
-                                                        {isListMenuShown && (selectedListId === list.id) && <ListMenu board={board} closeListMenu={this.closeListMenu} list={list} updateBoard={updateBoard} user={user} />}
+                                                        {isListMenuShown && (selectedListId === list.id) &&
+                                                            <ListMenu board={board} closeListMenu={this.closeListMenu} list={list} updateBoard={updateBoard} user={user} />}
                                                         <Droppable droppableId={list.id} type="card">
                                                             {(provided, snapshot) => {
                                                                 return <CardsList
@@ -198,7 +196,7 @@ export default class BoardLists extends Component {
                                 )
                             })}
                             {provided.placeholder}
-                            {toggleMiniCardDetails && <MiniCardDynamicComponent
+                            {toggleMiniCardDetails && <MiniCardDetails
                                 board={board}
                                 direction={direction}
                                 miniCard={miniCardDetails}

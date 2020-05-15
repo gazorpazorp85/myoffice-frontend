@@ -69,15 +69,15 @@ export default class CardForm extends Component {
         const imgREGEX = /.(jpg|jpeg|png|gif)\/?$/;
         if (title.match(youtubeREGEX)) {
             const url = title.replace('watch?v=', 'embed/');
-            return this.setState({ card: { ...this.state.card, title: '', type: 'video', url: url } }, this.saveCard());
+            return this.setState({ card: { ...this.state.card, title: '', type: 'video', url: url } }, () => this.saveCard());
         } else if (title.match(imgREGEX)) {
-            return this.setState({ card: { ...this.state.card, title: '', type: 'image', url: title } }, this.saveCard());
+            return this.setState({ card: { ...this.state.card, title: '', type: 'image', url: title } }, () => this.saveCard());
         }
         this.saveCard();
     }
 
     saveCard = () => {
-        const { board, list, updateBoard, user } = this.props;
+        const { board, list, toggleAddCardFormHandler, updateBoard, user } = this.props;
         const { card, edit } = this.state;
         const id = card.id;
         const newBoard = { ...board, cards: { ...board.cards, [id]: card } };
@@ -86,6 +86,7 @@ export default class CardForm extends Component {
         const msg = `${window.i18nData.theCard}${card.title}${edit ? window.i18nData.cardEdited : window.i18nData.cardAdded}${user.username}`;
         const notificationType = 'success';
         updateBoard(newBoard, msg, notificationType, historyItem);
+        toggleAddCardFormHandler(list.id);
         console.log('cardForm: ', newBoard);
         console.log('cardForm: ', list);
     }

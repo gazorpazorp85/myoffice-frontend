@@ -6,7 +6,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 import TeamMemberIcon from '../../TeamMemberIcon';
 
-export default function CardTextPreview({ card, innerRef, isDragging, list, onCardId, provided, style, toggleEditBtn, toggleMiniCardDetailsHandler }) {
+export default function CardPreview({ card, innerRef, isDragging, isEditButtonShown, list, onCardId, provided, style, toggleMiniCardDetailsHandler }) {
 
     const cardContainer = React.createRef();
 
@@ -20,24 +20,30 @@ export default function CardTextPreview({ card, innerRef, isDragging, list, onCa
         toggleMiniCardDetailsHandler(miniCard);
     }
 
-    const isDraggingClassName = isDragging ? " isDragging" : "";
+    const isDraggingClassName = isDragging ? 'isDragging' : '';
+    const withoutPadding = card.url ? 'without-padding' : '';
 
     return (
         <section ref={cardContainer}>
-            <div className={`flex column card-preview-container ${isDraggingClassName}`}
+            <div className={`flex column card-preview-container ${isDraggingClassName} ${withoutPadding}`}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
                 ref={innerRef}
                 style={style}>
-                {card.url && <img title={card.id} alt='card' src={card.url} />}
-                <div className="flex wrap">
-                    {card.labels.map(label => <div key={label} className={`small-label ${label}`}></div>)}
-                </div>
-                <div className="flex card-title">{card.title}</div>
-                {toggleEditBtn && (onCardId === card.id) &&
+                {isEditButtonShown && (onCardId === card.id) &&
                     <div className="flex card-edit-icon-container">
                         <CreateIcon className="card-edit-icon" onClick={(ev) => toggleMiniCardDetails(ev)} />
                     </div>}
+                {card.type === 'video' &&
+                    <iframe title={card.id} type='text/html'
+                        width="252" height="142"
+                        allowFullScreen="allowfullscreen"
+                        src={card.url} security="restricted" />}
+                {card.type === 'image' && <img title={card.id} alt='card' src={card.url} />}
+                <div className="flex wrap">
+                    {card.labels.map(label => <div key={label} className={`${label} small-label`}></div>)}
+                </div>
+                <div className="flex card-title">{card.title}</div>
                 <div className="flex align-center wrap card-details-container">
                     {card.description && <div className="flex card-detail-info"><SubjectIcon /></div>}
                     {card.todos.length > 0 &&

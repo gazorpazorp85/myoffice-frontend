@@ -1,22 +1,11 @@
-.status-bar {
+.status-bar-container {
     justify-content: space-between;
     align-items: center;
     height: 61px;
     width: 100%;
     color: $clr4;
-    // background: #00000099;
     background-color: rgba(0, 0, 0, 0.46);
     padding: 10px 20px;
-}
-
-.screen {
-    background-color: $clr2;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    right: 0;
-    z-index: 1;
 }
 
 .flag-icon {

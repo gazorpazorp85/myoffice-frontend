@@ -2,27 +2,28 @@ import React, { Component } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
 
-import CardDynamicComponent from '../card/CardDynamicComponent';
+import CardPreview from '../card/CardPreview';
 
 export default class CardsList extends Component {
 
     state = {
         currCardId: '',
         onCardId: '',
-        toggleEditBtn: false
+        isEditButtonShown: false
     }
 
-    toggleEditBtnHandler = (cardId) => {
-        this.setState(prevState => ({
-            toggleEditBtn: !prevState.toggleEditBtn,
-            onCardId: prevState.onCardId === cardId ? '' : cardId
-        }))
+    showEditBtn = (cardId) => {
+        this.setState({ isEditButtonShown: true, onCardId: cardId });
+    }
+
+    hideEditBtn = () => {
+        this.setState({ isEditButtonShown: false })
     }
 
     render() {
 
         const { cards, list, provided, innerRef, isDraggingOver, toggleMiniCardDetailsHandler } = this.props;
-        const { onCardId, toggleEditBtn } = this.state;
+        const { onCardId, isEditButtonShown } = this.state;
 
         const isDraggingOverHandler = isDraggingOver ? "isDraggingOver" : "";
 
@@ -35,17 +36,17 @@ export default class CardsList extends Component {
                                 <NaturalDragAnimation style={provided.draggableProps.style} snapshot={snapshot} rotationMultiplier={1.3}>
                                     {style => (
                                         <div key={card.id}
-                                            onMouseEnter={() => this.toggleEditBtnHandler(card.id)}
-                                            onMouseLeave={() => this.toggleEditBtnHandler(card.id)} >
-                                            <CardDynamicComponent
+                                            onMouseEnter={() => this.showEditBtn(card.id)}
+                                            onMouseLeave={() => this.hideEditBtn(card.id)} >
+                                            <CardPreview
                                                 card={card}
                                                 innerRef={provided.innerRef}
                                                 isDragging={snapshot.isDragging}
+                                                isEditButtonShown={isEditButtonShown}
                                                 list={list}
                                                 onCardId={onCardId}
                                                 provided={provided}
                                                 style={style}
-                                                toggleEditBtn={toggleEditBtn}
                                                 toggleMiniCardDetailsHandler={toggleMiniCardDetailsHandler}
                                             />
                                         </div>

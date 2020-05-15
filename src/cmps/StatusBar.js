@@ -45,8 +45,8 @@ class StatusBar extends Component {
             </div>
 
         return (
-            <div className="flex status-bar" dir={direction}>
-                {this.state.toggleLogin && <div className="screen" onClick={this.toggleLogin}></div>}
+            <div className="flex status-bar-container" dir={direction}>
+                {this.state.toggleLogin && <div className="screen status-bar" onClick={this.toggleLogin}></div>}
                 {user ?
                     <div className="flex align-center">
                         <TeamMemberIcon user={user} />

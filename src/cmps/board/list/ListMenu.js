@@ -15,7 +15,7 @@ export default function ListMenu({ board, closeListMenu, list, updateBoard, user
         
         newList.cardIds.forEach(cardId => {
             const newCardId = utils.getRandomId();
-            const cardIdIdx = list.cardIds.findIndex(id => id === cardId);
+            const cardIdIdx = list.cardIds.findIndex(idx => idx === cardId);
             newBoard.cards[newCardId] = { ...newBoard.cards[cardId], id: newCardId };
             newList.cardIds = [...newList.cardIds];
             newList.cardIds.splice(cardIdIdx, 1, newCardId);
@@ -31,18 +31,19 @@ export default function ListMenu({ board, closeListMenu, list, updateBoard, user
     }
 
     const onDelete = (id) => {
-        let newBoard = { ...board };
-        let list = newBoard.lists[id];
+        const newBoard = { ...board };
+        const listsOrder = newBoard.listsOrder;
+        const list = newBoard.lists[id];
 
         for (const cardId of list.cardIds) {
-            for (const cardKey in newBoard.lists) {
+            for (const cardKey in newBoard.cards) {
                 if (cardId === cardKey) delete newBoard.cards[cardKey];
             }
         }
 
-        const idx = newBoard.listsOrder.findIndex(listId => listId === id);
-        newBoard.listsOrder.splice(idx, 1);
         delete newBoard.lists[id];
+        const idx = listsOrder.findIndex(listId => listId === id);
+        listsOrder.splice(idx, 1);
         const historyItem = { user: user.username, item: list.title, key1: 'theList', key2: 'listDeleted' };
         const msg = `${window.i18nData.theList}${list.title}${window.i18nData.listDeleted}${user.username}`;
         const notificationType = 'danger';

@@ -85,6 +85,15 @@ class Board extends Component {
         }));
     }
 
+    closeAll = () => {
+        this.setState({
+            toggleBoardHistory: false,
+            toggleBoardMembers: false,
+            toggleListForm: false,
+            toggleSplashMenu: false,
+        })
+    }
+
     onAddImg = async (ev) => {
         const file = ev.target.files[0];
 
@@ -99,10 +108,6 @@ class Board extends Component {
         } catch (err) {
             console.log(err);
         }
-    }
-
-    close = (field) => {
-        this.setState({ [field]: false });
     }
 
     isBgDark = async (img) => {
@@ -131,13 +136,14 @@ class Board extends Component {
         return (
             <div className="flex column board-container" style={{ backgroundImage: `url(${bgImage})` }}>
                 <BoardBar direction={direction} isBgDark={isBgDark} goBack={this.goBack} toggleHandler={this.toggleHandler} />
+                {(toggleBoardHistory || toggleBoardMembers || toggleSplashMenu) && <div className="screen board" onClick={this.closeAll}></div>}
                 <CSSTransition in={toggleBoardHistory} timeout={700} classNames={direction === 'ltr' ? 'modal-rtl' : 'modal-ltr'} unmountOnExit>
                     <BoardHistory direction={direction} history={board.history} language={language} />
                 </CSSTransition>
                 <CSSTransition in={toggleSplashMenu} timeout={700} classNames={direction === 'ltr' ? 'modal-rtl' : 'modal-ltr'} unmountOnExit>
                     <SplashMenu
                         board={board}
-                        close={this.close}
+                        close={this.toggleHandler}
                         direction={direction}
                         isBgDark={isBgDark}
                         onAddImg={this.onAddImg}
@@ -146,7 +152,7 @@ class Board extends Component {
                     />
                 </CSSTransition>
                 <CSSTransition in={toggleBoardMembers} timeout={700} classNames={direction === 'ltr' ? 'modal-rtl' : 'modal-ltr'} unmountOnExit>
-                    <BoardMembers board={board} close={this.close} collaborators={collaborators} direction={direction} updateBoard={updateBoard} />
+                    <BoardMembers board={board} close={this.toggleHandler} collaborators={collaborators} direction={direction} updateBoard={updateBoard} />
                 </CSSTransition>
                 <div className={`flex lists-container ${directionHandler}`}>
                     <BoardLists direction={direction} board={board} updateBoard={updateBoard} user={user} />

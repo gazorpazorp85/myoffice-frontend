@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 
+import MiniCardDetailsEditor from './MiniCardDetailsEditor';
+
 export default class MiniCardTextDetails extends Component {
 
     constructor(props) {
         super(props);
         this.textArea = React.createRef();
+        this.imgContainer = React.createRef();
     }
 
     state = {
-        title: ''
+        title: '',
+        imgHeight: 220
     }
 
     componentDidMount() {
         this.textArea.current.focus();
+        if (this.props.miniCard.card.type === 'image') this.setState({ imgHeight: this.imgContainer.current.getBoundingClientRect().height });
     }
 
     handleFocus = (ev) => {
@@ -44,7 +49,9 @@ export default class MiniCardTextDetails extends Component {
     render() {
 
         const { direction, miniCard } = this.props;
+        const props = { ...this.props };
         const { card } = this.props.miniCard;
+        const videoDimensions = { height: 140, width: 246 };
         let { height, top } = miniCard.boundingClientRect;
         const textAreaStyle = (direction === 'ltr') ? { right: 1 + 'px' } : { left: 1 + 'px' }
 
@@ -57,7 +64,7 @@ export default class MiniCardTextDetails extends Component {
 
         return (
             <div className="mini-card-details-container">
-                <div className="mini-card-screen" onClick={this.toggleMiniCardDetails}></div>
+                <div className="screen mini-card" onClick={this.toggleMiniCardDetails}></div>
                 <div className="mini-card-details"
                     dir={direction}
                     style={{
@@ -65,8 +72,15 @@ export default class MiniCardTextDetails extends Component {
                         top: top + 'px',
                         height: height + 'px'
                     }} >
-                    <div className="flex">
-                        {card.labels.map(label => <div key={label} className={`${label} + 'small-label`}></div>)}
+                    {card.type === 'video' &&
+                        <iframe title={card.id}
+                            type='text/html' width={videoDimensions.width}
+                            height={videoDimensions.height}
+                            src={card.url}
+                            allowFullScreen="allowfullscreen" />}
+                    {card.type === 'image' && <img ref={this.imgContainer} title={card.id} alt="card" src={card.url} />}
+                    <div className="flex wrap mini-card-labels-container">
+                        {card.labels.map(label => <div key={label} className={`${label} small-label`}></div>)}
                     </div>
                     <textarea
                         className="mini-card-textarea"
@@ -78,15 +92,8 @@ export default class MiniCardTextDetails extends Component {
                         placeholder={window.i18nData.enterCardTitle}
                         style={textAreaStyle}
                     />
-                    <button
-                        className="save-mini-card-btn"
-                        style={{
-                            left: miniCard.boundingClientRect.left + 'px',
-                            top: (top + height + 10) + 'px'
-                        }} onClick={this.onSave}>
-                        {window.i18nData.save}
-                    </button>
                 </div>
+                <MiniCardDetailsEditor {...props} onSave={this.onSave} />
             </div>
         )
     }

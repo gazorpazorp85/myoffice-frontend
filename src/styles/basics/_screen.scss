@@ -1,0 +1,21 @@
+.screen {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+    &.board {
+        top: 0;
+        z-index: 1;
+    }
+
+    &.status-bar {
+        background-color: $clr2;
+        top: 0;
+        right: 0;
+        z-index: 1;
+    }
+
+    &.mini-card {
+        background-color: $clr2;
+    }
+}

@@ -10,6 +10,7 @@
 @import "basics/input";
 @import "basics/layout";
 @import "basics/modal";
+@import "basics/screen";
 @import "basics/typography";
 
 //Component
@@ -24,10 +25,11 @@
 @import "cmps/board/BoardMembersPreview.scss";
 @import "cmps/board/SplashMenu.scss";
 @import "cmps/board/card/CardForm.scss";
-@import "cmps/board/card/CardTextPreview.scss";
+@import "cmps/board/card/CardPreview.scss";
 @import "cmps/board/card/CardsList.scss";
 @import "cmps/board/list/ListMenu.scss";
-@import "cmps/board/miniCard/MiniCardTextDetails.scss";
+@import "cmps/board/miniCard/MiniCardDetailsEditor.scss";
+@import "cmps/board/miniCard/MiniCardDetails.scss";
 
 //pages
 @import "pages/Home.scss";

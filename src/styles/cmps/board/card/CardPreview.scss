@@ -1,5 +1,6 @@
 .card-preview-container {
     cursor: pointer !important;
+    position: relative;
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;
@@ -10,6 +11,10 @@
     text-decoration: none;
     font-size: 14px;
     padding: 0 5px;
+
+    &.without-padding {
+        padding: 0;
+    }
 
     &:hover {
         box-shadow: 0px 3px 5px -3px #00000082;
@@ -32,6 +37,7 @@
 
 .card-edit-icon-container {
     position: absolute;
+    top: 2px;
     align-self: flex-end;
     width: 20px;
     height: 20px;

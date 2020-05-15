@@ -50,4 +50,11 @@ export default {
     'listRenamed': '" נקראה מחדש ע"י ',
     'theCardTitled': 'שם הכטיס "',
     'save': 'שמירה',
+    'cardDuplicated': '" שוכפל ע"י ',
+    'cardDeleted': '" נמחק ע"י ',
+    'duplicateCard': 'שכפול כרטיס',
+    'deleteCard': 'מחיקת כרטיס',
+    'editLabels': 'ערוך תגיות',
+    'editDueDate': 'ערוך מועד הגשה',
+    'editCardMembers': 'הוספת / הסרת חבר לכרטיס',
 }

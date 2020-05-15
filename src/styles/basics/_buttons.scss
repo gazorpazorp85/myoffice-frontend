@@ -23,12 +23,13 @@ button {
     }
     &.submit-form {
         height: 32px;
-        // color: $clr4;
-        // background-color: $btnclr1;
-        // padding: 5px 10px;
         font-size: rem(14px);
         margin-top: 0;
         margin-inline-end: 4px;
+    }
+    &.save-mini-card-btn {
+        width: fit-content;
+        font-size: 14px;   
     }
 }
 
@@ -87,11 +88,13 @@ button {
         height: 40px;
         width: 40px;
         transition: 0.3s;
+        z-index: 2;
     }
     &.add-members,
     &.change-bg,
     &.show-history {
         padding: 0 10px;
+        z-index: 2;
 
         :last-child {
             margin-inline-end: 10px;
@@ -120,6 +123,7 @@ button {
         background-color: #686868d3;
     }
     &.add-list {
+        justify-content: flex-start;
         height: 30px;
         min-width: 200px;
         transition: 0.2s;

@@ -7,7 +7,7 @@ export default function AddCardButton({ list, toggleAddCardFormHandler }) {
     }
     
     return (
-        <div className="flex pointer list-footer" onClick={(ev) => toggleAddCardFormHandler(ev, list.id)}>
+        <div className="flex pointer list-footer" onClick={() => toggleAddCardFormHandler(list.id)}>
             <div style={{ height: '22px', lineHeight: '22px' }}>
                 <span className="list-footer-add-icon">+</span>{addCardText(list)}
             </div>
