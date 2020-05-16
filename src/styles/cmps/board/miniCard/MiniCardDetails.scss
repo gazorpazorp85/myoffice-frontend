@@ -4,6 +4,7 @@
     left: 0;
     height: 100%;
     width: 100%;
+    
 }
 
 .mini-card-labels-container {
@@ -16,6 +17,7 @@
     border-radius: 4px;
     background-color: $clr4;
     border: 1px solid #d5d5d5c9;
+    z-index: 3;
 }
 
 .mini-card-textarea {

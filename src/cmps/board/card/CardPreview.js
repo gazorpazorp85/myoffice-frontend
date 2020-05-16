@@ -1,8 +1,9 @@
 import React from 'react';
 
+import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CreateIcon from '@material-ui/icons/Create';
 import SubjectIcon from '@material-ui/icons/Subject';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 import TeamMemberIcon from '../../TeamMemberIcon';
 
@@ -51,6 +52,7 @@ export default function CardPreview({ card, innerRef, isDragging, isEditButtonSh
                             <CheckBoxIcon />
                             <div>{`${card.doneTodos}/${card.todos.length}`}</div>
                         </div>}
+                    {card.dueDate && <div className="flex card-detail-info"><AccessAlarmIcon /></div>}
                     <div className="flex card-detail-info">
                         {card.cardMembers.map(member => <TeamMemberIcon user={member} key={member.username} style={{ height: 25 + 'px', width: 25 + 'px', fontSize: 12 + 'px' }} />)}
                     </div>

@@ -12,11 +12,13 @@ export default class MiniCardTextDetails extends Component {
 
     state = {
         title: '',
+        top: null,
         imgHeight: 220
     }
 
     componentDidMount() {
         this.textArea.current.focus();
+        this.adjustTop();
         if (this.props.miniCard.card.type === 'image') this.setState({ imgHeight: this.imgContainer.current.getBoundingClientRect().height });
     }
 
@@ -34,8 +36,8 @@ export default class MiniCardTextDetails extends Component {
         const { title } = this.state;
         const newCard = title ? { ...miniCard.card, title: title } : { ...miniCard };
         const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
-        const historyItem = { user: user.username, item: miniCard.title, key1: 'theCard', key2: 'cardEdited' };
-        const msg = `${window.i18nData.theCardTitled}${miniCard.title}${window.i18nData.cardEdited}${user.username}`;
+        const historyItem = { user: user.username, item: miniCard.card.title, key1: 'theCard', key2: 'cardEdited' };
+        const msg = `${window.i18nData.theCardTitled}${miniCard.card.title}${window.i18nData.cardEdited}${user.username}`;
         const notificationType = 'success';
         updateBoard(newBoard, msg, notificationType, historyItem);
         this.props.toggleMiniCardDetailsHandler(this.props.miniCard);
@@ -46,21 +48,22 @@ export default class MiniCardTextDetails extends Component {
         this.props.toggleMiniCardDetailsHandler(this.props.miniCard);
     }
 
+    adjustTop = () => {
+        let { height, top } = this.props.miniCard.boundingClientRect;
+        if (top > (window.innerHeight - (window.innerHeight / 4))) {
+            this.setState({ top: window.innerHeight - height - 50 });
+        }
+    }
+
     render() {
 
         const { direction, miniCard } = this.props;
         const props = { ...this.props };
         const { card } = this.props.miniCard;
         const videoDimensions = { height: 140, width: 246 };
-        let { height, top } = miniCard.boundingClientRect;
+        let { height, left } = miniCard.boundingClientRect;
+        let top = this.state.top || miniCard.boundingClientRect.top;
         const textAreaStyle = (direction === 'ltr') ? { right: 1 + 'px' } : { left: 1 + 'px' }
-
-        if (height + top > window.innerHeight) {
-            height = (window.innerHeight - top - 50) > 248 ? window.innerHeight - top - 50 : 248;
-        }
-        if (miniCard.boundingClientRect.top > (window.innerHeight - (window.innerHeight / 4))) {
-            top = window.innerHeight - height - 50;
-        }
 
         return (
             <div className="mini-card-details-container">
@@ -68,7 +71,7 @@ export default class MiniCardTextDetails extends Component {
                 <div className="mini-card-details"
                     dir={direction}
                     style={{
-                        left: miniCard.boundingClientRect.left + 'px',
+                        left: left + 'px',
                         top: top + 'px',
                         height: height + 'px'
                     }} >
@@ -93,7 +96,7 @@ export default class MiniCardTextDetails extends Component {
                         style={textAreaStyle}
                     />
                 </div>
-                <MiniCardDetailsEditor {...props} onSave={this.onSave} />
+                <MiniCardDetailsEditor {...props} top={top} onSave={this.onSave} />
             </div>
         )
     }

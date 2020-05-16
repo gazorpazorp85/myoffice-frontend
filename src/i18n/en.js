@@ -50,6 +50,7 @@ export default {
     'listRenamed': '" was renamed by ',
     'theCardTitled': 'the card titled "',
     'save': 'save',
+    'reset': 'reset',
     'cardDuplicated': '" was duplicated by ',
     'cardDeleted': '" was deleted by ',
     'duplicateCard': 'duplicate card',
@@ -57,4 +58,6 @@ export default {
     'editLabels': 'edit labels',
     'editDueDate': 'change due date',
     'editCardMembers': 'add/remove card member',
+    'theDueDate': 'the due date of the card "',
+    'changed': '" was changed by '
 }

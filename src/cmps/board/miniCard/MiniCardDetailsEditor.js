@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
+import CardDueDate from '../card/CardDueDate';
 import MiniCardDetailsButton from './MiniCardDetailsButton';
 
 import utils from '../../../services/utils';
 
-export default class MiniDetailsEditor extends Component {
+export default class MiniCardDetailsEditor extends Component {
 
     state = {
         toggleDueDate: false,
@@ -48,23 +49,37 @@ export default class MiniDetailsEditor extends Component {
         console.log('duplicateCard: ', newBoard);
     }
 
-    render() {
-        const { direction } = this.props;
-        const { boundingClientRect } = this.props.miniCard;
-        let top = boundingClientRect.top;
+    adjustLeft = () => {
+        const { direction, miniCard } = this.props;
+        let { left } = miniCard.boundingClientRect;
+        return (direction === 'ltr') ? left + 265 : left - 295;
+    }
 
-        if (top + 180 > window.innerHeight) top = window.innerHeight - 180;
+    render() {
+        const { board, direction, miniCard, top, updateBoard, user } = this.props;
+        const { toggleDueDate, toggleLabels, toggleMembers } = this.state;
+        const left = this.adjustLeft();
 
         return (
             <div className="flex column mini-card-editor-container"
                 dir={direction}
                 style={{
-                    left: (direction === 'ltr') ? boundingClientRect.left + 265 + 'px' : boundingClientRect.left - 295 + 'px',
-                    top: (top + 1) + 'px'
+                    left: left + 'px',
+                    top: top + 'px'
                 }}>
                 <MiniCardDetailsButton text={`🖊️ ${window.i18nData.editLabels}`} onClick={() => this.toggleHandler('toggleLabels')} direction={direction} />
                 <MiniCardDetailsButton text={`🎭 ${window.i18nData.editCardMembers}`} onClick={() => this.toggleHandler('toggleMembers')} direction={direction} />
-                <MiniCardDetailsButton text={`📅 ${window.i18nData.editLabels}`} onClick={() => this.toggleHandler('toggleDueDate')} direction={direction} />
+                <MiniCardDetailsButton text={`📅 ${window.i18nData.editDueDate}`} onClick={() => this.toggleHandler('toggleDueDate')} direction={direction} />
+                {toggleDueDate &&
+                    <CardDueDate
+                        board={board}
+                        card={miniCard.card}
+                        language={direction === 'ltr' ? 'en' : 'he'}
+                        left={direction === 'ltr' ? left : left - 42}
+                        toggle={this.toggleHandler}
+                        top={top}
+                        updateBoard={updateBoard}
+                        user={user} />}
                 <MiniCardDetailsButton text={`⎘ ${window.i18nData.duplicateCard}`} onClick={this.duplicateCard} direction={direction} />
                 <MiniCardDetailsButton text={`🗑️ ${window.i18nData.deleteCard}`} onClick={this.deleteCard} direction={direction} />
                 <button className="save-mini-card-btn" onClick={this.props.onSave}>

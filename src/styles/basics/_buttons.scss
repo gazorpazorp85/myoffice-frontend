@@ -14,7 +14,8 @@ button {
         background-color: $btnclr2;
     }
 
-    &.logout {
+    &.logout,
+    &.due-date-reset-btn {
         background-color: $btnclr3;
 
         &:hover {
@@ -29,7 +30,18 @@ button {
     }
     &.save-mini-card-btn {
         width: fit-content;
-        font-size: 14px;   
+        font-size: 14px;
+        margin-inline-start: 8px;
+    }
+    &.due-date-save-btn {
+        width: fit-content;
+        font-size: 14px;
+        margin-inline-end: 10px;
+    }
+    &.due-date-reset-btn {
+        width: fit-content;
+        font-size: 14px;
+        align-self: center;
     }
 }
 
@@ -139,4 +151,10 @@ button {
             font-weight: 600;
         }
     }
+}
+
+.close-due-date-btn {
+    margin-top: 5px;
+    margin-inline-start: 5px;
+    width: 24px;
 }

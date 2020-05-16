@@ -13,7 +13,8 @@ export default class BoardMembers extends Component {
     }
 
     updateBoardMembers = (user) => {
-        const newBoard = { ...this.props.board };
+        const { board, close, updateBoard } = this.props;
+        const newBoard = { ...board };
         let boardMembers = newBoard.boardMembers;
         let historyItem = {};
         let msgBody = '';
@@ -32,8 +33,8 @@ export default class BoardMembers extends Component {
         }
         const msg = `${user.username} ${msgBody}`;
         this.setState({ currentBoardMembers: boardMembers });
-        this.props.updateBoard(newBoard, msg, notificationType, historyItem);
-        this.props.close('toggleBoardMembers');
+        updateBoard(newBoard, msg, notificationType, historyItem);
+        close('toggleBoardMembers');
     }
 
     onStopPropagation = (ev) => {
@@ -53,11 +54,11 @@ export default class BoardMembers extends Component {
                 <div>
                     <h2 className="uppercase">{window.i18nData.boardMembers}:</h2>
                     <hr />
-                    {currentBoardMembers.length === 0 ? 
-                    <div>
-                        {window.i18nData.inviteMembers}
-                    </div>
-                    : <BoardMembersPreview members={currentBoardMembers} updateBoardMembers={this.updateBoardMembers} />}
+                    {currentBoardMembers.length === 0 ?
+                        <div>
+                            {window.i18nData.inviteMembers}
+                        </div>
+                        : <BoardMembersPreview members={currentBoardMembers} updateBoardMembers={this.updateBoardMembers} />}
                 </div>
                 <hr />
                 <div>

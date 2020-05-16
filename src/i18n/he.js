@@ -50,6 +50,7 @@ export default {
     'listRenamed': '" נקראה מחדש ע"י ',
     'theCardTitled': 'שם הכטיס "',
     'save': 'שמירה',
+    'reset': 'איפוס',
     'cardDuplicated': '" שוכפל ע"י ',
     'cardDeleted': '" נמחק ע"י ',
     'duplicateCard': 'שכפול כרטיס',
@@ -57,4 +58,6 @@ export default {
     'editLabels': 'ערוך תגיות',
     'editDueDate': 'ערוך מועד הגשה',
     'editCardMembers': 'הוספת / הסרת חבר לכרטיס',
+    'theDueDate': 'מועד הגשה של הכרטיס "',
+    'changed': '" שונה ע"י '
 }
