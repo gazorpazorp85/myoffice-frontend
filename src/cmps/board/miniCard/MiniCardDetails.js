@@ -11,9 +11,9 @@ export default class MiniCardTextDetails extends Component {
     }
 
     state = {
+        imgHeight: 220,
         title: '',
         top: null,
-        imgHeight: 220
     }
 
     componentDidMount() {
@@ -57,9 +57,10 @@ export default class MiniCardTextDetails extends Component {
 
     render() {
 
-        const { direction, miniCard } = this.props;
+        const { board, direction, miniCard } = this.props;
         const props = { ...this.props };
         const { card } = this.props.miniCard;
+        const labels = board.cards[card.id].labels;
         const videoDimensions = { height: 140, width: 246 };
         let { height, left } = miniCard.boundingClientRect;
         let top = this.state.top || miniCard.boundingClientRect.top;
@@ -83,7 +84,7 @@ export default class MiniCardTextDetails extends Component {
                             allowFullScreen="allowfullscreen" />}
                     {card.type === 'image' && <img ref={this.imgContainer} title={card.id} alt="card" src={card.url} />}
                     <div className="flex wrap mini-card-labels-container">
-                        {card.labels.map(label => <div key={label} className={`${label} small-label`}></div>)}
+                        {labels.map(label => <div key={label} className={`${label} small-label`}></div>)}
                     </div>
                     <textarea
                         className="mini-card-textarea"
@@ -96,7 +97,7 @@ export default class MiniCardTextDetails extends Component {
                         style={textAreaStyle}
                     />
                 </div>
-                <MiniCardDetailsEditor {...props} top={top} onSave={this.onSave} />
+                <MiniCardDetailsEditor {...props} labels={labels} onSave={this.onSave} top={top} />
             </div>
         )
     }

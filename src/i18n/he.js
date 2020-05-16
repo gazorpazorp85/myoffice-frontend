@@ -59,5 +59,12 @@ export default {
     'editDueDate': 'ערוך מועד הגשה',
     'editCardMembers': 'הוספת / הסרת חבר לכרטיס',
     'theDueDate': 'מועד הגשה של הכרטיס "',
-    'changed': '" שונה ע"י '
+    'changed': '" שונה ע"י ',
+    'aLabel': 'תגית בכרטיס "',
+    'addRemoveLabels': 'הוסף/הוסיפי תגית',
+    'cardAssigned': '" הוטל לביצוע ע"י ',
+    'theUser': 'המשתמש ',
+    'userDismissed': 'הוסר מהכרטיס ',
+    'addRemoveCardMembers': 'הוספת / הסרת חבר לכרטיס',
+    'availableCardMembers': 'חברים זמינים',
 }

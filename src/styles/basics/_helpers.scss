@@ -68,44 +68,6 @@
     display: grid;
 }
 
-//colors
-
-.small-label {
-    height: 10px;
-    width: 44px;
-    margin-top: 4px;
-    margin-inline-end: 4px;
-    border-radius: 4px;
-}
-
-.small-label:last-child{
-    margin-inline-end: 0px;
-}
-
-.label-color-1 {
-    background-color: rgb(3, 187, 12);
-}
-
-.label-color-2 {
-    background-color: rgb(255, 175, 70);
-}
-
-.label-color-3 {
-    background-color: rgb(199, 23, 23);
-}
-
-.label-color-4 {
-    background-color: rgb(97, 94, 255);
-}
-
-.label-color-5 {
-    background-color: rgb(230, 54, 230);
-}
-
-.label-color-6 {
-    background-color: rgb(0, 247, 255);
-}
-
 // icon
 
 .team-member-icon {
@@ -116,6 +78,9 @@
     font-size: 17px;
     font-weight: 800;
     border-radius: 50%;
-    margin-inline-end: 10px;
     text-transform: uppercase;
+}
+
+.team-member-icon:not(:last-child) {
+    margin-inline-end: 10px;
 }

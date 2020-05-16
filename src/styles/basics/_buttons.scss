@@ -153,8 +153,11 @@ button {
     }
 }
 
-.close-due-date-btn {
+.close-due-date-btn,
+.close-btn-labels,
+.close-btn-card-members {
+    align-self: flex-end;
     margin-top: 5px;
-    margin-inline-start: 5px;
+    margin-inline-end: 5px;
     width: 24px;
 }

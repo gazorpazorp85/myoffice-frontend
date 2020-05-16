@@ -60,13 +60,15 @@
 }
 
 .card-details-container {
+    min-height: 32px;
     border-top: 1px solid rgba(255, 255, 255, 0.527);
-}
-
-.card-details-container :not(:last-child) {
-    margin-inline-end: 10px;
 }
 
 .card-detail-info {
     align-items: center;
 }
+
+.card-detail-info:not(:last-child) {
+    margin-inline-end: 10px;
+}
+

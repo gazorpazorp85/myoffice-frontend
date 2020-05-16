@@ -38,7 +38,6 @@ export default class CardDueDate extends Component {
     saveCard = () => {
         const { board, card, toggle, updateBoard, user } = this.props;
         const { dueDate } = this.state;
-        console.log(dueDate);
         const newCard = { ...card, dueDate: dueDate ? dueDate.getTime() : dueDate };
         const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
         const historyItem = { user: user.username, item: newCard.title, key1: 'theDueDate', key2: 'changed' }

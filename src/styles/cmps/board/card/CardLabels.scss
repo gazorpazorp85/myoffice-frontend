@@ -1,0 +1,63 @@
+.labels-container {
+    position: absolute;
+    width: 232px;
+    background-color: $clr4;
+    // box-shadow: 0px 0px 0px 2px #aeaeaeb5;
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.label-title {
+    margin: 5px 10px;
+}
+
+.large-label {
+    cursor: pointer;
+    margin-bottom: 5px;
+    height: 30px;
+    width: 90%;
+    border-radius: 4px;
+}
+
+.medium-label {
+    margin: 4px 4px 4px 0;
+    height: 15px;
+    width: 30px;
+    border-radius: 4px;
+}
+
+.small-label {
+    height: 10px;
+    width: 44px;
+    margin-top: 4px;
+    margin-inline-end: 4px;
+    border-radius: 4px;
+}
+
+.small-label:last-child {
+    margin-inline-end: 0px;
+}
+
+.label-color-1 {
+    background-color: rgb(3, 187, 12);
+}
+
+.label-color-2 {
+    background-color: rgb(255, 175, 70);
+}
+
+.label-color-3 {
+    background-color: rgb(199, 23, 23);
+}
+
+.label-color-4 {
+    background-color: rgb(97, 94, 255);
+}
+
+.label-color-5 {
+    background-color: rgb(230, 54, 230);
+}
+
+.label-color-6 {
+    background-color: rgb(0, 247, 255);
+}

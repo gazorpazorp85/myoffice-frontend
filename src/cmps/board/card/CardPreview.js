@@ -45,7 +45,7 @@ export default function CardPreview({ card, innerRef, isDragging, isEditButtonSh
                     {card.labels.map(label => <div key={label} className={`${label} small-label`}></div>)}
                 </div>
                 <div className="flex card-title">{card.title}</div>
-                <div className="flex align-center wrap card-details-container">
+                {(card.description || card.dueDate || card.todos.length > 0 || card.cardMembers.length > 0) && <div className="flex align-center wrap card-details-container">
                     {card.description && <div className="flex card-detail-info"><SubjectIcon /></div>}
                     {card.todos.length > 0 &&
                         <div className="flex card-detail-info">
@@ -56,7 +56,7 @@ export default function CardPreview({ card, innerRef, isDragging, isEditButtonSh
                     <div className="flex card-detail-info">
                         {card.cardMembers.map(member => <TeamMemberIcon user={member} key={member.username} style={{ height: 25 + 'px', width: 25 + 'px', fontSize: 12 + 'px' }} />)}
                     </div>
-                </div>
+                </div>}
             </div>
         </section>
     )
