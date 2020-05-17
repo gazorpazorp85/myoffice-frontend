@@ -1,9 +1,29 @@
 .card-members-container {
     position: absolute;
-    width: 295px;
+    width: 330px;
     background-color: $clr4;
     // box-shadow: 0px 0px 0px 2px #aeaeaeb5;
     border-radius: 4px;
     // padding-top: 25px;
     z-index: 1;
+}
+
+.card-members-section-title {
+    text-align: center;
+    border-bottom: 1px solid rgba(92, 92, 92, 0.288);
+    margin: 10px;
+}
+
+.card-members-preview {
+    padding: 10px;
+    border-bottom: 1px solid rgba(92, 92, 92, 0.288);
+
+    &:hover {
+        background: rgba(124, 124, 124, 0.438);
+    }
+}
+
+.no-card-members {
+    text-align: center; 
+    padding: 10px;
 }

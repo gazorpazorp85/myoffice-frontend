@@ -67,11 +67,15 @@ export default class CardForm extends Component {
     checkCardType = (title) => {
         const youtubeREGEX = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
         const imgREGEX = /.(jpg|jpeg|png|gif)\/?$/;
+        const httpREGEX = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+        console.log(title.match(httpREGEX));
         if (title.match(youtubeREGEX)) {
             const url = title.replace('watch?v=', 'embed/');
             return this.setState({ card: { ...this.state.card, title: '', type: 'video', url: url } }, () => this.saveCard());
         } else if (title.match(imgREGEX)) {
             return this.setState({ card: { ...this.state.card, title: '', type: 'image', url: title } }, () => this.saveCard());
+        } else if (title.match(httpREGEX)) {
+            return this.setState({ card: { ...this.state.card, url: title } }, () => this.saveCard());
         }
         this.saveCard();
     }

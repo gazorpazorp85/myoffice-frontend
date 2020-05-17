@@ -67,4 +67,5 @@ export default {
     'userDismissed': ' was dismissed from the card ',
     'addRemoveCardMembers': 'add / remove card members',
     'availableMembers': 'available members',
+    'noCardMembers': 'no users assigned to this card yet. click below to add one.'
 }

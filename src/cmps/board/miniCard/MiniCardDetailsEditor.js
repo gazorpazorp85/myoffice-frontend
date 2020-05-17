@@ -87,6 +87,7 @@ export default class MiniCardDetailsEditor extends Component {
                         board={board}
                         card={miniCard.card}
                         cardMembers={cardMembers}
+                        direction={direction}
                         toggle={this.toggleHandler}
                         updateBoard={updateBoard}
                         user={user} />}

@@ -67,4 +67,5 @@ export default {
     'userDismissed': 'הוסר מהכרטיס ',
     'addRemoveCardMembers': 'הוספת / הסרת חבר לכרטיס',
     'availableCardMembers': 'חברים זמינים',
+    'noCardMembers': 'אין משתמש שמטפל בכרטיס הזה. לחץ/י כדי להוסיף'
 }

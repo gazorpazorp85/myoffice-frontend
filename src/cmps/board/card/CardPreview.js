@@ -44,7 +44,11 @@ export default function CardPreview({ card, innerRef, isDragging, isEditButtonSh
                 <div className="flex wrap">
                     {card.labels.map(label => <div key={label} className={`${label} small-label`}></div>)}
                 </div>
-                <div className="flex card-title">{card.title}</div>
+                {card.url === card.title ?
+                    <a className="card-url" href={card.title} target='blank'>{card.title}</a> :
+                    <div className="flex card-title">{card.title}</div>
+                }
+
                 {(card.description || card.dueDate || card.todos.length > 0 || card.cardMembers.length > 0) && <div className="flex align-center wrap card-details-container">
                     {card.description && <div className="flex card-detail-info"><SubjectIcon /></div>}
                     {card.todos.length > 0 &&
