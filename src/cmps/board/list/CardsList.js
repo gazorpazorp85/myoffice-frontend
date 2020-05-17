@@ -8,8 +8,8 @@ export default class CardsList extends Component {
 
     state = {
         currCardId: '',
+        isEditButtonShown: false,
         onCardId: '',
-        isEditButtonShown: false
     }
 
     showEditBtn = (cardId) => {
@@ -18,6 +18,12 @@ export default class CardsList extends Component {
 
     hideEditBtn = () => {
         this.setState({ isEditButtonShown: false })
+    }
+
+    cardDetailsToggleHandler = (card, list) => {
+        const { selectedCardHandler, toggle } = this.props;
+        toggle('isCardDetailsShown');
+        selectedCardHandler(card, list);
     }
 
     render() {
@@ -36,6 +42,7 @@ export default class CardsList extends Component {
                                 <NaturalDragAnimation style={provided.draggableProps.style} snapshot={snapshot} rotationMultiplier={1.3}>
                                     {style => (
                                         <div key={card.id}
+                                            onClick={() => this.cardDetailsToggleHandler(card, list)}
                                             onMouseEnter={() => this.showEditBtn(card.id)}
                                             onMouseLeave={() => this.hideEditBtn(card.id)} >
                                             <CardPreview

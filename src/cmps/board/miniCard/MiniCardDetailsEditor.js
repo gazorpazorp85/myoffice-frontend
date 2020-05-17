@@ -5,7 +5,8 @@ import CardLabels from '../card/CardLabels';
 import CardMembers from '../card/CardMembers';
 import MiniCardDetailsButton from './MiniCardDetailsButton';
 
-import utils from '../../../services/utils';
+import CardService from '../../../services/CardService';
+// import utils from '../../../services/utils';
 
 export default class MiniCardDetailsEditor extends Component {
 
@@ -20,35 +21,11 @@ export default class MiniCardDetailsEditor extends Component {
     }
 
     duplicateCard = () => {
-        const { board, miniCard, toggleMiniCardDetailsHandler, updateBoard, user } = this.props;
-        const { card } = this.props.miniCard;
-        const newCard = { ...card, id: utils.getRandomId(), labels: [...card.labels], todos: [...card.todos], cardMembers: [...card.cardMembers] };
-        const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
-        newBoard.lists[miniCard.list.id].cardIds.push(newCard.id);
-        const historyItem = { user: user.username, item: newCard.title, key1: 'theCard', key2: 'cardDuplicated' };
-        const msg = `${window.i18nData.theCard}${newCard.title}${window.i18nData.cardDuplicated}${user.username}`;
-        const notificationType = 'success';
-        newCard.title = `${window.i18nData.clonedList} ${newCard.title}`;
-        updateBoard(newBoard, msg, notificationType, historyItem);
-        toggleMiniCardDetailsHandler(miniCard);
-        console.log('duplicateCard: ', newBoard);
+        CardService.duplicateCard(this.props);
     }
 
     deleteCard = () => {
-        const { miniCard, toggleMiniCardDetailsHandler, updateBoard, user } = this.props;
-        const newBoard = { ...this.props.board };
-        const list = miniCard.list;
-        const cardIds = newBoard.lists[list.id].cardIds;
-        const card = newBoard.cards[miniCard.card.id];
-        const idx = cardIds.findIndex(cardId => cardId === miniCard.card.id);
-        cardIds.splice(idx, 1);
-        delete newBoard.cards[miniCard.card.id];
-        const historyItem = { user: user.username, item: card.title, key1: 'theCard', key2: 'cardDeleted' };
-        const msg = `${window.i18nData.theCard}${card.title}${window.i18nData.cardDeleted}${user.username}`;
-        const notificationType = 'danger';
-        updateBoard(newBoard, msg, notificationType, historyItem);
-        toggleMiniCardDetailsHandler(miniCard);
-        console.log('duplicateCard: ', newBoard);
+        CardService.deleteCard(this.props);
     }
 
     adjustLeft = () => {
@@ -61,7 +38,6 @@ export default class MiniCardDetailsEditor extends Component {
         const { board, direction, labels, miniCard, top, updateBoard, user } = this.props;
         const { toggleDueDate, toggleLabels, toggleMembers } = this.state;
         const cardMembers = board.cards[miniCard.card.id].cardMembers;
-        // console.log(board.cards[miniCard.card.id].cardMembers);
         const left = this.adjustLeft();
 
         return (

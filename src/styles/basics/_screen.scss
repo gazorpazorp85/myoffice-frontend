@@ -19,4 +19,12 @@
         background-color: $clr2;
         z-index: 2;
     }
+
+    &.card-details {
+        justify-content: center;
+        align-items: center;
+        background-color: $clr2;
+        top: 0;
+        z-index: 2;
+    }
 }

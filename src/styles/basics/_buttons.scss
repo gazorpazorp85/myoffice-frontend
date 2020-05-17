@@ -155,9 +155,37 @@ button {
 
 .close-due-date-btn,
 .close-btn-labels,
-.close-btn-card-members {
+.close-btn-card-members,
+.card-details-close-btn {
     align-self: flex-end;
     margin-top: 5px;
     margin-inline-end: 5px;
     width: 24px;
+}
+
+.card-details-close-btn{
+    margin-top: 20px;
+    margin-inline-end: 25px;
+}
+
+.card-details-editor-btn {
+    height: 32px;
+    color: #172b4d;
+    font-size: 14px;
+    background-color: rgba(9, 30, 66, 0.068);
+    border-radius: 4px;
+    margin-top: 8px;
+    padding: 0 10px;
+    transition: 0.3s;
+
+    .MuiSvgIcon-root {
+        height: 18px;
+        width: 18px;
+        margin-inline-end: 5px;
+    }
+
+    &:hover {
+        color: $clr4;
+        background-color: rgba(9, 30, 66, 0.322);
+    }
 }

@@ -67,5 +67,13 @@ export default {
     'userDismissed': ' was dismissed from the card ',
     'addRemoveCardMembers': 'add / remove card members',
     'availableMembers': 'available members',
-    'noCardMembers': 'no users assigned to this card yet. click below to add one.'
+    'noCardMembers': 'no users assigned to this card yet. click below to add one.',
+    'addToCard': 'add to card',
+    'cardLabelsIcon': 'labels',
+    'cardMembersIcon': 'members',
+    'cardTodosIcon': 'check list',
+    'cardDueDateIcon': 'due date',
+    'cardActions': 'actions',
+    'duplicateCardIcon': 'duplicate',
+    'deleteCardIcon': 'delete',
 }

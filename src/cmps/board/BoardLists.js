@@ -6,6 +6,7 @@ import AddCardButton from './list/AddCardButton';
 import CardForm from './card/CardForm';
 import CardsList from './list/CardsList';
 import ListMenu from './list/ListMenu';
+import ListTitleContainer from './list/ListTitleContainer';
 
 import MiniCardDetails from './miniCard/MiniCardDetails';
 
@@ -16,7 +17,6 @@ export default class BoardLists extends Component {
         listsOrder: [],
         miniCardDetails: '',
         selectedListId: '',
-        title: '',
         toggleAddCardForm: false,
         toggleMiniCardDetails: false
     }
@@ -98,29 +98,6 @@ export default class BoardLists extends Component {
         updateBoard(newBoard, msg, notificationType, historyItem);
     }
 
-    setListName = (listId) => {
-        const listTitle = this.props.board.lists[listId].title;
-        this.setState({ title: listTitle });
-    }
-
-    emitChange = (ev) => {
-        this.setState({ title: ev.target.innerText });
-    }
-
-    saveListName = (listId, title) => {
-        const { board, updateBoard, user } = this.props;
-        const listTitle = board.lists[listId].title;
-        if (listTitle === title) return;
-
-        const newBoard = { ...board };
-        newBoard.lists[listId].title = title;
-        const historyItem = { user: user.username, item: listTitle, key1: 'thelist', key2: 'listRenamed' };
-        const msg = `${window.i18nData.theList}${listTitle}${window.i18nData.listRenamed}${user.username}`;
-        const notificationType = 'success';
-        updateBoard(newBoard, msg, notificationType, historyItem);
-
-    }
-
     toggleAddCardFormHandler = (listId) => {
         this.setState(prevState => ({ toggleAddCardForm: !prevState.toggleAddCardForm, selectedListId: prevState.selectedListId === listId ? '' : listId }))
     }
@@ -131,8 +108,8 @@ export default class BoardLists extends Component {
 
     render() {
 
-        let { board, direction, updateBoard, user } = this.props;
-        let { isListMenuShown, listsOrder, miniCardDetails, selectedListId, title, toggleAddCardForm, toggleMiniCardDetails } = this.state;
+        let { board, direction, selectedCardHandler, toggle, updateBoard, user } = this.props;
+        let { isListMenuShown, listsOrder, miniCardDetails, selectedListId, toggleAddCardForm, toggleMiniCardDetails } = this.state;
 
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
@@ -151,15 +128,7 @@ export default class BoardLists extends Component {
                                                     <div className="flex column list" {...provided.draggableProps} ref={provided.innerRef} style={style} dir={direction}>
                                                         <div className="flex list-header" {...provided.dragHandleProps}>
                                                             <div className="list-title-container">
-                                                                <h2 className="list-title"
-                                                                    contentEditable='true'
-                                                                    spellCheck='false'
-                                                                    onFocus={() => this.setListName(list.id)}
-                                                                    onInput={(ev) => this.emitChange(ev)}
-                                                                    onBlur={() => this.saveListName(list.id, title)}
-                                                                    suppressContentEditableWarning={true}>
-                                                                    {list.title}
-                                                                </h2>
+                                                                <ListTitleContainer board={board} list={list} updateBoard={updateBoard} user={user} />
                                                             </div>
                                                             <div className="btn title-menu" onClick={(ev) => this.titleMenuClickHandler(ev, list.id)}>
                                                                 <div>...</div>
@@ -175,6 +144,8 @@ export default class BoardLists extends Component {
                                                                     list={list}
                                                                     provided={provided}
                                                                     isDraggingOver={snapshot.isDraggingOver}
+                                                                    selectedCardHandler={selectedCardHandler}
+                                                                    toggle={toggle}
                                                                     toggleMiniCardDetailsHandler={this.toggleMiniCardDetailsHandler}
                                                                     updateBoard={updateBoard}
                                                                     user={user} />

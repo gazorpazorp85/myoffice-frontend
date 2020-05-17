@@ -67,5 +67,13 @@ export default {
     'userDismissed': 'הוסר מהכרטיס ',
     'addRemoveCardMembers': 'הוספת / הסרת חבר לכרטיס',
     'availableCardMembers': 'חברים זמינים',
-    'noCardMembers': 'אין משתמש שמטפל בכרטיס הזה. לחץ/י כדי להוסיף'
+    'noCardMembers': 'אין משתמש שמטפל בכרטיס הזה. לחץ/י כדי להוסיף',
+    'addToCard': 'הוסף / הוסיפי לכרטיס',
+    'cardLabelsIcon': 'תגיות',
+    'cardMembersIcon': 'הוספת / הסרת חברים',
+    'cardTodosIcon': 'רשימת תתי משימות',
+    'cardDueDateIcon': 'קביעת תאריך למועד סיום',
+    'cardActions': 'פעולות',
+    'duplicateCardIcon': 'שכפול',
+    'deleteCardIcon': 'מחיקה',
 }

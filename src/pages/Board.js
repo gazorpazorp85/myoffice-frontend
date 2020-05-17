@@ -5,7 +5,7 @@ import FastAverageColor from 'fast-average-color';
 import { CSSTransition } from 'react-transition-group';
 
 import LoadPage from '../cmps/LoadPage';
-
+import CardDetails from '../cmps/board/card/CardDetails';
 import AddListButton from '../cmps/board/AddListButton';
 import AddListForm from '../cmps/board/AddListForm';
 import BoardBar from '../cmps/board/BoardBar';
@@ -28,6 +28,8 @@ class Board extends Component {
         isBgDark: null,
         isCardDetailsShown: false,
         isTopMenuOptionsShown: true,
+        selectedCard: '',
+        selectedCardList: '',
         toggleBoardHistory: false,
         toggleBoardMembers: false,
         toggleListForm: false,
@@ -78,10 +80,18 @@ class Board extends Component {
 
     toggleHandler = (field) => {
         this.setState(prevState => ({
+            isCardDetailsShown: field === 'isCardDetailsShown' ? !prevState.isCardDetailsShown : false,
             toggleBoardHistory: field === 'toggleBoardHistory' ? !prevState.toggleBoardHistory : false,
             toggleBoardMembers: field === 'toggleBoardMembers' ? !prevState.toggleBoardMembers : false,
             toggleListForm: field === 'toggleListForm' ? !prevState.toggleListForm : false,
             toggleSplashMenu: field === 'toggleSplashMenu' ? !prevState.toggleSplashMenu : false
+        }));
+    }
+
+    selectedCardHandler = (card, list) => {
+        this.setState(prevState => ({
+            selectedCard: prevState.selectedCard === card ? '' : card,
+            selectedCardList: prevState.selectedCardList === list ? '' : list
         }));
     }
 
@@ -125,7 +135,8 @@ class Board extends Component {
 
     render() {
 
-        let { board, collaborators, language, updateBoard, user } = this.props;
+        const { board, collaborators, language, updateBoard, user } = this.props;
+        const { isCardDetailsShown, selectedCard, selectedCardList } = this.state;
         let { isBgDark, isBoardLoaded, toggleBoardHistory, toggleBoardMembers, toggleListForm, toggleSplashMenu } = this.state;
         let bgImage = board.boardBgImage;
         let direction = LanguageService.languageDirection(language);
@@ -135,10 +146,19 @@ class Board extends Component {
 
         return (
             <div className="flex column board-container" style={{ backgroundImage: `url(${bgImage})` }}>
-                <BoardBar direction={direction} isBgDark={isBgDark} goBack={this.goBack} toggleHandler={this.toggleHandler} />
+                <BoardBar
+                    direction={direction}
+                    isBgDark={isBgDark}
+                    goBack={this.goBack}
+                    toggleHandler={this.toggleHandler}
+                />
                 {(toggleBoardHistory || toggleBoardMembers || toggleSplashMenu) && <div className="screen board" onClick={this.closeAll}></div>}
                 <CSSTransition in={toggleBoardHistory} timeout={700} classNames={direction === 'ltr' ? 'modal-rtl' : 'modal-ltr'} unmountOnExit>
-                    <BoardHistory direction={direction} history={board.history} language={language} />
+                    <BoardHistory
+                        direction={direction}
+                        history={board.history}
+                        language={language}
+                    />
                 </CSSTransition>
                 <CSSTransition in={toggleSplashMenu} timeout={700} classNames={direction === 'ltr' ? 'modal-rtl' : 'modal-ltr'} unmountOnExit>
                     <SplashMenu
@@ -152,16 +172,48 @@ class Board extends Component {
                     />
                 </CSSTransition>
                 <CSSTransition in={toggleBoardMembers} timeout={700} classNames={direction === 'ltr' ? 'modal-rtl' : 'modal-ltr'} unmountOnExit>
-                    <BoardMembers board={board} close={this.toggleHandler} collaborators={collaborators} direction={direction} updateBoard={updateBoard} />
+                    <BoardMembers
+                        board={board}
+                        close={this.toggleHandler}
+                        collaborators={collaborators}
+                        direction={direction}
+                        updateBoard={updateBoard}
+                    />
                 </CSSTransition>
                 <div className={`flex lists-container ${directionHandler}`}>
-                    <BoardLists direction={direction} board={board} updateBoard={updateBoard} user={user} />
+                    <BoardLists
+                        board={board}
+                        direction={direction}
+                        selectedCardHandler={this.selectedCardHandler}
+                        toggle={this.toggleHandler}
+                        updateBoard={updateBoard}
+                        user={user}
+                    />
                     <div className="flex column align-center" dir={direction} style={{ paddingInlineEnd: '8px' }}>
-                        {toggleListForm ? <AddListForm board={board} toggleHandler={this.toggleHandler}
-                            updateBoard={updateBoard} user={user ? user.username : 'Guest'} />
-                            : <AddListButton isBgDark={isBgDark} toggleHandler={this.toggleHandler} />}
+                        {toggleListForm ?
+                            <AddListForm
+                                board={board}
+                                toggleHandler={this.toggleHandler}
+                                updateBoard={updateBoard}
+                                user={user ? user.username : 'Guest'}
+                            /> :
+                            <AddListButton
+                                isBgDark={isBgDark}
+                                toggleHandler={this.toggleHandler}
+                            />}
                     </div>
                 </div>
+                {isCardDetailsShown &&
+                    <CardDetails
+                        board={board}
+                        card={selectedCard}
+                        direction={direction}
+                        list={selectedCardList}
+                        selectedCardHandler={this.selectedCardHandler}
+                        toggle={this.toggleHandler}
+                        updateBoard={updateBoard}
+                        user={user}
+                    />}
             </div>
         )
     }
