@@ -3,5 +3,63 @@
     min-height: 75vh;
     max-height: 95vh;
     background-color: $clr4;
+    color: #172b4d;
     z-index: 3;
+    border-radius: 4px;
+}
+
+.card-details-info-container {
+    // width: 371px;
+    flex-grow: 1;
+}
+
+.card-details-title-container {
+    margin-top: 23px;
+    margin-bottom: 8px;
+    margin-inline-start: 21px;
+}
+
+.card-details-card-title-icon,
+.card-details-card-duedate-icon,
+.card-details-card-description-icon {
+    color: #42526e;
+
+    &.MuiSvgIcon-root {
+        height: 25px;
+        width: 25px;
+        margin-inline-end: 10px;
+    }
+}
+
+.in-list-container,
+.card-details-card-duedate-time {
+    font-size: 14px;
+    font-weight: lighter;
+}
+
+.card-details-labels-container,
+.card-details-members-container {
+    margin-inline-start: 56px;
+    margin-bottom: 8px;
+}
+
+.labels-title-container,
+.members-title-container {
+    font-size: rem(12px);
+}
+
+.card-details-duedate-container,
+.card-details-description-container {
+    margin-bottom: 8px;
+    margin-inline-start: 21px;
+}
+
+.card-description-textarea {
+    min-height: 160px;
+    background-color: rgba(9, 30, 66, 0.068);
+    color: inherit;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 5px;
+    margin-top: 7px;
 }

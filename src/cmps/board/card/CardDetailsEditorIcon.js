@@ -7,7 +7,7 @@ export default function CardDetailsEditorIcon({ icon }) {
 
     return (
         <div className="flex align-center pointer card-details-editor-btn">
-            <IconCmp />
+            <IconCmp style={icon.style || {}} />
             <div className="capitalize">{window.i18nData[iconName]}</div>
         </div>
     )

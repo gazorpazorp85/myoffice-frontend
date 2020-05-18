@@ -208,6 +208,7 @@ class Board extends Component {
                         board={board}
                         card={selectedCard}
                         direction={direction}
+                        language={language}
                         list={selectedCardList}
                         selectedCardHandler={this.selectedCardHandler}
                         toggle={this.toggleHandler}

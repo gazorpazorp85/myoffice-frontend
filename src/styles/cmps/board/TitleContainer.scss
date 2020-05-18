@@ -1,0 +1,22 @@
+.title-container {
+    margin: 0;
+    cursor: text;
+    word-break: break-all;
+
+    &.list-style {
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    &.card-style {
+        width: 300px;
+        color: #172b4d;
+        font-weight: 600;
+        font-size: 18px;
+    }
+
+    &:focus {
+        background-color: $clr4;
+        box-shadow: inset 0 0 0 2px #0079bf;
+    }
+}

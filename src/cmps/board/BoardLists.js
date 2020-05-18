@@ -6,7 +6,7 @@ import AddCardButton from './list/AddCardButton';
 import CardForm from './card/CardForm';
 import CardsList from './list/CardsList';
 import ListMenu from './list/ListMenu';
-import ListTitleContainer from './list/ListTitleContainer';
+import TitleContainer from './TitleContainer';
 
 import MiniCardDetails from './miniCard/MiniCardDetails';
 
@@ -128,7 +128,7 @@ export default class BoardLists extends Component {
                                                     <div className="flex column list" {...provided.draggableProps} ref={provided.innerRef} style={style} dir={direction}>
                                                         <div className="flex list-header" {...provided.dragHandleProps}>
                                                             <div className="list-title-container">
-                                                                <ListTitleContainer board={board} list={list} updateBoard={updateBoard} user={user} />
+                                                                <TitleContainer board={board} list={list} updateBoard={updateBoard} user={user} />
                                                             </div>
                                                             <div className="btn title-menu" onClick={(ev) => this.titleMenuClickHandler(ev, list.id)}>
                                                                 <div>...</div>
@@ -140,10 +140,11 @@ export default class BoardLists extends Component {
                                                             {(provided, snapshot) => {
                                                                 return <CardsList
                                                                     cards={cards}
+                                                                    direction={direction}
                                                                     innerRef={provided.innerRef}
+                                                                    isDraggingOver={snapshot.isDraggingOver}
                                                                     list={list}
                                                                     provided={provided}
-                                                                    isDraggingOver={snapshot.isDraggingOver}
                                                                     selectedCardHandler={selectedCardHandler}
                                                                     toggle={toggle}
                                                                     toggleMiniCardDetailsHandler={this.toggleMiniCardDetailsHandler}

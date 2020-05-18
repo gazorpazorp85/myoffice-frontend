@@ -7,7 +7,7 @@ import SubjectIcon from '@material-ui/icons/Subject';
 
 import TeamMemberIcon from '../../TeamMemberIcon';
 
-export default function CardPreview({ card, innerRef, isDragging, isEditButtonShown, list, onCardId, provided, style, toggleMiniCardDetailsHandler }) {
+export default function CardPreview({ card, direction, innerRef, isDragging, isEditButtonShown, list, onCardId, provided, style, toggleMiniCardDetailsHandler }) {
 
     const cardContainer = React.createRef();
 
@@ -23,6 +23,7 @@ export default function CardPreview({ card, innerRef, isDragging, isEditButtonSh
 
     const isDraggingClassName = isDragging ? 'isDragging' : '';
     const withoutPadding = card.url ? 'without-padding' : '';
+    const rotateIcon = direction === 'rtl' ? {transform: 'rotate3d(0, -100, 7, 180deg)'} : {};
 
     return (
         <section ref={cardContainer}>
@@ -52,7 +53,7 @@ export default function CardPreview({ card, innerRef, isDragging, isEditButtonSh
                     <div className="flex card-title">{card.title}</div>
                 }
                 {(card.description || card.dueDate || card.todos.length > 0 || card.cardMembers.length > 0) && <div className="flex align-center wrap card-preview-details-container">
-                    {card.description && <div className="flex card-detail-info"><SubjectIcon /></div>}
+                    {card.description && <div className="flex card-detail-info"><SubjectIcon style={rotateIcon}/></div>}
                     {card.todos.length > 0 &&
                         <div className="flex card-detail-info">
                             <CheckBoxIcon />

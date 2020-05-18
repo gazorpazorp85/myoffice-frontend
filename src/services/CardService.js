@@ -4,7 +4,8 @@ export default {
     duplicateCard,
     deleteCard,
     updateChoosenLabels,
-    updateCardMembers
+    updateCardMembers,
+    saveCardName
 }
 
 function duplicateCard(props) {
@@ -70,4 +71,17 @@ function updateCardMembers(props, collaborator) {
 
     updateBoard(newBoard, msg, notificationType, historyItem);
     toggle('toggleMembers');
+}
+
+function saveCardName(props, id, title) {
+    const { board, updateBoard, user } = props;
+    const cardTitle = board.cards[id].title;
+    if (cardTitle === title) return;
+
+    const newBoard = { ...board };
+    newBoard.cards[id].title = title;
+    const historyItem = { user: user.username, item: title, key1: 'theCard', key2: 'cardEdited' };
+    const msg = `${window.i18nData.theCard}${title}${window.i18nData.cardEdited}${user.username}`;
+    const notificationType = 'success';
+    updateBoard(newBoard, msg, notificationType, historyItem);
 }

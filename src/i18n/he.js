@@ -76,4 +76,9 @@ export default {
     'cardActions': 'פעולות',
     'duplicateCardIcon': 'שכפול',
     'deleteCardIcon': 'מחיקה',
+    'inList': 'ברשימה ',
+    'cardDetailsDueDate': 'מועד סיום',
+    'cardDueDateNotSet': 'עוד לא נקבע מועד סיום לכרטיס הזה',
+    'cardDetailsDescription': 'תיאור',
+    'enterCardDescription': 'הוסף/הוסיפי תיאור יותר מורכב לכרטיס...'
 }

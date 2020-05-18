@@ -9,13 +9,13 @@ import CardTodosIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
 import DuplicateCardIcon from '@material-ui/icons/FileCopyOutlined';
 import DeleteCardIcon from '@material-ui/icons/DeleteOutlineOutlined';
 
-export default function CardDetailsEditor() {
+export default function CardDetailsEditor({ rotateIcon }) {
 
     const topIconsArray = [
         { cmp: CardLabelsIcon, string: 'cardLabelsIcon' },
         { cmp: CardMembersIcon, string: 'cardMembersIcon' },
         { cmp: CardTodosIcon, string: 'cardTodosIcon' },
-        { cmp: CardDueDateIcon, string: 'cardDueDateIcon' }];
+        { cmp: CardDueDateIcon, string: 'cardDueDateIcon', style: rotateIcon }];
     const bottomIconsArray = [
         { cmp: DuplicateCardIcon, string: 'duplicateCardIcon' },
         { cmp: DeleteCardIcon, string: 'deleteCardIcon' }];

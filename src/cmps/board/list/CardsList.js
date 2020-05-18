@@ -27,8 +27,7 @@ export default class CardsList extends Component {
     }
 
     render() {
-
-        const { cards, list, provided, innerRef, isDraggingOver, toggleMiniCardDetailsHandler } = this.props;
+        const { cards, direction, list, provided, innerRef, isDraggingOver, toggleMiniCardDetailsHandler } = this.props;
         const { onCardId, isEditButtonShown } = this.state;
 
         const isDraggingOverHandler = isDraggingOver ? "isDraggingOver" : "";
@@ -47,6 +46,7 @@ export default class CardsList extends Component {
                                             onMouseLeave={() => this.hideEditBtn(card.id)} >
                                             <CardPreview
                                                 card={card}
+                                                direction={direction}
                                                 innerRef={provided.innerRef}
                                                 isDragging={snapshot.isDragging}
                                                 isEditButtonShown={isEditButtonShown}

@@ -76,4 +76,9 @@ export default {
     'cardActions': 'actions',
     'duplicateCardIcon': 'duplicate',
     'deleteCardIcon': 'delete',
+    'inList': 'in list ',
+    'cardDetailsDueDate': 'due date',
+    'cardDueDateNotSet': 'a due date for this card is not set yet', 
+    'cardDetailsDescription': 'description',
+    'enterCardDescription': 'Add a more detailed description...'
 }
