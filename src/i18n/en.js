@@ -80,5 +80,6 @@ export default {
     'cardDetailsDueDate': 'due date',
     'cardDueDateNotSet': 'a due date for this card is not set yet', 
     'cardDetailsDescription': 'description',
-    'enterCardDescription': 'Add a more detailed description...'
+    'enterCardDescription': 'Add a more detailed description...',
+    'theDescription': 'the description of the card "',
 }

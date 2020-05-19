@@ -6,7 +6,6 @@ import CardMembers from '../card/CardMembers';
 import MiniCardDetailsButton from './MiniCardDetailsButton';
 
 import CardService from '../../../services/CardService';
-// import utils from '../../../services/utils';
 
 export default class MiniCardDetailsEditor extends Component {
 
@@ -21,11 +20,21 @@ export default class MiniCardDetailsEditor extends Component {
     }
 
     duplicateCard = () => {
-        CardService.duplicateCard(this.props);
+        const newProps = { ...this.props };
+        newProps.card = newProps.miniCard.card;
+        newProps.list = newProps.miniCard.list;
+        delete newProps.miniCard;
+        CardService.duplicateCard(newProps);
+        this.props.toggleMiniCardDetailsHandler(newProps.card);
     }
 
     deleteCard = () => {
-        CardService.deleteCard(this.props);
+        const newProps = { ...this.props };
+        newProps.card = newProps.miniCard.card;
+        newProps.list = newProps.miniCard.list;
+        delete newProps.miniCard;
+        CardService.deleteCard(newProps);
+        this.props.toggleMiniCardDetailsHandler(newProps.card);
     }
 
     adjustLeft = () => {
@@ -39,6 +48,7 @@ export default class MiniCardDetailsEditor extends Component {
         const { toggleDueDate, toggleLabels, toggleMembers } = this.state;
         const cardMembers = board.cards[miniCard.card.id].cardMembers;
         const left = this.adjustLeft();
+        const styleDirection = direction === 'ltr' ? 'left' : 'right';
 
         return (
             <div className="flex column mini-card-editor-container"
@@ -52,8 +62,8 @@ export default class MiniCardDetailsEditor extends Component {
                     <CardLabels
                         board={board}
                         card={miniCard.card}
-                        direction={direction}
                         labels={labels}
+                        style={{ [styleDirection]: 9, top: 37 }}
                         toggle={this.toggleHandler}
                         updateBoard={updateBoard}
                         user={user} />}
@@ -63,7 +73,7 @@ export default class MiniCardDetailsEditor extends Component {
                         board={board}
                         card={miniCard.card}
                         cardMembers={cardMembers}
-                        direction={direction}
+                        style={{ [styleDirection]: 9, top: 76 }}
                         toggle={this.toggleHandler}
                         updateBoard={updateBoard}
                         user={user} />}
@@ -73,9 +83,8 @@ export default class MiniCardDetailsEditor extends Component {
                         board={board}
                         card={miniCard.card}
                         language={direction === 'ltr' ? 'en' : 'he'}
-                        left={direction === 'ltr' ? left : left - 42}
                         toggle={this.toggleHandler}
-                        top={top}
+                        style={{ [styleDirection]: 9, top: 112 }}
                         updateBoard={updateBoard}
                         user={user} />}
                 <MiniCardDetailsButton text={`⎘ ${window.i18nData.duplicateCard}`} onClick={this.duplicateCard} direction={direction} />

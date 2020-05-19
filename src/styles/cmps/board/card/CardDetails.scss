@@ -1,4 +1,5 @@
 .card-details-container {
+    position: relative;
     max-width: 768px;
     min-height: 75vh;
     max-height: 95vh;
@@ -11,6 +12,7 @@
 .card-details-info-container {
     // width: 371px;
     flex-grow: 1;
+    padding-inline-end: 20px;
 }
 
 .card-details-title-container {

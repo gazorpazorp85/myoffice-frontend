@@ -80,5 +80,6 @@ export default {
     'cardDetailsDueDate': 'מועד סיום',
     'cardDueDateNotSet': 'עוד לא נקבע מועד סיום לכרטיס הזה',
     'cardDetailsDescription': 'תיאור',
-    'enterCardDescription': 'הוסף/הוסיפי תיאור יותר מורכב לכרטיס...'
+    'enterCardDescription': 'הוסף/הוסיפי תיאור יותר מורכב לכרטיס...',
+    'theDescription': 'התיאור של הכרטיס "',
 }

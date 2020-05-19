@@ -6,6 +6,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import en from 'date-fns/locale/en-US';
 import he from 'date-fns/locale/he';
 
+import CardService from '../../../services/CardService';
+
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default class CardDueDate extends Component {
@@ -36,16 +38,8 @@ export default class CardDueDate extends Component {
     }
 
     saveCard = () => {
-        const { board, card, toggle, updateBoard, user } = this.props;
         const { dueDate } = this.state;
-        const newCard = { ...card, dueDate: dueDate ? dueDate.getTime() : dueDate };
-        const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
-        const historyItem = { user: user.username, item: newCard.title, key1: 'theDueDate', key2: 'changed' }
-        const msg = `${window.i18nData.theDueDate}${newCard.title}${window.i18nData.changed}${user.username}`;
-        const notificationType = 'success';
-        updateBoard(newBoard, msg, notificationType, historyItem);
-        toggle('toggleDueDate');
-        console.log('cardDueDate: ', newCard);
+        CardService.updateCardDueDate(this.props, dueDate);
     }
 
     adjustedTop = () => {
@@ -60,20 +54,19 @@ export default class CardDueDate extends Component {
     adjustOffset = (language) => {
         const adjustedTop = this.adjustedTop();
         if (language === 'en') {
-            console.log('adjustedOffset: en', adjustedTop === 'top-end' ? '28px, 40px' : '28px, 20px')
             this.setState({ adjustedOffset: adjustedTop === 'top-end' ? '28px, 40px' : '28px, 20px' });
         } else {
-            console.log('adjustedOffset: he', adjustedTop === 'top-end' ? '28px, 40px' : '28px, 20px')
             this.setState({ adjustedOffset: adjustedTop === 'top-end' ? '0px, 40px' : '0px, 20px' });
         };
     }
 
     render() {
-        const { language, left, toggle, top } = this.props;
+        const { language, style, toggle } = this.props;
         const { adjustedOffset } = this.state;
+        console.log(this.props.language);
 
         return (
-            <div ref={this.dueDateContainer} className="flex column card-duedate-container" style={{ left: left + 9, top: top + 112 }}>
+            <div ref={this.dueDateContainer} className="flex column card-duedate-container" style={style}>
                 <div className="pointer close-due-date-btn">
                     <CloseIcon onClick={() => toggle('toggleDueDate')} />
                 </div>

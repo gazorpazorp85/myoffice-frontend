@@ -5,38 +5,35 @@ export default {
     deleteCard,
     updateChoosenLabels,
     updateCardMembers,
+    updateCardDescription,
+    updateCardDueDate,
     saveCardName
 }
 
 function duplicateCard(props) {
-    const { board, miniCard, toggleMiniCardDetailsHandler, updateBoard, user } = props;
-    const { card } = props.miniCard;
+    const { board, card, list, updateBoard, user } = props;
     const newCard = { ...card, id: utils.getRandomId(), labels: [...card.labels], todos: [...card.todos], cardMembers: [...card.cardMembers] };
     const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
-    newBoard.lists[miniCard.list.id].cardIds.push(newCard.id);
+    newBoard.lists[list.id].cardIds.push(newCard.id);
     const historyItem = { user: user.username, item: newCard.title, key1: 'theCard', key2: 'cardDuplicated' };
     const msg = `${window.i18nData.theCard}${newCard.title}${window.i18nData.cardDuplicated}${user.username}`;
     const notificationType = 'success';
     newCard.title = `${window.i18nData.clonedList} ${newCard.title}`;
     updateBoard(newBoard, msg, notificationType, historyItem);
-    toggleMiniCardDetailsHandler(miniCard);
     console.log('cardService duplicateCard: ', newBoard);
 }
 
 function deleteCard(props) {
-    const { board, miniCard, toggleMiniCardDetailsHandler, updateBoard, user } = props;
+    const { board, card, list, updateBoard, user } = props;
     const newBoard = { ...board };
-    const list = miniCard.list;
     const cardIds = newBoard.lists[list.id].cardIds;
-    const card = newBoard.cards[miniCard.card.id];
-    const idx = cardIds.findIndex(cardId => cardId === miniCard.card.id);
+    const idx = cardIds.findIndex(cardId => cardId === card.id);
     cardIds.splice(idx, 1);
-    delete newBoard.cards[miniCard.card.id];
+    delete newBoard.cards[card.id];
     const historyItem = { user: user.username, item: card.title, key1: 'theCard', key2: 'cardDeleted' };
     const msg = `${window.i18nData.theCard}${card.title}${window.i18nData.cardDeleted}${user.username}`;
     const notificationType = 'danger';
     updateBoard(newBoard, msg, notificationType, historyItem);
-    toggleMiniCardDetailsHandler(miniCard);
     console.log('cardService deleteCard: ', newBoard);
 }
 
@@ -84,4 +81,25 @@ function saveCardName(props, id, title) {
     const msg = `${window.i18nData.theCard}${title}${window.i18nData.cardEdited}${user.username}`;
     const notificationType = 'success';
     updateBoard(newBoard, msg, notificationType, historyItem);
+}
+
+function updateCardDescription(props, description) {
+    const { board, card, updateBoard, user } = props;
+    const newCard = { ...card, description: description };
+    const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
+    const historyItem = { user: user.username, item: newCard.title, key1: 'theDescription', key2: 'changed' };
+    const msg = `${window.i18nData.theDescription}${newCard.title}${window.i18nData.changed}${user.username}`;
+    const notificationType = 'success';
+    updateBoard(newBoard, msg, notificationType, historyItem);
+}
+
+function updateCardDueDate(props, dueDate) {
+    const { board, card, toggle, updateBoard, user } = props;
+    const newCard = { ...card, dueDate: dueDate ? dueDate.getTime() : dueDate };
+    const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
+    const historyItem = { user: user.username, item: newCard.title, key1: 'theDueDate', key2: 'changed' }
+    const msg = `${window.i18nData.theDueDate}${newCard.title}${window.i18nData.changed}${user.username}`;
+    const notificationType = 'success';
+    updateBoard(newBoard, msg, notificationType, historyItem);
+    toggle('toggleDueDate');
 }

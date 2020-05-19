@@ -9,16 +9,25 @@ import CardTodosIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
 import DuplicateCardIcon from '@material-ui/icons/FileCopyOutlined';
 import DeleteCardIcon from '@material-ui/icons/DeleteOutlineOutlined';
 
-export default function CardDetailsEditor({ rotateIcon }) {
+import CardService from '../../../services/CardService';
+
+export default function CardDetailsEditor(props) {
+
+    const { rotateIcon, toggle } = props;
 
     const topIconsArray = [
-        { cmp: CardLabelsIcon, string: 'cardLabelsIcon' },
-        { cmp: CardMembersIcon, string: 'cardMembersIcon' },
-        { cmp: CardTodosIcon, string: 'cardTodosIcon' },
-        { cmp: CardDueDateIcon, string: 'cardDueDateIcon', style: rotateIcon }];
+        { cmp: CardLabelsIcon, string: 'cardLabelsIcon', field: 'toggleLabels' },
+        { cmp: CardMembersIcon, string: 'cardMembersIcon', field: 'toggleCardMembers' },
+        { cmp: CardTodosIcon, string: 'cardTodosIcon', field: 'toggleCardTodos' },
+        { cmp: CardDueDateIcon, string: 'cardDueDateIcon', field: 'toggleDueDate', style: rotateIcon }];
     const bottomIconsArray = [
-        { cmp: DuplicateCardIcon, string: 'duplicateCardIcon' },
-        { cmp: DeleteCardIcon, string: 'deleteCardIcon' }];
+        { cmp: DuplicateCardIcon, string: 'duplicateCardIcon', field: 'duplicateCard' },
+        { cmp: DeleteCardIcon, string: 'deleteCardIcon', field: 'deleteCard' }];
+    
+    const deleteDuplicateHandler = (iconField, props) => {
+        CardService[iconField](props);
+        props.cardDetailsToggle();
+    }
 
     return (
         <div className="flex column card-editor-container">
@@ -26,13 +35,13 @@ export default function CardDetailsEditor({ rotateIcon }) {
                 {window.i18nData.addToCard}
             </div>
             <div className="flex column">
-                {topIconsArray.map(icon => <CardDetailsEditorIcon key={icon.string} icon={icon} />)}
+                {topIconsArray.map(icon => <CardDetailsEditorIcon key={icon.string} icon={icon} functionToRun={() => toggle(icon.field)} />)}
             </div>
             <div className="uppercase" style={{ paddingTop: 20 }}>
                 {window.i18nData.cardActions}
             </div>
             <div className="flex column">
-                {bottomIconsArray.map(icon => <CardDetailsEditorIcon key={icon.string} icon={icon} />)}
+                {bottomIconsArray.map(icon => <CardDetailsEditorIcon key={icon.string} icon={icon} functionToRun={() => deleteDuplicateHandler(icon.field, props)} />)}
             </div>
         </div>
     )

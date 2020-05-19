@@ -161,9 +161,21 @@ button {
     margin-top: 5px;
     margin-inline-end: 5px;
     width: 24px;
+
+    &.MuiSvgIcon-root {
+        height: 18px;
+        width: 18px;
+    }
 }
 
-.card-details-close-btn{
+.card-details-close-btn {
+    &.MuiSvgIcon-root {
+        height: 24px;
+        width: 24px;
+    }
+}
+
+.card-details-close-btn {
     margin-top: 20px;
     margin-inline-end: 25px;
 }

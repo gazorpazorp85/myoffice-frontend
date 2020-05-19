@@ -8,12 +8,11 @@ import CardService from '../../../services/CardService';
 
 export default function CardMembers(props) {
 
-    const { board, cardMembers, direction, toggle } = props;
+    const { board, cardMembers, style, toggle } = props;
     const availableCollaborators = board.boardMembers.filter(member => !cardMembers.find(cardMember => cardMember._id === member._id));
-    const style = direction === 'ltr' ? 'left' : 'right';
 
     return (
-        <div className="flex column card-members-container" style={{ [style]: 9, top: 75 }}>
+        <div className="flex column card-members-container" style={style}>
             <CloseIcon className="pointer close-btn-card-members" onClick={() => toggle('toggleMembers')} />
             <div className="uppercase card-members-section-title">{window.i18nData.addRemoveCardMembers}</div>
             <div className="flex column">
