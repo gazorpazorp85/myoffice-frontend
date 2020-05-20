@@ -22,6 +22,7 @@
 }
 
 .card-details-card-title-icon,
+.card-details-card-todos-icon,
 .card-details-card-duedate-icon,
 .card-details-card-description-icon {
     color: #42526e;
@@ -51,7 +52,8 @@
 }
 
 .card-details-duedate-container,
-.card-details-description-container {
+.card-details-description-container,
+.card-details-todos-container {
     margin-bottom: 8px;
     margin-inline-start: 21px;
 }

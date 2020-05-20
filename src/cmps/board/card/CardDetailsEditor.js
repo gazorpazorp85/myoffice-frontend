@@ -18,7 +18,7 @@ export default function CardDetailsEditor(props) {
     const topIconsArray = [
         { cmp: CardLabelsIcon, string: 'cardLabelsIcon', field: 'toggleLabels' },
         { cmp: CardMembersIcon, string: 'cardMembersIcon', field: 'toggleCardMembers' },
-        { cmp: CardTodosIcon, string: 'cardTodosIcon', field: 'toggleCardTodos' },
+        { cmp: CardTodosIcon, string: 'cardTodosIcon', field: 'toggleCardTodosEditor' },
         { cmp: CardDueDateIcon, string: 'cardDueDateIcon', field: 'toggleDueDate', style: rotateIcon }];
     const bottomIconsArray = [
         { cmp: DuplicateCardIcon, string: 'duplicateCardIcon', field: 'duplicateCard' },

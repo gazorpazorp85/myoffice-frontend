@@ -82,4 +82,8 @@ export default {
     'cardDetailsDescription': 'description',
     'enterCardDescription': 'Add a more detailed description...',
     'theDescription': 'the description of the card "',
+    'cardDetailsTodos': 'check list',
+    'theTodos': 'the check list in card "',
+    'updateTodos': '" was updated by ',
+    'addNewCardTodo': 'add a new item to the check list',
 }

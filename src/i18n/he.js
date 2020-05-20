@@ -82,4 +82,8 @@ export default {
     'cardDetailsDescription': 'תיאור',
     'enterCardDescription': 'הוסף/הוסיפי תיאור יותר מורכב לכרטיס...',
     'theDescription': 'התיאור של הכרטיס "',
+    'cardDetailsTodos': 'רשימת משימות',
+    'theTodos': 'רשימת המשימות בכרטיס "',
+    'updateTodos': '" עודכנה ע"י ',
+    'addNewCardTodo': 'הוסף / הוסיפי משימה חדשה',
 }

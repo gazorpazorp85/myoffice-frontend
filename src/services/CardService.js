@@ -3,10 +3,11 @@ import utils from './utils';
 export default {
     duplicateCard,
     deleteCard,
+    updateCardDueDate,
+    updateCardDescription,
     updateChoosenLabels,
     updateCardMembers,
-    updateCardDescription,
-    updateCardDueDate,
+    updateCardTodos,
     saveCardName
 }
 
@@ -102,4 +103,17 @@ function updateCardDueDate(props, dueDate) {
     const notificationType = 'success';
     updateBoard(newBoard, msg, notificationType, historyItem);
     toggle('toggleDueDate');
+}
+
+function updateCardTodos(props, todo) {
+    const { board, card, updateBoard, user } = props;
+    const newCard = { ...card };
+    newCard.todos.push(todo);
+    if (newCard.todos.length === 1) newCard.doneTodos = 0;
+    const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
+    const historyItem = { user: user.username, item: newCard.title, key1: 'theTodos', key2: 'updateTodos' }
+    const msg = `${window.i18nData.theTodos}${newCard.title}${window.i18nData.updateTodos}${user.username}`;
+    const notificationType = 'success';
+    updateBoard(newBoard, msg, notificationType, historyItem);
+
 }

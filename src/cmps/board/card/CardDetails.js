@@ -4,14 +4,16 @@ import moment from 'moment';
 import CardDescriptionIcon from '@material-ui/icons/NotesOutlined';
 import CardDueDateIcon from '@material-ui/icons/EventOutlined';
 import CardTitleIcon from '@material-ui/icons/DescriptionOutlined';
+import CardTodosIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
 import CloseIcon from '@material-ui/icons/Close';
 
 import CardDetailsEditor from './CardDetailsEditor';
-import TeamMemberIcon from '../../TeamMemberIcon';
-import TitleContainer from '../TitleContainer';
 import CardDueDate from './CardDueDate';
 import CardLabels from './CardLabels';
 import CardMembers from './CardMembers';
+import CardTodosEditor from './CardTodosEditor';
+import TitleContainer from '../TitleContainer';
+import TeamMemberIcon from '../../TeamMemberIcon';
 
 import CardService from '../../../services/CardService';
 
@@ -25,6 +27,7 @@ export default class CardDetails extends Component {
             toggleCardMembers: false,
             toggleDueDate: false,
             toggleLabels: false,
+            toggleCardTodosEditor: false,
         }
 
         moment.locale(props.language);
@@ -41,6 +44,7 @@ export default class CardDetails extends Component {
             toggleCardMembers: field === 'toggleCardMembers' ? !prevState.toggleCardMembers : false,
             toggleDueDate: field === 'toggleDueDate' ? !prevState.toggleDueDate : false,
             toggleLabels: field === 'toggleLabels' ? !prevState.toggleLabels : false,
+            toggleCardTodosEditor: field === 'toggleCardTodosEditor' ? !prevState.toggleCardTodosEditor : false,
         }))
     }
 
@@ -57,7 +61,7 @@ export default class CardDetails extends Component {
 
         const { board, card, direction, list, updateBoard, user } = this.props;
         const { cardMembers, dueDate, labels } = board.cards[card.id];
-        const { description, toggleCardMembers, toggleDueDate, toggleLabels } = this.state;
+        const { description, toggleCardMembers, toggleDueDate, toggleLabels, toggleCardTodosEditor } = this.state;
 
         const rotateIcon = direction === 'rtl' ? { transform: 'rotate3d(0, -100, 7, 180deg)' } : {};
         const cardTitleIconRotate = direction === 'rtl' ? {} : { transform: 'rotate3d(0, -100, 7, 180deg)' };
@@ -97,6 +101,13 @@ export default class CardDetails extends Component {
                                 </div>
                             </div>
                         }
+                        {toggleCardTodosEditor && <CardTodosEditor {...this.props} style={{ [styleDirection]: 25, top: 223 }} toggle={this.cardDetailsToggleHandler}/>}
+                        <div className="flex card-details-todos-container">
+                            <CardTodosIcon className="card-details-card-todos-icon" />
+                            <div className="flex column">
+                                <div className="capitalize">{window.i18nData.cardDetailsTodos}</div>
+                            </div>
+                        </div>
 
                         {toggleDueDate && <CardDueDate {...this.props} style={{ [styleDirection]: 25, top: 307 }} toggle={this.cardDetailsToggleHandler} />}
                         <div className="flex card-details-duedate-container">
@@ -105,7 +116,7 @@ export default class CardDetails extends Component {
                                 <div className="capitalize">{window.i18nData.cardDetailsDueDate}</div>
                                 {dueDate ?
                                     <div className="card-details-card-duedate-time">{moment(dueDate).format('LLLL')}</div> :
-                                    <div className="card-details-card-duedate-time">{window.i18nData.cardDueDateNotSet}</div>}
+                                    <div className="capitalize card-details-card-duedate-time">{window.i18nData.cardDueDateNotSet}</div>}
                             </div>
                         </div>
 
