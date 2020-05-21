@@ -63,7 +63,6 @@ export default class CardDueDate extends Component {
     render() {
         const { language, style, toggle } = this.props;
         const { adjustedOffset } = this.state;
-        console.log(this.props.language);
 
         return (
             <div ref={this.dueDateContainer} className="flex column card-duedate-container" style={style}>

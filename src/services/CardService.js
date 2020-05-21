@@ -86,7 +86,8 @@ function saveCardName(props, id, title) {
 }
 
 function updateCardDescription(props, description) {
-    const { board, card, updateBoard, user } = props;
+    const { board, updateBoard, user } = props;
+    const card = board.cards[props.card.id];
     const newCard = { ...card, description: description };
     const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
     const historyItem = { user: user.username, item: newCard.title, key1: 'theDescription', key2: 'changed' };
@@ -96,7 +97,8 @@ function updateCardDescription(props, description) {
 }
 
 function updateCardDueDate(props, dueDate) {
-    const { board, card, toggle, updateBoard, user } = props;
+    const { board, toggle, updateBoard, user } = props;
+    const card = board.cards[props.card.id];
     const newCard = { ...card, dueDate: dueDate ? dueDate.getTime() : dueDate };
     const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
     const historyItem = { user: user.username, item: newCard.title, key1: 'theDueDate', key2: 'changed' }
@@ -107,7 +109,8 @@ function updateCardDueDate(props, dueDate) {
 }
 
 function updateCardTodos(props, todo) {
-    const { board, card, updateBoard, user } = props;
+    const { board, updateBoard, user } = props;
+    const card = board.cards[props.card.id];
     const newCard = { ...card };
     newCard.todos.push(todo);
     newCard.doneTodos = newCard.todos.length === 1 ? 0 : newCard.doneTodos;
@@ -120,7 +123,8 @@ function updateCardTodos(props, todo) {
 }
 
 function cardTodoHandler(props, id, key) {
-    const { board, card, updateBoard, user } = props;
+    const { board, updateBoard, user } = props;
+    const card = board.cards[props.card.id];
     const newCard = { ...card, todos: [...card.todos] };
     const todos = newCard.todos;
     const idx = todos.findIndex(todo => todo.id === id);
