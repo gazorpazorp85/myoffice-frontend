@@ -1,10 +1,11 @@
 .labels-container {
     position: absolute;
-    width: 232px;
+    width: 252px;
     background-color: $clr4;
     box-shadow: 0px 0px 0px 2px #aeaeaeb5;
     border-radius: 4px;
     z-index: 1;
+    padding: 10px;
 }
 
 .labels-hr {

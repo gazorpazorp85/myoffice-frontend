@@ -11,6 +11,7 @@ import CardDetailsEditor from './CardDetailsEditor';
 import CardDueDate from './CardDueDate';
 import CardLabels from './CardLabels';
 import CardMembers from './CardMembers';
+import CardTodos from './CardTodos';
 import CardTodosEditor from './CardTodosEditor';
 import TitleContainer from '../TitleContainer';
 import TeamMemberIcon from '../../TeamMemberIcon';
@@ -60,7 +61,7 @@ export default class CardDetails extends Component {
     render() {
 
         const { board, card, direction, list, updateBoard, user } = this.props;
-        const { cardMembers, dueDate, labels } = board.cards[card.id];
+        const { cardMembers, doneTodos, dueDate, labels, todos } = board.cards[card.id];
         const { description, toggleCardMembers, toggleDueDate, toggleLabels, toggleCardTodosEditor } = this.state;
 
         const rotateIcon = direction === 'rtl' ? { transform: 'rotate3d(0, -100, 7, 180deg)' } : {};
@@ -101,11 +102,14 @@ export default class CardDetails extends Component {
                                 </div>
                             </div>
                         }
-                        {toggleCardTodosEditor && <CardTodosEditor {...this.props} style={{ [styleDirection]: 25, top: 223 }} toggle={this.cardDetailsToggleHandler}/>}
+                        {toggleCardTodosEditor && <CardTodosEditor {...this.props} style={{ [styleDirection]: 25, top: 264 }} toggle={this.cardDetailsToggleHandler} />}
                         <div className="flex card-details-todos-container">
                             <CardTodosIcon className="card-details-card-todos-icon" />
-                            <div className="flex column">
+                            <div className="flex column card-todos-main-container">
                                 <div className="capitalize">{window.i18nData.cardDetailsTodos}</div>
+                                {todos.length !== 0 ?
+                                    <CardTodos doneTodos={doneTodos} {...this.props} todos={todos} /> :
+                                    <div className="capitalize no-card-todos-text">{window.i18nData.noCardTodos}</div>}
                             </div>
                         </div>
 

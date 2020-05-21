@@ -1,6 +1,7 @@
 import utils from './utils';
 
 export default {
+    cardTodoHandler,
     duplicateCard,
     deleteCard,
     updateCardDueDate,
@@ -8,7 +9,7 @@ export default {
     updateChoosenLabels,
     updateCardMembers,
     updateCardTodos,
-    saveCardName
+    saveCardName,
 }
 
 function duplicateCard(props) {
@@ -109,11 +110,37 @@ function updateCardTodos(props, todo) {
     const { board, card, updateBoard, user } = props;
     const newCard = { ...card };
     newCard.todos.push(todo);
-    if (newCard.todos.length === 1) newCard.doneTodos = 0;
+    newCard.doneTodos = newCard.todos.length === 1 ? 0 : newCard.doneTodos;
     const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
     const historyItem = { user: user.username, item: newCard.title, key1: 'theTodos', key2: 'updateTodos' }
     const msg = `${window.i18nData.theTodos}${newCard.title}${window.i18nData.updateTodos}${user.username}`;
     const notificationType = 'success';
     updateBoard(newBoard, msg, notificationType, historyItem);
 
+}
+
+function cardTodoHandler(props, id, key) {
+    const { board, card, updateBoard, user } = props;
+    const newCard = { ...card, todos: [...card.todos] };
+    const todos = newCard.todos;
+    const idx = todos.findIndex(todo => todo.id === id);
+    const currTodoText = todos[idx].text;
+    let historyItem = '';
+    let msg = '';
+    let notificationType = '';
+    if (key === 'delete') {
+        newCard.doneTodos = (todos[idx].isDone === true && newCard.doneTodos > 0) ? newCard.doneTodos - 1 : newCard.doneTodos;
+        todos.splice(idx, 1);
+        historyItem = { user: user.username, item: currTodoText, key1: 'theTodo', key2: 'listDeleted' };
+        msg = `${window.i18nData.theTodo}${currTodoText}${window.i18nData.listDeleted}${user.username}`;
+        notificationType = 'danger';
+    } else if (key === 'updateTodoStatus') {
+        todos[idx].isDone = !todos[idx].isDone;
+        newCard.doneTodos = todos.filter(todo => todo.isDone).length;
+        historyItem = { user: user.username, item: currTodoText, key1: 'todoStatus', key2: 'todoStatusUpdate' }
+        msg = `${window.i18nData.theTodo}${currTodoText}${window.i18nData.todoStatusUpdate}${user.username}`;
+        notificationType = 'success';
+    }
+    const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
+    updateBoard(newBoard, msg, notificationType, historyItem);
 }

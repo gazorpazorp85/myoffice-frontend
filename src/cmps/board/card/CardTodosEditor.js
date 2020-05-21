@@ -32,14 +32,13 @@ export default class CardTodosEditor extends Component {
         const { style, toggle } = this.props;
 
         return (
-            <div className="flex column" style={style}>
-                <div className="pointer close-todos-btn" onClick={() => toggle('toggleCardTodosEditor')}>
-                    <CloseIcon />
-                </div>
+            <div className="flex column card-todos-editor-container" style={style}>
 
-                <div>
-                    <input type="text" onChange={this.updateTodo} placeholder={window.i18nData.addNewCardTodo} value={this.state.text} />
-                    <button onClick={this.saveTodo}>{window.i18nData.save}</button>
+                <CloseIcon className="pointer close-todos-btn" onClick={() => toggle('toggleCardTodosEditor')} />
+
+                <div className="flex column center align-center todo-input-container">
+                    <input className="card-todos-editor-input" type="text" onChange={this.updateTodo} placeholder={window.i18nData.addNewCardTodo} value={this.state.text} />
+                    <button className="card-todos-save-btn" onClick={this.saveTodo}>{window.i18nData.save}</button>
                 </div>
             </div>
         )

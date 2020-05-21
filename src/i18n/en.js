@@ -86,4 +86,8 @@ export default {
     'theTodos': 'the check list in card "',
     'updateTodos': '" was updated by ',
     'addNewCardTodo': 'add a new item to the check list',
+    'noCardTodos': 'no check list items added yet',
+    'theTodo': 'the check list item "',
+    'todoStatus': 'the status of the item "',
+    'todoStatusUpdate': '" was updated by ',
 }

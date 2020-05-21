@@ -1,15 +1,15 @@
 .card-duedate-container {
     position: absolute;
-    height: 120px;
     width: 300px;
     background-color: $clr4;
     box-shadow: 0px 0px 0px 2px #aeaeaeb5;
     border-radius: 4px;
     z-index: 1;
+    padding: 10px;
 }
 
 .react-datepicker {
-    font-family: 'varela' !important;
+    font-family: "varela" !important;
     height: fit-content;
     width: 328px;
 }
@@ -20,6 +20,7 @@
 }
 
 .react-datepicker-wrapper {
+    margin-top: 10px;
     input {
         text-align: center;
         padding: 5px 0px;

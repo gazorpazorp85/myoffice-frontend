@@ -67,9 +67,7 @@ export default class CardDueDate extends Component {
 
         return (
             <div ref={this.dueDateContainer} className="flex column card-duedate-container" style={style}>
-                <div className="pointer close-due-date-btn">
-                    <CloseIcon onClick={() => toggle('toggleDueDate')} />
-                </div>
+                <CloseIcon className="pointer close-due-date-btn" onClick={() => toggle('toggleDueDate')} />
                 <DatePicker
                     dateFormat="MMMM d, yyyy h:mm aa"
                     locale={language}

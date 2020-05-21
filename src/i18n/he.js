@@ -86,4 +86,7 @@ export default {
     'theTodos': 'רשימת המשימות בכרטיס "',
     'updateTodos': '" עודכנה ע"י ',
     'addNewCardTodo': 'הוסף / הוסיפי משימה חדשה',
+    'noCardTodos': 'אין עדיין משימות בכרטיס הזה',
+    'todoStatus': 'הסטטוס של התת משימה "',
+    'todoStatusUpdate': '" עודכן ע"י ',
 }

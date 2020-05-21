@@ -43,6 +43,10 @@ button {
         font-size: 14px;
         align-self: center;
     }
+    &.card-todos-save-btn {
+        width: fit-content;
+        font-size: 14px;
+    }
 }
 
 .btn {
@@ -159,8 +163,6 @@ button {
 .close-btn-card-members,
 .card-details-close-btn {
     align-self: flex-end;
-    margin-top: 5px;
-    margin-inline-end: 5px;
     width: 24px;
 
     &.MuiSvgIcon-root {

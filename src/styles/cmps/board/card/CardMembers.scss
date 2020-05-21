@@ -4,14 +4,14 @@
     background-color: $clr4;
     box-shadow: 0px 0px 0px 2px #aeaeaeb5;
     border-radius: 4px;
-    // padding-top: 25px;
+    padding: 10px;
     z-index: 1;
 }
 
 .card-members-section-title {
     text-align: center;
     border-bottom: 1px solid rgba(92, 92, 92, 0.288);
-    margin: 10px;
+    margin-top: 10px;
 }
 
 .card-members-preview {
@@ -20,6 +20,7 @@
 
     &:hover {
         background: rgba(124, 124, 124, 0.438);
+        border-radius: 4px;
     }
 }
 
