@@ -9,6 +9,7 @@ import CardService from '../../../services/CardService';
 export default function CardMembers(props) {
 
     const { board, cardMembers, style, toggle } = props;
+    console.log(cardMembers);
     const availableCollaborators = board.boardMembers.filter(member => !cardMembers.find(cardMember => cardMember._id === member._id));
 
     return (

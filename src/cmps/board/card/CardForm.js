@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import CloseIcon from '@material-ui/icons/Close';
 
+import CardService from '../../../services/CardService';
 import utils from '../../../services/utils';
 
 export default class CardForm extends Component {
@@ -18,40 +19,11 @@ export default class CardForm extends Component {
             labels: [],
             todos: [],
             cardMembers: []
-        },
-        edit: false
+        }
     }
 
     componentDidMount() {
         this.nameInput.focus();
-        this.setFormDataForEdit();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.card !== this.props.card) {
-            this.setFormDataForEdit();
-        }
-    }
-
-    setFormDataForEdit() {
-        if (this.props.card) {
-            const { card } = this.props;
-            this.setState({
-                card: {
-                    id: card.id,
-                    title: card.title,
-                    createdAt: card.createdAt,
-                    dueDate: card.dueDate,
-                    importance: card.importance,
-                    description: card.description,
-                    type: card.text,
-                    labels: card.labels,
-                    todos: card.todos,
-                    cardMembers: card.cardMembers
-                },
-                edit: true
-            });
-        }
     }
 
     inputChange = (ev) => {
@@ -59,40 +31,10 @@ export default class CardForm extends Component {
         this.setState({ card: { ...this.state.card, [name]: value } });
     }
 
-    save = (ev) => {
-        ev.preventDefault();
-        this.checkCardType(this.state.card.title);
-    }
-
-    checkCardType = (title) => {
-        const youtubeREGEX = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-        const imgREGEX = /.(jpg|jpeg|png|gif)\/?$/;
-        const httpREGEX = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
-        console.log(title.match(httpREGEX));
-        if (title.match(youtubeREGEX)) {
-            const url = title.replace('watch?v=', 'embed/');
-            return this.setState({ card: { ...this.state.card, title: '', type: 'video', url: url } }, () => this.saveCard());
-        } else if (title.match(imgREGEX)) {
-            return this.setState({ card: { ...this.state.card, title: '', type: 'image', url: title } }, () => this.saveCard());
-        } else if (title.match(httpREGEX)) {
-            return this.setState({ card: { ...this.state.card, url: title } }, () => this.saveCard());
-        }
-        this.saveCard();
-    }
-
     saveCard = () => {
-        const { board, list, toggleAddCardFormHandler, updateBoard, user } = this.props;
-        const { card, edit } = this.state;
-        const id = card.id;
-        const newBoard = { ...board, cards: { ...board.cards, [id]: card } };
-        if (!list.cardIds.includes(id)) list.cardIds.push(id);
-        const historyItem = { user: user.username, item: card.title, key1: 'theCard', key2: edit ? 'cardEdited' : 'cardAdded' };
-        const msg = `${window.i18nData.theCard}${card.title}${edit ? window.i18nData.cardEdited : window.i18nData.cardAdded}${user.username}`;
-        const notificationType = 'success';
-        updateBoard(newBoard, msg, notificationType, historyItem);
+        const { list, toggleAddCardFormHandler } = this.props;
+        CardService.addNewCard(this.props, this.state.card);
         toggleAddCardFormHandler(list.id);
-        console.log('cardForm: ', newBoard);
-        console.log('cardForm: ', list);
     }
 
     textAreaAdjust = (ev) => {
@@ -105,7 +47,7 @@ export default class CardForm extends Component {
         const { list, toggleAddCardFormHandler } = this.props;
 
         return (
-            <form className="card-form" onSubmit={this.save}>
+            <form className="card-form" onSubmit={this.saveCard}>
                 <div className="flex column">
                     <textarea
                         type="text"
@@ -127,5 +69,4 @@ export default class CardForm extends Component {
             </form>
         )
     }
-
 }

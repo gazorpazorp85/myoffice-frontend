@@ -23,7 +23,7 @@ export default class CardsList extends Component {
     cardDetailsToggleHandler = (card, list) => {
         const { selectedCardHandler, toggle } = this.props;
         toggle('isCardDetailsShown');
-        selectedCardHandler(card, list);
+        selectedCardHandler(card.id, list);
     }
 
     render() {

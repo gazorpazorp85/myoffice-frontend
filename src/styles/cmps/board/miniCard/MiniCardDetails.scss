@@ -22,9 +22,10 @@
 
 .mini-card-textarea {
     position: relative;
+    // height: inherit;
+    // min-height: 32px;
     margin-bottom: unset;
     outline: transparent;
-    min-height: 32px;
     width: 252px;
     bottom: 1px;
     text-indent: 2px;

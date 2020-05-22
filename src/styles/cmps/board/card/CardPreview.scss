@@ -14,6 +14,10 @@
 
     &.without-padding {
         padding: 0;
+
+        img {
+            border-radius: 4px 4px 0 0;
+        }
     }
 
     &:hover {
@@ -28,17 +32,27 @@
 
 .card-title {
     justify-content: space-between;
+    align-items: center;
     min-height: rem(34px);
     width: 100%;
     color: #172b4d;
-    padding: 2px 0;
-    word-break: break-all;
+    // padding: 2px 0;
+    word-break: break-word;
+    line-height: 21px;
+
+    &.no-url-no-text {
+        padding: 0 5px;
+    }
 }
 
-.card-url  {
+.card-url-container {
+    line-height: 24px;
+    padding-top: 5px;
+}
+
+.card-url {
     color: $link;
-    word-break: break-all;
-    padding: 0 4px;
+    word-break: break-word;
 }
 
 .card-url:visited {

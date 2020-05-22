@@ -1,12 +1,14 @@
 .card-details-container {
     position: relative;
     max-width: 768px;
-    min-height: 75vh;
-    max-height: 95vh;
+    // min-height: 75vh;
+    // max-height: 95vh;
+    height: 80vh;
     background-color: $clr4;
     color: #172b4d;
     z-index: 3;
     border-radius: 4px;
+    overflow-y: auto;
 }
 
 .card-details-info-container {
@@ -22,6 +24,7 @@
 }
 
 .card-details-card-title-icon,
+.card-details-card-url-icon,
 .card-details-card-todos-icon,
 .card-details-card-duedate-icon,
 .card-details-card-description-icon {
@@ -51,11 +54,16 @@
     font-size: rem(12px);
 }
 
+.card-details-url-container,
 .card-details-duedate-container,
 .card-details-description-container,
 .card-details-todos-container {
     margin-bottom: 8px;
     margin-inline-start: 21px;
+}
+
+.card-details-url-container {
+    min-height: 31px;
 }
 
 .card-description-textarea {
@@ -72,6 +80,8 @@
     width: 100%;
 }
 
-.no-card-todos-text {
+.no-card-todos-text,
+.no-duedate-time {
     font-size: 14px;
+    cursor: default;
 }

@@ -17,6 +17,7 @@ body {
   font-family: "varela";
   font-size: rem(18px);
   line-height: 31px;
+  // line-height: 21px;
   // letter-spacing: 0.75px;
   margin: 0;
   color: $clr3;
@@ -38,7 +39,7 @@ small {
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 7px;
 }
 
 ::-webkit-scrollbar-track {

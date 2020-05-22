@@ -22,8 +22,8 @@ export default function CardPreview({ card, direction, innerRef, isDragging, isE
     }
 
     const isDraggingClassName = isDragging ? 'isDragging' : '';
-    const withoutPadding = card.url ? 'without-padding' : '';
-    const rotateIcon = direction === 'rtl' ? {transform: 'rotate3d(0, -100, 7, 180deg)'} : {};
+    const withoutPadding = card.url && card.type !== 'text' ? 'without-padding' : '';
+    const rotateIcon = direction === 'rtl' ? { transform: 'rotate3d(0, -100, 7, 180deg)' } : {};
 
     return (
         <section ref={cardContainer}>
@@ -42,18 +42,25 @@ export default function CardPreview({ card, direction, innerRef, isDragging, isE
                         allowFullScreen="allowfullscreen"
                         src={card.url} security="restricted" />}
                 {card.type === 'image' && <img title={card.id} alt='card' src={card.url} />}
-                <div className="flex wrap">
-                    {card.labels.map(label => <div key={label} className={`${label} small-label`}></div>)}
-                </div>
-                {card.url === card.title ?
-                    <div>
-                        <a className="card-url" href={card.title} target='blank' onClick={(ev) => ev.stopPropagation()}>{card.title}</a>
-                        <div className="flex card-title"></div>
-                    </div> :
+                {card.labels.length > 0 &&
+                    <div className="flex wrap">
+                        {card.labels.map(label => <div key={label} className={`${label} small-label`}></div>)}
+                    </div>}
+                {card.url && card.type === 'text' ?
+                    <div className="card-url-container">
+                        <a className="card-url"
+                            href={card.url.substring(0, 4) === 'http' ? card.url : 'https://' + card.url}
+                            target='blank'
+                            onClick={(ev) => ev.stopPropagation()}>
+                            {card.url}
+                        </a>
+                        <div className="flex card-title">{card.title}</div>
+                    </div> : card.type !== 'text' ?
+                    <div className="flex card-title no-url-no-text">{card.title}</div> :
                     <div className="flex card-title">{card.title}</div>
                 }
                 {(card.description || card.dueDate || card.todos.length > 0 || card.cardMembers.length > 0) && <div className="flex align-center wrap card-preview-details-container">
-                    {card.description && <div className="flex card-detail-info"><SubjectIcon style={rotateIcon}/></div>}
+                    {card.description && <div className="flex card-detail-info"><SubjectIcon style={rotateIcon} /></div>}
                     {card.todos.length > 0 &&
                         <div className="flex card-detail-info">
                             <CheckBoxIcon />

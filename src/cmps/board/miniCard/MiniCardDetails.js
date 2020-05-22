@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import MiniCardDetailsEditor from './MiniCardDetailsEditor';
 
+import CardService from '../../../services/CardService';
+
 export default class MiniCardTextDetails extends Component {
 
     constructor(props) {
@@ -14,6 +16,7 @@ export default class MiniCardTextDetails extends Component {
         imgHeight: 220,
         title: '',
         top: null,
+        topEditorAdjustment: null
     }
 
     componentDidMount() {
@@ -32,38 +35,46 @@ export default class MiniCardTextDetails extends Component {
     }
 
     onSave = () => {
-        const { board, miniCard, updateBoard, user } = this.props;
+        const { board, miniCard, toggleMiniCardDetailsHandler, updateBoard, user } = this.props;
+        const card = { ...miniCard.card };
+        const editedProps = { board, card, updateBoard, user };
         const { title } = this.state;
-        const newCard = title ? { ...miniCard.card, title: title } : { ...miniCard };
-        const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
-        const historyItem = { user: user.username, item: miniCard.card.title, key1: 'theCard', key2: 'cardEdited' };
-        const msg = `${window.i18nData.theCardTitled}${miniCard.card.title}${window.i18nData.cardEdited}${user.username}`;
-        const notificationType = 'success';
-        updateBoard(newBoard, msg, notificationType, historyItem);
-        this.props.toggleMiniCardDetailsHandler(this.props.miniCard);
-        console.log('miniCardTextDetailsSave: ', newBoard);
+        CardService.miniCardSaveHandler(editedProps, title);
+        toggleMiniCardDetailsHandler(miniCard);
     }
 
     toggleMiniCardDetails = () => {
-        this.props.toggleMiniCardDetailsHandler(this.props.miniCard);
+        const { miniCard, toggleMiniCardDetailsHandler } = this.props;
+        toggleMiniCardDetailsHandler(miniCard);
     }
 
     adjustTop = () => {
-        let { height, top } = this.props.miniCard.boundingClientRect;
+        let { height, top, bottom } = this.props.miniCard.boundingClientRect;
+        console.log('top: ', top);
+        console.log('bottom:', bottom);
+        console.log('height: ', height);
+        console.log('window.innerHeight: ', window.innerHeight);
+        console.log('window.innerHeight - (window.innerHeight / 4): ', window.innerHeight - (window.innerHeight / 4));
+        console.log('top > (window.innerHeight - (window.innerHeight / 4)): ', top > (window.innerHeight - (window.innerHeight / 4)));
+        console.log('window.innerHeight - height - 50: ', window.innerHeight - height - 50);
+        console.log('top - 222 + height: ', top - 222 + height);
+        let adjustment = window.innerHeight - height - 50;
+        console.log('adjustment > top: ', adjustment > top);
         if (top > (window.innerHeight - (window.innerHeight / 4))) {
-            this.setState({ top: window.innerHeight - height - 50 });
+            this.setState({ top: adjustment > top ? bottom - height : adjustment, topEditorAdjustment: adjustment > top ? top - 222 + height : 0 });
         }
+        console.log(this.state.top, this.state.topEditorAdjustment);
     }
 
     render() {
 
         const { board, direction, miniCard } = this.props;
-        const props = { ...this.props };
         const { card } = this.props.miniCard;
         const labels = board.cards[card.id].labels;
         const videoDimensions = { height: 140, width: 246 };
         let { height, left } = miniCard.boundingClientRect;
         let top = this.state.top || miniCard.boundingClientRect.top;
+        let { topEditorAdjustment } = this.state;
         const textAreaStyle = (direction === 'ltr') ? { right: 1 + 'px' } : { left: 1 + 'px' }
 
         return (
@@ -97,7 +108,7 @@ export default class MiniCardTextDetails extends Component {
                         style={textAreaStyle}
                     />
                 </div>
-                <MiniCardDetailsEditor {...props} labels={labels} onSave={this.onSave} top={top} />
+                <MiniCardDetailsEditor {...this.props} labels={labels} onSave={this.onSave} top={topEditorAdjustment || top} />
             </div>
         )
     }

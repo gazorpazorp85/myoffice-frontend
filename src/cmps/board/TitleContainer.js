@@ -8,16 +8,11 @@ export default class TitleContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: props.list ? props.list.title : props.card ? props.card.title : '',
+            title:
+                props.list ? props.list.title :
+                    props.card && props.cardField === 'title' ? props.card.title : props.card.url,
             type: props.list ? 'list' : 'card'
         }
-    }
-
-    setName = (id) => {
-        const { type } = this.state;
-        const item = type === 'list' ? 'lists' : 'cards';
-        const title = this.props.board[item][id].title;
-        this.setState({ title });
     }
 
     emitChange = (ev) => {
@@ -29,24 +24,25 @@ export default class TitleContainer extends Component {
         if (type === 'list') {
             ListService.saveListName(this.props, id, title);
         } else {
-            CardService.saveCardName(this.props, id, title);
+            CardService.saveCardTitleUrlHandler(this.props, id, title);
         }
     }
 
     render() {
 
         const { title, type } = this.state;
+        const { cardField } = this.props;
         const item = this.props[type];
+        const fieldToShow = (type === 'card' && cardField === 'url') ? item.url : item.title;
 
         return (
-            <h2 className={`title-container ${type}-style`}
+            <h2 className={`title-container ${type}-style ${cardField === 'url' ? 'url-font-size' : ''}`}
                 contentEditable='true'
                 spellCheck='false'
-                onFocus={() => this.setName(item.id)}
                 onInput={(ev) => this.emitChange(ev)}
                 onBlur={() => this.saveName(item.id, title)}
                 suppressContentEditableWarning={true} >
-                {item.title}
+                {fieldToShow}
             </h2>
         )
     }

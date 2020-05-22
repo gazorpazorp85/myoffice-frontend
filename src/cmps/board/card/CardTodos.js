@@ -20,14 +20,13 @@ export default class CardTodos extends Component {
     }
 
     deleteTodo = (ev, id) => {
-        console.log('cardTodos: ', id);
         ev.stopPropagation();
         CardService.cardTodoHandler(this.props, id, 'delete');
         this.hideDeleteTodoButton(id);
     }
 
     setTodoStatus = (ev, id) => {
-        ev.stopPropagation();
+        // ev.stopPropagation();
         CardService.cardTodoHandler(this.props, id, 'updateTodoStatus');
     }
 

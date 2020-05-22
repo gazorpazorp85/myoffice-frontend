@@ -28,7 +28,7 @@ class Board extends Component {
         isBgDark: null,
         isCardDetailsShown: false,
         isTopMenuOptionsShown: true,
-        selectedCard: '',
+        selectedCardId: '',
         selectedCardList: '',
         toggleBoardHistory: false,
         toggleBoardMembers: false,
@@ -88,9 +88,9 @@ class Board extends Component {
         }));
     }
 
-    selectedCardHandler = (card, list) => {
+    selectedCardHandler = (cardId, list) => {
         this.setState(prevState => ({
-            selectedCard: prevState.selectedCard === card ? '' : card,
+            selectedCardId: prevState.selectedCardId === cardId ? '' : cardId,
             selectedCardList: prevState.selectedCardList === list ? '' : list
         }));
     }
@@ -136,7 +136,7 @@ class Board extends Component {
     render() {
 
         const { board, collaborators, language, updateBoard, user } = this.props;
-        const { isCardDetailsShown, selectedCard, selectedCardList } = this.state;
+        const { isCardDetailsShown, selectedCardId, selectedCardList } = this.state;
         let { isBgDark, isBoardLoaded, toggleBoardHistory, toggleBoardMembers, toggleListForm, toggleSplashMenu } = this.state;
         let bgImage = board.boardBgImage;
         let direction = LanguageService.languageDirection(language);
@@ -206,7 +206,7 @@ class Board extends Component {
                 {isCardDetailsShown &&
                     <CardDetails
                         board={board}
-                        card={selectedCard}
+                        cardId={selectedCardId}
                         direction={direction}
                         language={language}
                         list={selectedCardList}
