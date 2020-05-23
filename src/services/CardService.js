@@ -15,7 +15,8 @@ export default {
 }
 
 function duplicateCard(props) {
-    const { board, card, list, updateBoard, user } = props;
+    const { board, cardId, list, updateBoard, user } = props;
+    const card = board.cards[cardId];
     const newCard = {
         ...card,
         id: utils.getRandomId(),

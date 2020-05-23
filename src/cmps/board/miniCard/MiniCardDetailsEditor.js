@@ -27,7 +27,7 @@ export default class MiniCardDetailsEditor extends Component {
 
     duplicateCard = () => {
         const newProps = { ...this.props };
-        newProps.card = newProps.miniCard.card;
+        newProps.cardId = newProps.miniCard.card.id;
         newProps.list = newProps.miniCard.list;
         delete newProps.miniCard;
         CardService.duplicateCard(newProps);
