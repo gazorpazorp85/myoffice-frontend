@@ -16,15 +16,18 @@ export default {
 
 function duplicateCard(props) {
     const { board, card, list, updateBoard, user } = props;
-    const newCard = { ...card, id: utils.getRandomId(), labels: [...card.labels], todos: [...card.todos], cardMembers: [...card.cardMembers] };
+    const newCard = {
+        ...card,
+        id: utils.getRandomId(),
+        title: `${window.i18nData.clonedList} ${card.title}`,
+        labels: [...card.labels],
+        todos: [...card.todos],
+        cardMembers: [...card.cardMembers]
+    };
     const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
     newBoard.lists[list.id].cardIds.push(newCard.id);
     const historyItem = { user: user.username, item: newCard.title, key1: 'theCard', key2: 'cardDuplicated' };
-    const msg = `${window.i18nData.theCard}${newCard.title}${window.i18nData.cardDuplicated}${user.username}`;
-    const notificationType = 'success';
-    newCard.title = `${window.i18nData.clonedList} ${newCard.title}`;
-    updateBoard(newBoard, msg, notificationType, historyItem);
-    console.log('cardService duplicateCard: ', newBoard);
+    _saveBoardHandler(newBoard, newCard, 'success', historyItem, updateBoard);
 }
 
 function deleteCard(props) {
@@ -38,7 +41,6 @@ function deleteCard(props) {
     const msg = `${window.i18nData.theCard}${card.title}${window.i18nData.cardDeleted}${user.username}`;
     const notificationType = 'danger';
     updateBoard(newBoard, msg, notificationType, historyItem);
-    console.log('cardService deleteCard: ', newBoard);
 }
 
 function updateChoosenLabels(props, labelName) {
@@ -47,12 +49,9 @@ function updateChoosenLabels(props, labelName) {
     const idx = newCardLabels.findIndex(cardLabel => cardLabel === labelName);
     (idx >= 0) ? newCardLabels.splice(idx, 1) : newCardLabels.push(labelName);
     const newCard = { ...card, labels: newCardLabels };
-    const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
-    const msg = (idx >= 0) ? `${window.i18nData.aLabel}${newCard.title}${window.i18nData.listAdded}${user.username}`
-        : `${window.i18nData.aLabel}${newCard.title}${window.i18nData.listRemoved}${user.username}`;
-    const notificationType = (idx >= 0) ? 'danger' : 'success';
+    const notificationAction = (idx >= 0) ? 'delete' : 'success';
     const historyItem = { user: user.username, item: newCard.title, key1: 'aLabel', key2: (idx >= 0) ? 'listDeleted' : 'listAdded' }
-    updateBoard(newBoard, msg, notificationType, historyItem);
+    _saveBoardHandler(board, newCard, notificationAction, historyItem, updateBoard);
     toggle('toggleLabels');
 }
 
@@ -62,15 +61,11 @@ function updateCardMembers(props, collaborator) {
     const idx = newCardMembers.findIndex(currMember => currMember._id === collaborator._id);
     (idx >= 0) ? newCardMembers.splice(idx, 1) : newCardMembers.push(collaborator);
     const newCard = { ...card, cardMembers: newCardMembers };
-    const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
-    const msg = (idx >= 0) ? `${window.i18nData.theCard}${newCard.title}${window.i18nData.cardAssigned}${user.username}`
-        : `${window.i18nData.theCard}${newCard.title}${window.i18nData.listRemoved}${user.username}`;
-    const notificationType = (idx >= 0) ? 'danger' : 'success';
     const historyItem = (idx >= 0) ?
         { user: `"${newCard.title}"`, item: collaborator.username, key1: 'theUser', key2: 'userDismissed' } :
         { user: collaborator.username, item: newCard.title, key1: 'theCard', key2: 'cardAssigned' }
-
-    updateBoard(newBoard, msg, notificationType, historyItem);
+    const notificationAction = (idx >= 0) ? 'delete' : 'success';
+    _saveBoardHandler(board, newCard, notificationAction, historyItem, updateBoard);
     toggle('toggleMembers');
 }
 
@@ -79,36 +74,25 @@ function saveCardTitleUrlHandler(props, id, value) {
     const cardFieldValue = board.cards[id][cardField];
     if (cardFieldValue === value) return;
     let newCard = { ...board.cards[id] };
-    newCard = cardField === 'title' ? _checkCardType(newCard, value) : newCard[cardField] = value
-    const cardTitle = newCard.title;
-
-    const newBoard = { ...board, cards: { ...board.cards, [id]: newCard } };
-    const historyItem = { user: user.username, item: cardTitle, key1: 'theCard', key2: 'cardEdited' };
-    const msg = `${window.i18nData.theCard}${cardTitle}${window.i18nData.cardEdited}${user.username}`;
-    const notificationType = 'success';
-    updateBoard(newBoard, msg, notificationType, historyItem);
+    newCard = cardField === 'title' ? _checkCardType(newCard, value) : newCard[cardField] = value;
+    const historyItem = { user: user.username, item: newCard.title, key1: 'theCard', key2: 'cardEdited' };
+    _saveBoardHandler(board, newCard, 'success', historyItem, updateBoard);
 }
 
 function updateCardDescription(props, description) {
     const { board, updateBoard, user } = props;
-    const card = board.cards[props.card.id];
+    const card = board.cards[props.cardId];
     const newCard = { ...card, description: description };
-    const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
     const historyItem = { user: user.username, item: newCard.title, key1: 'theDescription', key2: 'changed' };
-    const msg = `${window.i18nData.theDescription}${newCard.title}${window.i18nData.changed}${user.username}`;
-    const notificationType = 'success';
-    updateBoard(newBoard, msg, notificationType, historyItem);
+    _saveBoardHandler(board, newCard, 'success', historyItem, updateBoard);
 }
 
 function updateCardDueDate(props, dueDate) {
     const { board, toggle, updateBoard, user } = props;
     const card = board.cards[props.card.id];
     const newCard = { ...card, dueDate: dueDate ? dueDate.getTime() : dueDate };
-    const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
     const historyItem = { user: user.username, item: newCard.title, key1: 'theDueDate', key2: 'changed' }
-    const msg = `${window.i18nData.theDueDate}${newCard.title}${window.i18nData.changed}${user.username}`;
-    const notificationType = 'success';
-    updateBoard(newBoard, msg, notificationType, historyItem);
+    _saveBoardHandler(board, newCard, 'success', historyItem, updateBoard);
     toggle('toggleDueDate');
 }
 
@@ -118,39 +102,31 @@ function updateCardTodos(props, todo) {
     const newCard = { ...card };
     newCard.todos.push(todo);
     newCard.doneTodos = newCard.todos.length === 1 ? 0 : newCard.doneTodos;
-    const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
     const historyItem = { user: user.username, item: newCard.title, key1: 'theTodos', key2: 'updateTodos' }
-    const msg = `${window.i18nData.theTodos}${newCard.title}${window.i18nData.updateTodos}${user.username}`;
-    const notificationType = 'success';
-    updateBoard(newBoard, msg, notificationType, historyItem);
-
+    _saveBoardHandler(board, newCard, 'success', historyItem, updateBoard);
 }
 
 function cardTodoHandler(props, id, key) {
     const { board, updateBoard, user } = props;
-    const card = board.cards[props.card.id];
+    const card = board.cards[props.cardId];
     const newCard = { ...card, todos: [...card.todos] };
     const todos = newCard.todos;
     const idx = todos.findIndex(todo => todo.id === id);
     const currTodoText = todos[idx].text;
-    let historyItem = '';
-    let msg = '';
-    let notificationType = '';
+    const historyItem = {
+        user: user.username,
+        item: currTodoText,
+        key1: key === 'delete' ? 'theTodo' : 'todoStatus',
+        key2: key === 'delete' ? 'listDeleted' : 'todoStatusUpdate'
+    };
     if (key === 'delete') {
         newCard.doneTodos = (todos[idx].isDone === true && newCard.doneTodos > 0) ? newCard.doneTodos - 1 : newCard.doneTodos;
         todos.splice(idx, 1);
-        historyItem = { user: user.username, item: currTodoText, key1: 'theTodo', key2: 'listDeleted' };
-        msg = `${window.i18nData.theTodo}${currTodoText}${window.i18nData.listDeleted}${user.username}`;
-        notificationType = 'danger';
     } else if (key === 'updateTodoStatus') {
         todos[idx].isDone = !todos[idx].isDone;
         newCard.doneTodos = todos.filter(todo => todo.isDone).length;
-        historyItem = { user: user.username, item: currTodoText, key1: 'todoStatus', key2: 'todoStatusUpdate' }
-        msg = `${window.i18nData.theTodo}${currTodoText}${window.i18nData.todoStatusUpdate}${user.username}`;
-        notificationType = 'success';
     }
-    const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
-    updateBoard(newBoard, msg, notificationType, historyItem);
+    _saveBoardHandler(board, newCard, key, historyItem, updateBoard);
 }
 
 function addNewCard(props, card) {
@@ -160,23 +136,17 @@ function addNewCard(props, card) {
     newCard = _checkCardType(newCard, newCard.title);
     const id = newCard.id;
     if (!newList.cardIds.includes(id)) newList.cardIds.push(id);
-    const newBoard = { ...board, lists: { ...board.lists, [newList.id]: newList }, cards: { ...board.cards, [id]: newCard } };
+    const editedBoard = { ...board, lists: { ...board.lists, [newList.id]: newList } };
     const historyItem = { user: user.username, item: card.title, key1: 'theCard', key2: 'cardAdded' };
-    const msg = `${window.i18nData.theCard}${card.title}${window.i18nData.cardAdded}${user.username}`;
-    const notificationType = 'success';
-    updateBoard(newBoard, msg, notificationType, historyItem);
+    _saveBoardHandler(editedBoard, newCard, 'success', historyItem, updateBoard);
 }
 
 function miniCardSaveHandler(props, title) {
     const { board, card, updateBoard, user } = props;
     let newCard = { ...card };
     newCard = title ? _checkCardType(newCard, title) : newCard;
-    const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
     const historyItem = { user: user.username, item: newCard.title, key1: 'theCard', key2: 'cardEdited' };
-    const msg = `${window.i18nData.theCardTitled}${newCard.title}${window.i18nData.cardEdited}${user.username}`;
-    const notificationType = 'success';
-    updateBoard(newBoard, msg, notificationType, historyItem);
-    console.log('miniCardTextDetailsSave: ', newBoard);
+    _saveBoardHandler(board, newCard, 'success', historyItem, updateBoard);
 }
 
 function _checkCardType(card, title) {
@@ -196,4 +166,11 @@ function _checkCardType(card, title) {
     } else {
         return { ...card, title: title };
     }
+}
+
+function _saveBoardHandler(board, newCard, notificationAction, historyItem, updateBoard) {
+    const newBoard = { ...board, cards: { ...board.cards, [newCard.id]: newCard } };
+    const msg = `${window.i18nData[historyItem.key1]}${historyItem.item}${window.i18nData[historyItem.key2]}${historyItem.user}`;
+    const notificationType = notificationAction === 'delete' ? 'danger' : 'success';
+    updateBoard(newBoard, msg, notificationType, historyItem);
 }

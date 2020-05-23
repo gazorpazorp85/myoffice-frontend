@@ -57,7 +57,7 @@ export default {
     'deleteCard': 'delete card',
     'editLabels': 'edit labels',
     'editDueDate': 'change due date',
-    'editCardMembers': 'add / remove card member',
+    'editCardMembers': 'edit card members',
     'theDueDate': 'the due date of the card "',
     'changed': '" was changed by ',
     'aLabel': 'a label in the card "',

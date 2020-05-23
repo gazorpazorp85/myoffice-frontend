@@ -57,7 +57,7 @@ export default {
     'deleteCard': 'מחיקת כרטיס',
     'editLabels': 'ערוך תגיות',
     'editDueDate': 'ערוך מועד הגשה',
-    'editCardMembers': 'הוספת / הסרת חבר לכרטיס',
+    'editCardMembers': 'עריכת חברי כרטיס',
     'theDueDate': 'מועד הגשה של הכרטיס "',
     'changed': '" שונה ע"י ',
     'aLabel': 'תגית בכרטיס "',
