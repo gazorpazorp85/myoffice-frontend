@@ -35,7 +35,6 @@ async function uploadImg(file) {
 
   try {
     const { data } = await axios.post(UPLOAD_URL, formData);
-    console.log('data', data);
     return data.url;
   } catch (err) {
     console.error(err)

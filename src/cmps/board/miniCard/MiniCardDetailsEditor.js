@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 
+import CardDueDateIcon from '@material-ui/icons/EventOutlined';
+import CardLabelsIcon from '@material-ui/icons/LabelOutlined';
+import CardMembersIcon from '@material-ui/icons/PersonAddOutlined';
+import DuplicateCardIcon from '@material-ui/icons/FileCopyOutlined';
+import DeleteCardIcon from '@material-ui/icons/DeleteOutlineOutlined';
+
 import CardDueDate from '../card/CardDueDate';
 import CardLabels from '../card/CardLabels';
 import CardMembers from '../card/CardMembers';
@@ -40,7 +46,10 @@ export default class MiniCardDetailsEditor extends Component {
     adjustLeft = () => {
         const { direction, miniCard } = this.props;
         let { left } = miniCard.boundingClientRect;
-        return (direction === 'ltr') ? left + 265 : left - 295;
+        console.log('left: ', left);
+        console.log('direction: ', direction);
+        console.log('left -295: ', left - 228);
+        return (direction === 'ltr') ? left + 265 : left - 228;
     }
 
     render() {
@@ -57,7 +66,7 @@ export default class MiniCardDetailsEditor extends Component {
                     left: left + 'px',
                     top: top + 'px'
                 }}>
-                <MiniCardDetailsButton text={`🖊️ ${window.i18nData.editLabels}`} onClick={() => this.toggleHandler('toggleLabels')} direction={direction} />
+                <MiniCardDetailsButton Icon={CardLabelsIcon} text={window.i18nData.cardLabelsIcon} onClick={() => this.toggleHandler('toggleLabels')} direction={direction} />
                 {toggleLabels &&
                     <CardLabels
                         board={board}
@@ -67,7 +76,7 @@ export default class MiniCardDetailsEditor extends Component {
                         toggle={this.toggleHandler}
                         updateBoard={updateBoard}
                         user={user} />}
-                <MiniCardDetailsButton text={`🎭 ${window.i18nData.editCardMembers}`} onClick={() => this.toggleHandler('toggleMembers')} direction={direction} />
+                <MiniCardDetailsButton Icon={CardMembersIcon} text={window.i18nData.cardMembersIcon} onClick={() => this.toggleHandler('toggleMembers')} direction={direction} />
                 {toggleMembers &&
                     <CardMembers
                         board={board}
@@ -77,7 +86,7 @@ export default class MiniCardDetailsEditor extends Component {
                         toggle={this.toggleHandler}
                         updateBoard={updateBoard}
                         user={user} />}
-                <MiniCardDetailsButton text={`📅 ${window.i18nData.editDueDate}`} onClick={() => this.toggleHandler('toggleDueDate')} direction={direction} />
+                <MiniCardDetailsButton Icon={CardDueDateIcon} text={window.i18nData.cardDueDateIcon} onClick={() => this.toggleHandler('toggleDueDate')} direction={direction} />
                 {toggleDueDate &&
                     <CardDueDate
                         board={board}
@@ -87,8 +96,8 @@ export default class MiniCardDetailsEditor extends Component {
                         style={{ [styleDirection]: 9, top: 112 }}
                         updateBoard={updateBoard}
                         user={user} />}
-                <MiniCardDetailsButton text={`⎘ ${window.i18nData.duplicateCard}`} onClick={this.duplicateCard} direction={direction} />
-                <MiniCardDetailsButton text={`🗑️ ${window.i18nData.deleteCard}`} onClick={this.deleteCard} direction={direction} />
+                <MiniCardDetailsButton Icon={DuplicateCardIcon} text={window.i18nData.duplicateCardIcon} onClick={this.duplicateCard} direction={direction} />
+                <MiniCardDetailsButton Icon={DeleteCardIcon} text={window.i18nData.deleteCardIcon} onClick={this.deleteCard} direction={direction} />
                 <button className="save-mini-card-btn" onClick={this.props.onSave}>
                     {window.i18nData.save}
                 </button>

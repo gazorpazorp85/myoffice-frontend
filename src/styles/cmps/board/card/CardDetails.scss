@@ -1,14 +1,14 @@
 .card-details-container {
     position: relative;
     max-width: 768px;
-    // min-height: 75vh;
-    // max-height: 95vh;
-    height: 80vh;
+    min-height: 60vh;
+    max-height: 80vh;
     background-color: $clr4;
     color: #172b4d;
     z-index: 3;
     border-radius: 4px;
     overflow-y: auto;
+    padding-bottom: 10px;
 }
 
 .card-details-info-container {

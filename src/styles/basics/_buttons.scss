@@ -70,19 +70,20 @@ button {
             line-height: 40px;
         }
     }
-    &.home-logout {
-        height: 40px;
-        width: 40px;
-        align-self: center;
-        margin: 0 10px;
+    &.user-logout {
+        color: #172b4d;
+        // padding: 5px;
 
         .MuiSvgIcon-root {
-            height: 32px;
-            width: 32px;
+            height: 20px;
+            width: 20px;
+        }
+        &:hover {
+            border-radius: 0px 0px 4px 4px;
         }
     }
     &.home-login:hover,
-    &.home-logout:hover {
+    &.user-logout:hover {
         color: $clr3;
         background-color: $clr1;
     }

@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import LoginIcon from '@material-ui/icons/PersonOutline';
 
-import Login from '../cmps/Login';
-import TeamMemberIcon from '../cmps/TeamMemberIcon';
+import Login from './Login';
+import TeamMemberIcon from './TeamMemberIcon';
+import UserMenu from './UserMenu';
 
 import LanguageService from '../services/LanguageService';
 
@@ -17,53 +16,53 @@ import { getLoggedInUser, logout } from '../actions/UserActions';
 class StatusBar extends Component {
 
     state = {
-        toggleLogin: false
+        toggleLogin: false,
+        toggleUserMenu: false,
     }
 
     componentDidMount() {
         this.props.getLoggedInUser();
     }
 
-    toggleLogin = (ev) => {
-        ev.stopPropagation();
-        this.setState((prevState) => ({ toggleLogin: !prevState.toggleLogin }))
+    toggleHandler = (field) => {
+        this.setState((prevState) => ({
+            toggleLogin: field === 'toggleLogin' ? !prevState.toggleLogin : false,
+            toggleUserMenu: field === 'toggleUserMenu' ? !prevState.toggleUserMenu : false,
+        }))
     }
 
     render() {
 
-        let language = this.props.language;
-        let direction = LanguageService.languageDirection(language);
-        let user = this.props.user;
-        let button = (user) ?
-            <Link to='/' className="btn home-logout">
-                <ExitToAppIcon onClick={this.props.logout} />
-            </Link>
+        const { changeLanguage, language, logout, user } = this.props;
+        const { toggleLogin, toggleUserMenu } = this.state;
+        const direction = LanguageService.languageDirection(language);
+        const cssTransitionClassNames = direction === 'ltr' ? 'modal-rtl' : 'modal-ltr';
+        const button = (user) ?
+            <div className="flex pointer align-center" onClick={() => this.toggleHandler('toggleUserMenu')}>
+                <TeamMemberIcon user={user} />
+                <div className="flex capitalize" dir={direction} style={{ lineHeight: '40px' }}>
+                    {window.i18nData.welcome} {user.username}
+                </div>
+            </div>
             :
-            <div className="btn home-login" onClick={this.toggleLogin} dir={direction}>
-                <PersonOutlineIcon />
+            <div className="btn home-login" onClick={() => this.toggleHandler('toggleLogin')} dir={direction}>
+                <LoginIcon />
                 <div>{window.i18nData.login}</div>
             </div>
 
         return (
             <div className="flex status-bar-container" dir={direction}>
-                {this.state.toggleLogin && <div className="screen status-bar" onClick={this.toggleLogin}></div>}
-                {user ?
-                    <div className="flex align-center">
-                        <TeamMemberIcon user={user} />
-                        <div className="flex capitalize" dir={direction} style={{ lineHeight: '40px' }}>
-                            {window.i18nData.welcome} {user.username}
-                        </div>
-                        {button}
-                    </div>
-                    : button}
+                {this.state.toggleLogin && <div className="screen status-bar" onClick={() => this.toggleHandler('toggleLogin')}></div>}
+                {button}
+                {toggleUserMenu && <UserMenu logout={logout} toggle={() => this.toggleHandler('toggleUserMenu')} user={user} />}
                 <div className="flex center align-center">
-                    <div className="pointer flag-icon en" onClick={() => this.props.changeLanguage('en')}></div>
-                    <div className="pointer flag-icon he" onClick={() => this.props.changeLanguage('he')}></div>
+                    <div className="pointer flag-icon en" onClick={() => changeLanguage('en')}></div>
+                    <div className="pointer flag-icon he" onClick={() => changeLanguage('he')}></div>
                 </div>
-                <CSSTransition in={this.state.toggleLogin} timeout={700} classNames={direction === 'ltr' ? 'modal-rtl' : 'modal-ltr'} unmountOnExit>
-                    <Login toggleLogin={this.toggleLogin} direction={direction} />
+                <CSSTransition in={toggleLogin} timeout={700} classNames={cssTransitionClassNames} unmountOnExit>
+                    <Login toggleLogin={() => this.toggleHandler('toggleLogin')} direction={direction} />
                 </CSSTransition>
-            </div>
+            </div >
         )
     }
 }

@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import '../src/styles/global.scss';
 
-import Home from './pages/Home';
 import Board from './pages/Board';
+import Home from './pages/Home';
+import User from './pages/User';
 
 import StatusBar from './cmps/StatusBar';
 
@@ -15,6 +16,7 @@ function App() {
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/board/:id" component={Board} exact />
+        <Route path="/user/:id" component={User} exact />
       </Switch>
     </Router>
   );

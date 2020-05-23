@@ -89,4 +89,7 @@ export default {
     'noCardTodos': 'אין עדיין משימות בכרטיס הזה',
     'todoStatus': 'הסטטוס של התת משימה "',
     'todoStatusUpdate': '" עודכן ע"י ',
+    'noPicsToDisplay': 'אין תמונות להציג כעת',
+    'myProfile': 'הפרופיל שלי',
+    'boardTitle': 'שם הלוח: ',
 }

@@ -4,7 +4,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import utils from '../../services/utils';
 
-export default class SplashMenu extends Component {
+export default class BoardBackground extends Component {
 
     state = {
         splashImagesUrls: [],
@@ -52,36 +52,40 @@ export default class SplashMenu extends Component {
 
     render() {
 
-        let direction = this.props.direction;
+        const { direction, onAddImg } = this.props;
+        const { splashImagesUrls } = this.state;
 
         return (
-            <div className='flex column side-menu-container splash-menu-container'
+            <div className='flex column side-menu-container board-background-menu-container'
                 style={{ right: direction === 'ltr' ? 0 : 'unset', left: direction === 'rtl' ? 0 : 'unset' }}
                 onClick={this.stopPropagation}>
                 <div className='flex column align-center search-subcontainer'>
-                    <div className='flex splash-search-container'>
-                        <input className='splash-search-input' type='text' placeholder={window.i18nData.searchPicture} onChange={this.inputChange} />
+                    <div className='flex board-background-search-container'>
+                        <input className='board-background-search-input' type='text' placeholder={window.i18nData.searchPicture} onChange={this.inputChange} />
                         <div className='btn search-img' onClick={this.onSave}>
                             <SearchIcon />
                         </div>
                     </div>
                     <div className='btn upload-img'>
-                        <input style={{ display: "none" }} type='file' id='upload-img' onChange={this.props.onAddImg}>
+                        <input style={{ display: "none" }} type='file' id='upload-img' onChange={onAddImg}>
                         </input>
                         <label htmlFor='upload-img'>
                             {window.i18nData.uploadImg}
                         </label>
                     </div>
                 </div>
-                <hr style={{margin: 'unset'}}/>
+                <hr style={{ margin: 'unset' }} />
                 <div className='flex wrap splash-imgs-container'>
-                    {this.state.splashImagesUrls.map(imageUrl => {
+                    {splashImagesUrls.length > 0 ? splashImagesUrls.map(imageUrl => {
                         return (
                             <div className='splash-img' key={imageUrl.small}>
                                 <img src={imageUrl.small} alt='' onClick={() => this.setBoardBackground(imageUrl)} />
                             </div>
                         )
-                    })}
+                    }) :
+                        <div className="flex center align-center no-pictures-text-container">
+                            <div className="capitalize">{window.i18nData.noPicsToDisplay}</div>
+                        </div>}
                 </div>
             </div>
         )

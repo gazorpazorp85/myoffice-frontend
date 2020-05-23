@@ -56,7 +56,7 @@ function updateChoosenLabels(props, labelName) {
 }
 
 function updateCardMembers(props, collaborator) {
-    const { board, card, cardMembers, toggle, updateBoard, user } = props;
+    const { board, card, cardMembers, toggle, updateBoard } = props;
     const newCardMembers = [...cardMembers];
     const idx = newCardMembers.findIndex(currMember => currMember._id === collaborator._id);
     (idx >= 0) ? newCardMembers.splice(idx, 1) : newCardMembers.push(collaborator);

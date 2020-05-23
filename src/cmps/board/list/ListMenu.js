@@ -26,7 +26,6 @@ export default function ListMenu({ board, closeListMenu, list, updateBoard, user
         const notificationType = 'success';
         newList.title = `${window.i18nData.clonedList} ${list.title}`;
         updateBoard(newBoard, msg, notificationType, historyItem);
-        console.log('listMenuDuplicateBoard: ', newBoard);
         closeListMenu();
     }
 
@@ -48,7 +47,6 @@ export default function ListMenu({ board, closeListMenu, list, updateBoard, user
         const msg = `${window.i18nData.theList}${list.title}${window.i18nData.listDeleted}${user.username}`;
         const notificationType = 'danger';
         updateBoard(newBoard, msg, notificationType, historyItem);
-        console.log('listMenuOnDelete: ', newBoard);
         closeListMenu();
     }
 

@@ -70,7 +70,6 @@ export default class BoardLists extends Component {
             const msg = `${window.i18nData.theList}${listTitle}${window.i18nData.listMoved}${user.username}`;
             updateBoard(newBoard, msg, notificationType, historyItem);
             this.setState({ listsOrder: newBoard.listsOrder });
-            console.log('boardList List Movement: ', newBoard);
             return;
         }
 
@@ -84,13 +83,11 @@ export default class BoardLists extends Component {
         if (startingList === finishList) {
             newStartCardIds.splice(destination.index, 0, draggableId);
             newBoard = { ...newBoard, lists: { ...newBoard.lists, [newList.id]: newList } };
-            console.log('boardList List Movement: (startingList === finishList)', newBoard);
         } else {
             const newFinishCardIds = [...finishList.cardIds];
             newFinishCardIds.splice(destination.index, 0, draggableId);
             const newFinishList = { ...finishList, cardIds: newFinishCardIds };
             newBoard = { ...newBoard, lists: { ...newBoard.lists, [newList.id]: newList, [newFinishList.id]: newFinishList } };
-            console.log('boardList List Movement: (startingList !== finishList)', newBoard);
         }
 
         const msg = `${window.i18nData.theList}${cardTitle}${window.i18nData.listMoved}${user.username}`;

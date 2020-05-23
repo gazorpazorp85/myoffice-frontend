@@ -7,7 +7,7 @@
     width: fit-content;
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 4px;
-    // margin: 0 0 4px 8px;
+    font-size: 14px;
     margin-inline-start: 8px;
     margin-bottom: 5px;
     padding: 6px 12px 6px 8px;
@@ -19,5 +19,14 @@
     }
     &.rtl:hover {
         transform: translate(-5px, 0);
+    }
+}
+
+.mini-card-icon {
+    &.MuiSvgIcon-root {
+        height: 20px;
+        width: 20px;
+        margin-inline-end: 5px;
+        padding-bottom: 3px;
     }
 }

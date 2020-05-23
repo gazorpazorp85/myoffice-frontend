@@ -90,4 +90,7 @@ export default {
     'theTodo': 'the check list item "',
     'todoStatus': 'the status of the item "',
     'todoStatusUpdate': '" was updated by ',
+    'noPicsToDisplay': 'no pictures to display',
+    'myProfile': 'my profile',
+    'boardTitle': 'board name: ',
 }

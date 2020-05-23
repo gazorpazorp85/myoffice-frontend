@@ -18,7 +18,7 @@ export default function BoardBar({ direction, goBack, toggleHandler, isBgDark })
                 {window.i18nData.addMembers}
             </div>
             <div className={`btn change-bg ${isBgDark ? 'dark' : 'light'}`}
-                onClick={() => toggleHandler('toggleSplashMenu')}>
+                onClick={() => toggleHandler('toggleBoardBackground')}>
                 <ImageSearchOutlinedIcon />
                 {window.i18nData.changeBg}
             </div>

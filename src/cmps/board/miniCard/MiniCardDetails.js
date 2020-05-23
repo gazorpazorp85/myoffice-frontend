@@ -36,7 +36,7 @@ export default class MiniCardTextDetails extends Component {
 
     onSave = () => {
         const { board, miniCard, toggleMiniCardDetailsHandler, updateBoard, user } = this.props;
-        const card = { ...miniCard.card };
+        const card = { ...board.cards[miniCard.card.id] };
         const editedProps = { board, card, updateBoard, user };
         const { title } = this.state;
         CardService.miniCardSaveHandler(editedProps, title);
@@ -50,20 +50,20 @@ export default class MiniCardTextDetails extends Component {
 
     adjustTop = () => {
         let { height, top, bottom } = this.props.miniCard.boundingClientRect;
-        console.log('top: ', top);
-        console.log('bottom:', bottom);
-        console.log('height: ', height);
-        console.log('window.innerHeight: ', window.innerHeight);
-        console.log('window.innerHeight - (window.innerHeight / 4): ', window.innerHeight - (window.innerHeight / 4));
-        console.log('top > (window.innerHeight - (window.innerHeight / 4)): ', top > (window.innerHeight - (window.innerHeight / 4)));
-        console.log('window.innerHeight - height - 50: ', window.innerHeight - height - 50);
-        console.log('top - 222 + height: ', top - 222 + height);
+        // console.log('top: ', top);
+        // console.log('bottom:', bottom);
+        // console.log('height: ', height);
+        // console.log('window.innerHeight: ', window.innerHeight);
+        // console.log('window.innerHeight - (window.innerHeight / 4): ', window.innerHeight - (window.innerHeight / 4));
+        // console.log('top > (window.innerHeight - (window.innerHeight / 4)): ', top > (window.innerHeight - (window.innerHeight / 4)));
+        // console.log('window.innerHeight - height - 50: ', window.innerHeight - height - 50);
+        // console.log('top - 222 + height: ', top - 222 + height);
         let adjustment = window.innerHeight - height - 50;
-        console.log('adjustment > top: ', adjustment > top);
+        // console.log('adjustment > top: ', adjustment > top);
         if (top > (window.innerHeight - (window.innerHeight / 4))) {
             this.setState({ top: adjustment > top ? bottom - height : adjustment, topEditorAdjustment: adjustment > top ? top - 222 + height : 0 });
         }
-        console.log(this.state.top, this.state.topEditorAdjustment);
+        // console.log(this.state.top, this.state.topEditorAdjustment);
     }
 
     render() {

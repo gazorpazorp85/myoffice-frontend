@@ -4,15 +4,15 @@ import { store } from 'react-notifications-component';
 import FastAverageColor from 'fast-average-color';
 import { CSSTransition } from 'react-transition-group';
 
-import LoadPage from '../cmps/LoadPage';
-import CardDetails from '../cmps/board/card/CardDetails';
 import AddListButton from '../cmps/board/AddListButton';
 import AddListForm from '../cmps/board/AddListForm';
+import BoardBackground from '../cmps/board/BoardBackground';
 import BoardBar from '../cmps/board/BoardBar';
 import BoardHistory from '../cmps/board/BoardHistory';
 import BoardLists from '../cmps/board/BoardLists';
-import SplashMenu from '../cmps/board/SplashMenu';
 import BoardMembers from '../cmps/board/BoardMembers';
+import CardDetails from '../cmps/board/card/CardDetails';
+import LoadPage from '../cmps/LoadPage';
 
 import LanguageService from '../services/LanguageService';
 import SocketService from '../services/SocketService';
@@ -30,10 +30,10 @@ class Board extends Component {
         isTopMenuOptionsShown: true,
         selectedCardId: '',
         selectedCardList: '',
+        toggleBoardBackground: false,
         toggleBoardHistory: false,
         toggleBoardMembers: false,
         toggleListForm: false,
-        toggleSplashMenu: false,
     }
 
     componentDidMount() {
@@ -81,10 +81,10 @@ class Board extends Component {
     toggleHandler = (field) => {
         this.setState(prevState => ({
             isCardDetailsShown: field === 'isCardDetailsShown' ? !prevState.isCardDetailsShown : false,
+            toggleBoardBackground: field === 'toggleBoardBackground' ? !prevState.toggleBoardBackground : false,
             toggleBoardHistory: field === 'toggleBoardHistory' ? !prevState.toggleBoardHistory : false,
             toggleBoardMembers: field === 'toggleBoardMembers' ? !prevState.toggleBoardMembers : false,
-            toggleListForm: field === 'toggleListForm' ? !prevState.toggleListForm : false,
-            toggleSplashMenu: field === 'toggleSplashMenu' ? !prevState.toggleSplashMenu : false
+            toggleListForm: field === 'toggleListForm' ? !prevState.toggleListForm : false
         }));
     }
 
@@ -97,10 +97,10 @@ class Board extends Component {
 
     closeAll = () => {
         this.setState({
+            toggleBoardBackground: false,
             toggleBoardHistory: false,
             toggleBoardMembers: false,
             toggleListForm: false,
-            toggleSplashMenu: false,
         })
     }
 
@@ -137,7 +137,7 @@ class Board extends Component {
 
         const { board, collaborators, language, updateBoard, user } = this.props;
         const { isCardDetailsShown, selectedCardId, selectedCardList } = this.state;
-        let { isBgDark, isBoardLoaded, toggleBoardHistory, toggleBoardMembers, toggleListForm, toggleSplashMenu } = this.state;
+        let { isBgDark, isBoardLoaded, toggleBoardHistory, toggleBoardMembers, toggleListForm, toggleBoardBackground } = this.state;
         let bgImage = board.boardBgImage;
         let direction = LanguageService.languageDirection(language);
         let directionHandler = direction === 'ltr' ? '' : 'row-reverse'
@@ -152,7 +152,7 @@ class Board extends Component {
                     goBack={this.goBack}
                     toggleHandler={this.toggleHandler}
                 />
-                {(toggleBoardHistory || toggleBoardMembers || toggleSplashMenu) && <div className="screen board" onClick={this.closeAll}></div>}
+                {(toggleBoardHistory || toggleBoardMembers || toggleBoardBackground) && <div className="screen board" onClick={this.closeAll}></div>}
                 <CSSTransition in={toggleBoardHistory} timeout={700} classNames={direction === 'ltr' ? 'modal-rtl' : 'modal-ltr'} unmountOnExit>
                     <BoardHistory
                         direction={direction}
@@ -160,8 +160,8 @@ class Board extends Component {
                         language={language}
                     />
                 </CSSTransition>
-                <CSSTransition in={toggleSplashMenu} timeout={700} classNames={direction === 'ltr' ? 'modal-rtl' : 'modal-ltr'} unmountOnExit>
-                    <SplashMenu
+                <CSSTransition in={toggleBoardBackground} timeout={700} classNames={direction === 'ltr' ? 'modal-rtl' : 'modal-ltr'} unmountOnExit>
+                    <BoardBackground
                         board={board}
                         close={this.toggleHandler}
                         direction={direction}

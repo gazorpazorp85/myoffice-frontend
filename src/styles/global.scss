@@ -17,13 +17,14 @@
 @import "cmps/LoadPage.scss";
 @import "cmps/Login.scss";
 @import "cmps/StatusBar.scss";
+@import "cmps/UserMenu.scss";
 @import "cmps/board/AddListForm.scss";
+@import "cmps/board/BoardBackground.scss";
 @import "cmps/board/BoardBar.scss";
 @import "cmps/board/BoardHistory.scss";
 @import "cmps/board/BoardLists.scss";
 @import "cmps/board/BoardMembers.scss";
 @import "cmps/board/BoardMembersPreview.scss";
-@import "cmps/board/SplashMenu.scss";
 @import "cmps/board/TitleContainer.scss";
 @import "cmps/board/card/CardDetails.scss";
 @import "cmps/board/card/CardDetailsEditor.scss";
@@ -42,3 +43,4 @@
 //pages
 @import "pages/Home.scss";
 @import "pages/Board.scss";
+@import "pages/User.scss";

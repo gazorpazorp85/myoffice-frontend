@@ -55,7 +55,6 @@ export default class AddListForm extends Component {
         const notificationType = 'success';
         updateBoard(newBoard, msg, notificationType, historyItem);
         toggleHandler('toggleListForm');
-        console.log('addListForm: ', newBoard);
     }
 
     render() {
