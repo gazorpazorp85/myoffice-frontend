@@ -14,22 +14,10 @@ export default class BoardLists extends Component {
 
     state = {
         isListMenuShown: false,
-        listsOrder: [],
         miniCardDetails: '',
         selectedListId: '',
         toggleAddCardForm: false,
         toggleMiniCardDetails: false
-    }
-
-    componentDidMount() {
-        const { direction, board } = this.props;
-        this.directionHandler(direction, board.direction, [...board.listsOrder]);
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.direction !== this.props.direction) {
-            this.setState({ listsOrder: this.state.listsOrder.reverse() });
-        }
     }
 
     titleMenuClickHandler = (ev, listId) => {
@@ -99,15 +87,15 @@ export default class BoardLists extends Component {
         this.setState(prevState => ({ toggleAddCardForm: !prevState.toggleAddCardForm, selectedListId: prevState.selectedListId === listId ? '' : listId }))
     }
 
-    directionHandler = (direction, boardDirection, listsOrder) => {
-        this.setState({ listsOrder: direction === boardDirection ? listsOrder : listsOrder.reverse() });
+    directionHandler = (board, direction) => {
+        return direction === board.direction ? [...board.listsOrder] : [...board.listsOrder].reverse();
     }
 
     render() {
 
         let { board, direction, selectedCardHandler, toggle, updateBoard, user } = this.props;
-        let { isListMenuShown, listsOrder, miniCardDetails, selectedListId, toggleAddCardForm, toggleMiniCardDetails } = this.state;
-
+        let { isListMenuShown, miniCardDetails, selectedListId, toggleAddCardForm, toggleMiniCardDetails } = this.state;
+        const listsOrder = this.directionHandler(board, direction);
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
                 <Droppable droppableId='all-lists' direction='horizontal' type='list'>

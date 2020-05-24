@@ -33,7 +33,7 @@ function duplicateCard(props) {
 
 function deleteCard(props) {
     const { board, card, list, updateBoard, user } = props;
-    const newBoard = { ...board };
+    const newBoard = { ...board, cards: { ...board.cards } };
     const cardIds = newBoard.lists[list.id].cardIds;
     const idx = cardIds.findIndex(cardId => cardId === card.id);
     cardIds.splice(idx, 1);

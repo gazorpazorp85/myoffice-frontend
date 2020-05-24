@@ -16,9 +16,14 @@ import CardService from '../../../services/CardService';
 export default class MiniCardDetailsEditor extends Component {
 
     state = {
+        left: '',
         toggleDueDate: false,
         toggleLabels: false,
         toggleMembers: false,
+    }
+
+    componentDidMount() {
+        this.adjustLeft();
     }
 
     toggleHandler = (toggleKey) => {
@@ -45,18 +50,24 @@ export default class MiniCardDetailsEditor extends Component {
 
     adjustLeft = () => {
         const { direction, miniCard } = this.props;
-        let { left } = miniCard.boundingClientRect;
-        console.log('left: ', left);
-        console.log('direction: ', direction);
-        console.log('left -295: ', left - 228);
-        return (direction === 'ltr') ? left + 265 : left - 228;
+        let { left, width } = miniCard.boundingClientRect;
+        // console.log(width);
+        // console.log('left: ', left);
+        // console.log('window.innerWidth: ', window.innerWidth);
+        // console.log(left > window.innerWidth / 2);
+        left = (left > window.innerWidth / 2) && (direction === 'ltr') ? left - width - 150 : 
+               (left < window.innerWidth / 4) && (direction === 'rtl') ? left + width + 228 : left;
+        // console.log(right > window.innerWidth);
+        // console.log('right: ', right);
+        // console.log('direction: ', direction);
+        // console.log('left -295: ', left - 228);
+        this.setState({ left: (direction === 'ltr') ? left + 265 : left - 228 });
     }
 
     render() {
         const { board, direction, labels, miniCard, top, updateBoard, user } = this.props;
-        const { toggleDueDate, toggleLabels, toggleMembers } = this.state;
+        const { left, toggleDueDate, toggleLabels, toggleMembers } = this.state;
         const cardMembers = board.cards[miniCard.card.id].cardMembers;
-        const left = this.adjustLeft();
         const styleDirection = direction === 'ltr' ? 'left' : 'right';
 
         return (

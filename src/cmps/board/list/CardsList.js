@@ -29,7 +29,6 @@ export default class CardsList extends Component {
     render() {
         const { cards, direction, list, provided, innerRef, isDraggingOver, toggleMiniCardDetailsHandler } = this.props;
         const { onCardId, isEditButtonShown } = this.state;
-
         const isDraggingOverHandler = isDraggingOver ? "isDraggingOver" : "";
 
         return (
