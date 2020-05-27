@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import LanguageService from '../services/LanguageService';
+import StatusBar from '../cmps/StatusBar';
+
 import utils from '../services/utils';
 
 import { createBoard, loadBoard, loadBoards } from '../actions/BoardActions';
-import { changeLanguage } from '../actions/LanguageActions';
 import { logout, getLoggedInUser } from '../actions/UserActions';
 
 class Home extends Component {
 
-    state = {
-        board: {
-            boardMembers: [],
-            cards: {},
-            lists: {},
-            listsOrder: [],
-            boardBgImage: 'https://images.unsplash.com/photo-1511649475669-e288648b2339?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjExMTc0M30',
-            history: [],
-            boardBgThumbnail: 'https://images.unsplash.com/photo-1511649475669-e288648b2339?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjExMTc0M30'
-        }
-    }
+    // state = {
+    //     board: {
+    //         boardMembers: [],
+    //         cards: {},
+    //         lists: {},
+    //         listsOrder: [],
+    //         boardBgImage: 'https://images.unsplash.com/photo-1511649475669-e288648b2339?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjExMTc0M30',
+    //         history: [],
+    //         boardBgThumbnail: 'https://images.unsplash.com/photo-1511649475669-e288648b2339?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjExMTc0M30'
+    //     }
+    // }
 
     componentDidMount() {
         this.props.getLoggedInUser();
@@ -29,7 +29,7 @@ class Home extends Component {
     // createBoard = async () => {
     //     let board = this.state.board;
     //     board.createdBy = { _id: this.props.user._id, username: this.props.user.username } || { _id: 'guest', username: 'guest' };
-    //     board.direction = LanguageService.languageDirection(this.props.language);
+    //     board.direction = this.props.direction;
     //     this.createdBoardMessage(board);
     //     const newBoard = await this.props.createBoard(board);
     //     this.props.history.push(`/board/${newBoard._id}`);
@@ -46,11 +46,11 @@ class Home extends Component {
 
     render() {
 
-        let language = this.props.language;
-        let direction = LanguageService.languageDirection(language);
+        const { direction } = this.props;
 
         return (
-            <div className="home-container">
+            <div className="flex column home-container">
+                <StatusBar />
                 <div className="flex center hero-container">
                     <div className="flex column center align-center">
                         <div className="capitalize brand-title">
@@ -75,7 +75,7 @@ const mapStateToProps = (state) => {
     return {
         boards: state.boardState.boards,
         board: state.boardState.board,
-        language: state.languageState.language,
+        direction: state.languageState.direction,
         user: state.userState.user
     };
 };
@@ -84,7 +84,6 @@ const mapDispatchToProps = {
     createBoard,
     loadBoards,
     loadBoard,
-    changeLanguage,
     getLoggedInUser,
     logout
 };

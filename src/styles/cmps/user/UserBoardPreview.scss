@@ -1,0 +1,17 @@
+.user-board-preview-container {
+    margin-bottom: 15px;
+}
+
+.board-preview-thumbnail-container {
+    margin-inline-end: 20px;
+}
+
+.board-preview-thumbnail {
+    height: 225px;
+    width: 300px;
+    border-radius: 4px;
+}
+
+.board-btn-panel :not(:last-child) {
+    margin-inline-end: 10px;
+}

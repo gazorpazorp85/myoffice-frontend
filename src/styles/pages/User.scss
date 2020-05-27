@@ -1,3 +1,12 @@
 .user-container {
+    height: 100%;
     width: 100%;
+    color: $clr4;
+    background-color: rgba(0, 0, 0, 0.46);
+    overflow: auto;
+}
+
+.user-subcontainer {
+    width: 100%;
+    padding-top: 20px;
 }

@@ -14,6 +14,7 @@ function saveListName(props, listId, title) {
 }
 
 function duplicateList(board, list, updateBoard, user) {
+    console.log(list);
     let newBoard = { ...board, lists: { ...board.lists }, listsOrder: [...board.listsOrder] };
     let newList = { ...list, cardIds: [...list.cardIds] };
     const newListId = utils.getRandomId();

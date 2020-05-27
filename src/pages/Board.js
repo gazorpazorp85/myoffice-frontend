@@ -13,8 +13,8 @@ import BoardLists from '../cmps/board/BoardLists';
 import BoardMembers from '../cmps/board/BoardMembers';
 import CardDetails from '../cmps/board/card/CardDetails';
 import LoadPage from '../cmps/LoadPage';
+import StatusBar from '../cmps/StatusBar';
 
-import LanguageService from '../services/LanguageService';
 import SocketService from '../services/SocketService';
 import utils from '../services/utils';
 
@@ -134,18 +134,17 @@ class Board extends Component {
     }
 
     render() {
-
-        const { board, collaborators, language, updateBoard, user } = this.props;
+        const { board, collaborators, direction, language, updateBoard, user } = this.props;
         const { isCardDetailsShown, selectedCardId, selectedCardList } = this.state;
         let { isBgDark, isBoardLoaded, toggleBoardHistory, toggleBoardMembers, toggleListForm, toggleBoardBackground } = this.state;
         let bgImage = board.boardBgImage;
-        let direction = LanguageService.languageDirection(language);
         let directionHandler = direction === 'ltr' ? '' : 'row-reverse'
 
         if (!isBoardLoaded) return <LoadPage direction={direction} />
 
         return (
             <div className="flex column board-container" style={{ backgroundImage: `url(${bgImage})` }}>
+                <StatusBar />
                 <BoardBar
                     direction={direction}
                     isBgDark={isBgDark}
@@ -223,6 +222,7 @@ class Board extends Component {
 const mapStateToProps = state => {
     return {
         board: state.boardState.board,
+        direction: state.languageState.direction,
         language: state.languageState.language,
         user: state.userState.user,
         collaborators: state.userState.userCollaborators

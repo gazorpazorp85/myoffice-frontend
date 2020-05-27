@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { login, logout, signup, getLoggedInUser } from '../actions/UserActions';
 
+import utils from '../services/utils';
+
 class Login extends Component {
     state = {
         msg: '',
@@ -42,7 +44,7 @@ class Login extends Component {
         if (!firstName || !lastName || !username || !email || !password) {
             return this.setState({ msg: window.i18nData.signupError });
         }
-        const signupCreds = { firstName, lastName, username, email, password };
+        const signupCreds = { firstName, lastName, username, email, password, url_id: utils.getRandomId(15) };
         this.props.signup(signupCreds);
         this.setState({ signupCred: { firstName: '', lastName: '', username: '', email: '', password: '' } });
     }
@@ -84,8 +86,8 @@ class Login extends Component {
             </form>
         );
 
-        let loggedInUser = this.props.user;
-        let direction = this.props.direction;
+        const loggedInUser = this.props.user;
+        const { direction } = this.props;
 
         return (
             <div className="flex column side-menu-container" onClick={this.doStopPropagation} dir={direction} style={{ right: direction === 'ltr' ? 0 : 'unset', left: direction === 'rtl' ? 0 : 'unset' }}>
@@ -111,6 +113,7 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        direction: state.languageState.direction,
         user: state.userState.user
     };
 }

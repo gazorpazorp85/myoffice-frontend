@@ -8,8 +8,6 @@ import Login from './Login';
 import TeamMemberIcon from './TeamMemberIcon';
 import UserMenu from './UserMenu';
 
-import LanguageService from '../services/LanguageService';
-
 import { changeLanguage } from '../actions/LanguageActions';
 import { getLoggedInUser, logout } from '../actions/UserActions';
 
@@ -33,9 +31,8 @@ class StatusBar extends Component {
 
     render() {
 
-        const { changeLanguage, language, logout, user } = this.props;
+        const { changeLanguage, direction, logout, user } = this.props;
         const { toggleLogin, toggleUserMenu } = this.state;
-        const direction = LanguageService.languageDirection(language);
         const cssTransitionClassNames = direction === 'ltr' ? 'modal-rtl' : 'modal-ltr';
         const button = (user) ?
             <div className="flex pointer align-center" onClick={() => this.toggleHandler('toggleUserMenu')}>
@@ -60,15 +57,16 @@ class StatusBar extends Component {
                     <div className="pointer flag-icon he" onClick={() => changeLanguage('he')}></div>
                 </div>
                 <CSSTransition in={toggleLogin} timeout={700} classNames={cssTransitionClassNames} unmountOnExit>
-                    <Login toggleLogin={() => this.toggleHandler('toggleLogin')} direction={direction} />
+                    <Login toggleLogin={() => this.toggleHandler('toggleLogin')} />
                 </CSSTransition>
-            </div >
+            </div>
         )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
+        direction: state.languageState.direction,
         language: state.languageState.language,
         user: state.userState.user
     };

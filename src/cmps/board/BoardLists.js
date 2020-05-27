@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
 
+import ListMenuIcon from '@material-ui/icons/MoreHoriz';
+
 import AddCardButton from './list/AddCardButton';
 import CardForm from './card/CardForm';
 import CardsList from './list/CardsList';
 import ListMenu from './list/ListMenu';
+import MiniCardDetails from './miniCard/MiniCardDetails';
 import TitleContainer from './TitleContainer';
 
-import MiniCardDetails from './miniCard/MiniCardDetails';
+import ListService from '../../services/ListService';
 
 export default class BoardLists extends Component {
 
@@ -91,6 +94,18 @@ export default class BoardLists extends Component {
         return direction === board.direction ? [...board.listsOrder] : [...board.listsOrder].reverse();
     }
 
+    onDelete = (id) => {
+        const { board, updateBoard, user } = this.props;
+        ListService.deleteList(board, id, updateBoard, user);
+        this.closeListMenu();
+    }
+
+    onDuplicateList = (list) => {
+        const { board, updateBoard, user } = this.props;
+        ListService.duplicateList(board, list, updateBoard, user);
+        this.closeListMenu();
+    }
+
     render() {
 
         let { board, direction, selectedCardHandler, toggle, updateBoard, user } = this.props;
@@ -116,11 +131,11 @@ export default class BoardLists extends Component {
                                                                 <TitleContainer board={board} list={list} updateBoard={updateBoard} user={user} />
                                                             </div>
                                                             <div className="btn title-menu" onClick={(ev) => this.titleMenuClickHandler(ev, list.id)}>
-                                                                <div>...</div>
+                                                                <ListMenuIcon />
                                                             </div>
                                                         </div>
                                                         {isListMenuShown && (selectedListId === list.id) &&
-                                                            <ListMenu board={board} closeListMenu={this.closeListMenu} list={list} updateBoard={updateBoard} user={user} />}
+                                                            <ListMenu list={list} onDelete={this.onDelete} onDuplicateList={this.onDuplicateList} />}
                                                         <Droppable droppableId={list.id} type="card">
                                                             {(provided, snapshot) => {
                                                                 return <CardsList

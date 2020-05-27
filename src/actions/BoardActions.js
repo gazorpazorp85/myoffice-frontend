@@ -81,3 +81,21 @@ function _addBoard(addedBoard) {
         addedBoard
     };
 }
+
+export function removeBoard(board) {
+    return async dispatch => {
+        try {
+            await BoardService.remove(board._id);
+            dispatch(_deleteBoard(board));
+        } catch (err) {
+            console.log('BoardActions: err in removeBoard', err);
+        }
+    };
+}
+
+function _deleteBoard(board) {
+    return {
+        type: 'DELETE_BOARD',
+        board
+    }
+}

@@ -39,8 +39,10 @@
 @import "cmps/board/list/ListMenu.scss";
 @import "cmps/board/miniCard/MiniCardDetailsEditor.scss";
 @import "cmps/board/miniCard/MiniCardDetails.scss";
+@import "cmps/user/UserBoardPreview.scss";
 
 //pages
-@import "pages/Home.scss";
 @import "pages/Board.scss";
+@import "pages/Home.scss";
+@import "pages/PageNotFound.scss";
 @import "pages/User.scss";

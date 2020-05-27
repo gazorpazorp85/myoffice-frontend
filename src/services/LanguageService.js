@@ -10,11 +10,11 @@ const changeLanguage = (lang) => {
     return lang;
 }
 
-const languageDirection = (language) => {
-    return language === 'en' ? 'ltr' : 'rtl';
+const setLanguageDirection = (language) => {
+    return language === 'he' ? 'rtl' : 'ltr';
 }
 
 export default {
     changeLanguage,
-    languageDirection
+    setLanguageDirection
 }

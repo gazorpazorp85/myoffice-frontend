@@ -7,20 +7,9 @@ import SubjectIcon from '@material-ui/icons/Subject';
 
 import TeamMemberIcon from '../../TeamMemberIcon';
 
-export default function CardPreview({ card, direction, innerRef, isDragging, isEditButtonShown, list, onCardId, provided, style, toggleMiniCardDetailsHandler }) {
+export default function CardPreview({ card, direction, innerRef, isDragging, isEditButtonShown, list, onCardId, provided, style, toggleMiniCardDetails }) {
 
     const cardContainer = React.createRef();
-
-    const toggleMiniCardDetails = (ev) => {
-        ev.stopPropagation();
-        const miniCard = {
-            card: card,
-            boundingClientRect: cardContainer.current.getBoundingClientRect(),
-            list: list
-        };
-        toggleMiniCardDetailsHandler(miniCard);
-    }
-
     const isDraggingClassName = isDragging ? 'isDragging' : '';
     const withoutPadding = card.url && card.type !== 'text' ? 'without-padding' : '';
     const rotateIcon = direction === 'rtl' ? { transform: 'rotate3d(0, -100, 7, 180deg)' } : {};
@@ -34,7 +23,7 @@ export default function CardPreview({ card, direction, innerRef, isDragging, isE
                 style={style}>
                 {isEditButtonShown && (onCardId === card.id) &&
                     <div className="flex card-edit-icon-container">
-                        <CreateIcon className="card-edit-icon" onClick={(ev) => toggleMiniCardDetails(ev)} />
+                        <CreateIcon className="card-edit-icon" onClick={(ev) => toggleMiniCardDetails(ev, card, cardContainer, list)} />
                     </div>}
                 {card.type === 'video' &&
                     <iframe title={card.id} type='text/html'

@@ -11,6 +11,8 @@ export default function (state = initialState, action = {}) {
             return { ...state, board: action.board };
         case 'ADD_BOARD':
             return { ...state, boards: [...state.boards, action.addedBoard] };
+        case 'DELETE_BOARD':
+            return { ...state, boards: state.boards.filter(board => board._id !== action.board._id) }
         default:
             return state;
     }

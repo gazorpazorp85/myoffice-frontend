@@ -10,11 +10,11 @@ export default {
   emitNotification
 }
 
-function getRandomId() {
-  const letters = '1234567890poiiytreqwasdfghjklmnbvcxxssersgyushquiz';
+function getRandomId(idLength = 10) {
+  const letters = '0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
   const max = letters.length;
   let id = '';
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < idLength; i++) {
     let idx = Math.floor(Math.random() * max);
     id += letters[idx];
   }
@@ -23,7 +23,7 @@ function getRandomId() {
 
 function createUserIcon(firstName, lastName) {
   let newIcon = firstName.charAt(0) + lastName.charAt(0)
-  return (newIcon)
+  return newIcon;
 }
 
 async function uploadImg(file) {

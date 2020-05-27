@@ -59,15 +59,27 @@ export default class CardDetails extends Component {
         CardService.updateCardDescription(this.props, this.state.description);
     }
 
+    rotateIconHandler = () => {
+        return this.props.direction === 'rtl' ? { transform: 'rotate3d(0, -100, 7, 180deg)' } : {};
+    }
+
+    cardTitleIconRotateHandler = () => {
+        return this.props.direction === 'rtl' ? {} : { transform: 'rotate3d(0, -100, 7, 180deg)' };
+    }
+
+    styleDirectionHandler = () => {
+        return this.props.direction === 'ltr' ? 'right' : 'left';
+    }
+
     render() {
 
         const { board, cardId, direction, list, updateBoard, user } = this.props;
         const card = board.cards[cardId];
         const { description, toggleCardMembers, toggleDueDate, toggleLabels, toggleCardTodosEditor } = this.state;
 
-        const rotateIcon = direction === 'rtl' ? { transform: 'rotate3d(0, -100, 7, 180deg)' } : {};
-        const cardTitleIconRotate = direction === 'rtl' ? {} : { transform: 'rotate3d(0, -100, 7, 180deg)' };
-        const styleDirection = direction === 'ltr' ? 'right' : 'left';
+        const rotateIcon = this.rotateIconHandler();
+        const cardTitleIconRotate = this.cardTitleIconRotateHandler();
+        const styleDirection = this.styleDirectionHandler();
 
         return (
             <div className="flex screen card-details">

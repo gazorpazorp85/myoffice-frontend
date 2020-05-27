@@ -145,15 +145,37 @@ button {
         min-width: 200px;
         transition: 0.2s;
         font-size: rem(14px);
+        text-transform: none;
         border: 1px solid #0000000d;
         padding: 5px;
     }
     &.title-menu {
         height: 30px;
-        padding: 10px 10px 20px 10px;
         &:hover {
             background: rgba(177, 177, 177, 0.5);
             font-weight: 600;
+        }
+    }
+    &.board-panel {
+        width: fit-content;
+        border: 1px solid $clr4;
+        border-radius: 10px;
+        font-size: rem(14px);
+        padding: 4px 10px;
+        transition: 0.75s;
+
+        &:hover {
+            color: $clr2;
+            background-color: $clr1;
+        }
+
+        &.delete {
+            background-color: $btnclr3;
+
+            &:hover {
+                color: $clr4;
+                background-color: $btnclr4;
+            }
         }
     }
 }

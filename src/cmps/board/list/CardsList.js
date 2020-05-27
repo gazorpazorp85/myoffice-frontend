@@ -26,8 +26,18 @@ export default class CardsList extends Component {
         selectedCardHandler(card.id, list);
     }
 
+    toggleMiniCardDetails = (ev, card, cardContainer, list) => {
+        ev.stopPropagation();
+        const miniCard = {
+            card: card,
+            boundingClientRect: cardContainer.current.getBoundingClientRect(),
+            list: list
+        };
+        this.props.toggleMiniCardDetailsHandler(miniCard);
+    }
+
     render() {
-        const { cards, direction, list, provided, innerRef, isDraggingOver, toggleMiniCardDetailsHandler } = this.props;
+        const { cards, direction, list, provided, innerRef, isDraggingOver } = this.props;
         const { onCardId, isEditButtonShown } = this.state;
         const isDraggingOverHandler = isDraggingOver ? "isDraggingOver" : "";
 
@@ -53,7 +63,7 @@ export default class CardsList extends Component {
                                                 onCardId={onCardId}
                                                 provided={provided}
                                                 style={style}
-                                                toggleMiniCardDetailsHandler={toggleMiniCardDetailsHandler}
+                                                toggleMiniCardDetails={this.toggleMiniCardDetails}
                                             />
                                         </div>
                                     )}
