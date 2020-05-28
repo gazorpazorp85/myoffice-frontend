@@ -8,12 +8,12 @@ import Home from './pages/Home';
 import PageNotFound from './pages/PageNotFound';
 import User from './pages/User';
 
-// import StatusBar from './cmps/StatusBar';
+import StatusBar from './cmps/StatusBar';
 
 function App() {
   return (
     <Router>
-      {/* <StatusBar /> */}
+      <StatusBar />
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/board/:id" component={Board} exact />

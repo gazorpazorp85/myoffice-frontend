@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import StatusBar from '../cmps/StatusBar';
-
 import utils from '../services/utils';
 
 import { createBoard, loadBoard, loadBoards } from '../actions/BoardActions';
@@ -50,7 +48,6 @@ class Home extends Component {
 
         return (
             <div className="flex column home-container">
-                <StatusBar />
                 <div className="flex center hero-container">
                     <div className="flex column center align-center">
                         <div className="capitalize brand-title">

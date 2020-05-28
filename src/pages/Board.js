@@ -13,7 +13,6 @@ import BoardLists from '../cmps/board/BoardLists';
 import BoardMembers from '../cmps/board/BoardMembers';
 import CardDetails from '../cmps/board/card/CardDetails';
 import LoadPage from '../cmps/LoadPage';
-import StatusBar from '../cmps/StatusBar';
 
 import SocketService from '../services/SocketService';
 import utils from '../services/utils';
@@ -144,7 +143,6 @@ class Board extends Component {
 
         return (
             <div className="flex column board-container" style={{ backgroundImage: `url(${bgImage})` }}>
-                <StatusBar />
                 <BoardBar
                     direction={direction}
                     isBgDark={isBgDark}

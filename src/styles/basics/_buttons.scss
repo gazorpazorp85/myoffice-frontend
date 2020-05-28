@@ -15,11 +15,24 @@ button {
     }
 
     &.logout,
-    &.due-date-reset-btn {
+    &.due-date-reset-btn,
+    &.board-delete {
         background-color: $btnclr3;
 
         &:hover {
             background-color: $btnclr4;
+            transition: 0.5s;
+        }
+    }
+    &.board-delete-cancel {
+        background-color: inherit;
+        color: $clr2;
+        border: 1px solid $clr2;
+        
+        &:hover {
+            background-color: $clr2;
+            color: $clr4;
+            transition: 0.5s;
         }
     }
     &.submit-form {

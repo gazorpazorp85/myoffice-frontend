@@ -1,0 +1,22 @@
+.user-nav-bar-container {
+    height: 60px;
+    background-color: $clr1;
+    padding: 0px 65px;
+    align-items: center;
+}
+
+.user-nav-bar-category {
+    width: fit-content;
+    font-size: 16px;
+    padding: 4px 5px;
+    color: $clr4;
+
+    &:hover {
+        color: $clr2;
+        transition: 0.5s;
+    }
+}
+
+.user-nav-bar-category:not(:last-child) {
+    margin-inline-end: 5px;
+}

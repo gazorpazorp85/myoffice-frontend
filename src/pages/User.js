@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import StatusBar from '../cmps/StatusBar';
+import DeleteBoardModal from '../cmps/user/DeleteBoardModal';
 import UserBoardPreview from '../cmps/user/UserBoardPreview';
+import UserCollaborators from '../cmps/user/UserCollaborators';
+import UserNavBar from '../cmps/user/UserNavBar';
 
 import { createBoard, loadBoards, removeBoard } from '../actions/BoardActions';
-import { getLoggedInUser } from '../actions/UserActions';
+import { getLoggedInUser, getUserCollaborators } from '../actions/UserActions';
 
 import BoardService from '../services/BoardService';
 
 class User extends Component {
 
     state = {
-        userBoards: []
+        boardToDelete: null,
+        userBoards: [],
+        userCollaborators: [],
+        userBoardsToggle: true,
+        deleteBoardModalToggle: false,
+        userCollaboratorsToggle: false
     }
 
     componentDidMount() {
@@ -21,10 +28,13 @@ class User extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { boards, history, match, user } = this.props;
+        const { boards, getUserCollaborators, history, match, user } = this.props;
         if (!match.params.url_id || match.params.url_id !== user.url_id) history.push('/');
         if (prevProps.boards !== boards) {
             this.setUserBoards();
+        }
+        if (prevProps.user !== user) {
+            getUserCollaborators(user.collaborators);
         }
     }
 
@@ -36,16 +46,21 @@ class User extends Component {
 
     duplicateBoard = (ev, board) => {
         ev.stopPropagation();
-        console.log(board);
         const newBoard = BoardService.duplicateBoard(board);
-        console.log(newBoard);
         this.props.createBoard(newBoard);
     }
 
-    deleteBoard = (ev, board) => {
+    deleteBoardHandler = (ev, board) => {
         ev.stopPropagation();
-        this.props.removeBoard(board);
-        console.log('board deleted!');
+        this.setState({ boardToDelete: board, deleteBoardModalToggle: true });
+    }
+
+    deleteConfirmation = (key) => {
+        if (key === 'delete') {
+            const { boardToDelete } = this.state;
+            this.props.removeBoard(boardToDelete);
+        };
+        this.setState({ boardToDelete: null, deleteBoardModalToggle: false })
     }
 
     openBoard = (ev, id) => {
@@ -53,23 +68,42 @@ class User extends Component {
         this.props.history.push(`/board/${id}`);
     }
 
+    toggleUserComponents = (key) => {
+        this.setState({
+            userBoardsToggle: key === 'userBoardsToggle' ? true : false,
+            userCollaboratorsToggle: key === 'userCollaboratorsToggle' ? true : false,
+        })
+    }
+
     render() {
-        const { direction } = this.props;
-        const { userBoards } = this.state;
+        const { direction, collaborators } = this.props;
+        const { deleteBoardModalToggle, userBoards, userBoardsToggle, userCollaboratorsToggle } = this.state;
+        const title = userBoardsToggle ? 'myBoards' : 'myCollaborators';
         return (
-            <div className="user-container" dir={direction}>
-                <StatusBar />
-                <div className="main-container user-subcontainer">
-                    {/* {user &&
-                        <div className="flex column">
-                            <div>{user._id}</div>
-                            <div>{user.username}</div>
-                            <div>{user.firstName}</div>
-                            <div>{user.lastName}</div>
-                        </div>} */}
-                    <UserBoardPreview deleteBoard={this.deleteBoard} duplicateBoard={this.duplicateBoard} openBoard={this.openBoard} userBoards={userBoards} />
+            [
+                <UserNavBar
+                    direction={direction}
+                    key={'userNavBar'}
+                    toggle={this.toggleUserComponents}
+                    userBoardsToggle={userBoardsToggle}
+                    userCollaboratorsToggle={userCollaboratorsToggle}
+                />,
+                <div key={'userContainer'} className="user-container" dir={direction}>
+                    <div className="user-subcontainer">
+                        <h1 className="capitalize">{window.i18nData[title]}</h1>
+                        {userBoardsToggle &&
+                            <UserBoardPreview
+                                deleteBoard={this.deleteBoardHandler}
+                                duplicateBoard={this.duplicateBoard}
+                                openBoard={this.openBoard}
+                                userBoards={userBoards}
+                            />}
+                        {userCollaboratorsToggle &&
+                            <UserCollaborators collaborators={collaborators} />}
+                    </div>
+                    {deleteBoardModalToggle && <DeleteBoardModal deleteConfirmation={this.deleteConfirmation} />}
                 </div>
-            </div>
+            ]
         )
     }
 }
@@ -77,6 +111,7 @@ class User extends Component {
 const mapStateToProps = state => {
     return {
         boards: state.boardState.boards,
+        collaborators: state.userState.userCollaborators,
         direction: state.languageState.direction,
         user: state.userState.user
     }
@@ -85,6 +120,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     createBoard,
     getLoggedInUser,
+    getUserCollaborators,
     loadBoards,
     removeBoard
 }

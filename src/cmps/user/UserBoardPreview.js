@@ -20,15 +20,15 @@ export default function UserBoardPreview({ deleteBoard, duplicateBoard, openBoar
                                     {window.i18nData.noBoardMembers}
                                 </div>}
                         </div>
-                        <div className="flex board-btn-panel" onClick={(ev) => duplicateBoard(ev, board)}>
-                            <div className="btn board-panel">
+                        <div className="flex board-btn-panel">
+                            <div className="btn board-panel" onClick={(ev) => openBoard(ev, board._id)}>
+                                <div>{window.i18nData.openBoard}</div>
+                            </div>
+                            <div className="btn board-panel" onClick={(ev) => duplicateBoard(ev, board)}>
                                 <div>{window.i18nData.duplicateBoard}</div>
                             </div>
                             <div className="btn board-panel delete" onClick={(ev) => deleteBoard(ev, board)}>
                                 <div>{window.i18nData.deleteBoard}</div>
-                            </div>
-                            <div className="btn board-panel" onClick={(ev) => openBoard(ev, board._id)}>
-                                <div>{window.i18nData.openBoard}</div>
                             </div>
                         </div>
                     </div>
