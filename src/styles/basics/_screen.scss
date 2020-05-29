@@ -9,7 +9,8 @@
     }
 
     &.status-bar,
-    &.delete-board-modal {
+    &.delete-board-modal,
+    &.add-collaborator-modal {
         background-color: $clr2;
         top: 0;
         right: 0;

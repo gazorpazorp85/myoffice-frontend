@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import StatusBar from '../cmps/StatusBar';
+import AddCollaboratorModal from '../cmps/user/AddCollaboratorModal';
 import DeleteBoardModal from '../cmps/user/DeleteBoardModal';
 import UserBoardPreview from '../cmps/user/UserBoardPreview';
 import UserCollaborators from '../cmps/user/UserCollaborators';
@@ -14,12 +16,13 @@ import BoardService from '../services/BoardService';
 class User extends Component {
 
     state = {
+        addCollaboratorModalToggle: false,
         boardToDelete: null,
-        userBoards: [],
-        userCollaborators: [],
-        userBoardsToggle: true,
         deleteBoardModalToggle: false,
-        userCollaboratorsToggle: false
+        userBoards: [],
+        userBoardsToggle: true,
+        userCollaborators: [],
+        userCollaboratorsToggle: false,
     }
 
     componentDidMount() {
@@ -75,21 +78,30 @@ class User extends Component {
         })
     }
 
+    toggleAddCollaboratorModal = () => {
+        this.setState(prevState => ({ addCollaboratorModalToggle: !prevState.addCollaboratorModalToggle }))
+    }
+
+    goBack = () => {
+        this.props.history.push('/');
+    }
+
     render() {
         const { direction, collaborators } = this.props;
-        const { deleteBoardModalToggle, userBoards, userBoardsToggle, userCollaboratorsToggle } = this.state;
+        const { addCollaboratorModalToggle, deleteBoardModalToggle, userBoards, userBoardsToggle, userCollaboratorsToggle } = this.state;
         const title = userBoardsToggle ? 'myBoards' : 'myCollaborators';
         return (
             [
+                <StatusBar key={'statusBar'} />,
                 <UserNavBar
                     direction={direction}
+                    goBack={this.goBack}
                     key={'userNavBar'}
                     toggle={this.toggleUserComponents}
                     userBoardsToggle={userBoardsToggle}
-                    userCollaboratorsToggle={userCollaboratorsToggle}
                 />,
-                <div key={'userContainer'} className="user-container" dir={direction}>
-                    <div className="user-subcontainer">
+                <div key={'userContainer'} className="flex column user-container" dir={direction}>
+                    <div className="flex column user-subcontainer">
                         <h1 className="capitalize">{window.i18nData[title]}</h1>
                         {userBoardsToggle &&
                             <UserBoardPreview
@@ -99,9 +111,10 @@ class User extends Component {
                                 userBoards={userBoards}
                             />}
                         {userCollaboratorsToggle &&
-                            <UserCollaborators collaborators={collaborators} />}
+                            <UserCollaborators collaborators={collaborators} toggle={this.toggleAddCollaboratorModal} />}
                     </div>
                     {deleteBoardModalToggle && <DeleteBoardModal deleteConfirmation={this.deleteConfirmation} />}
+                    {addCollaboratorModalToggle && <AddCollaboratorModal toggle={this.toggleAddCollaboratorModal} />}
                 </div>
             ]
         )

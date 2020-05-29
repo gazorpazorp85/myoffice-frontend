@@ -28,7 +28,7 @@ button {
         background-color: inherit;
         color: $clr2;
         border: 1px solid $clr2;
-        
+
         &:hover {
             background-color: $clr2;
             color: $clr4;
@@ -85,7 +85,6 @@ button {
     }
     &.user-logout {
         color: #172b4d;
-        // padding: 5px;
 
         .MuiSvgIcon-root {
             height: 20px;
@@ -133,7 +132,6 @@ button {
     &.search-img {
         height: 40px;
         width: 40px;
-        // background-color: #c8c8c7;
         background-color: #b5b5b1;
         color: $clr3;
         transition: 0.3s;
@@ -144,12 +142,21 @@ button {
         color: $clr3;
         transition: 0.3s;
     }
+    &.search-user {
+        height: 30px;
+        width: 30px;
+        background-color: #b5b5b1;
+        color: $clr3;
+        transition: 0.3s;
+        margin-inline-start: 20px;
+    }
     &.go-back:hover,
     &.add-members:hover,
     &.change-bg:hover,
     &.show-history:hover,
     &.search-img:hover,
-    &.upload-img:hover {
+    &.upload-img:hover,
+    &.search-user:hover {
         background-color: #686868d3;
     }
     &.add-list {
@@ -191,13 +198,26 @@ button {
             }
         }
     }
+    &.add-collaborator {
+        background-color: inherit;
+        padding: 4px 10px;
+        border: 1px solid $clr4;
+
+        &:hover {
+            // background-color: $clr2;
+            color: $clr2;
+            border: 1px solid $clr2;
+            transition: 0.25s;
+        }
+    }
 }
 
 .close-due-date-btn,
 .close-todos-btn,
 .close-btn-labels,
 .close-btn-card-members,
-.card-details-close-btn {
+.card-details-close-btn,
+.add-collaborator-modal-close-btn {
     align-self: flex-end;
     width: 24px;
 

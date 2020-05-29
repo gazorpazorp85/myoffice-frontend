@@ -5,7 +5,8 @@ export default {
     logout,
     signup,
     getLoggedInUser,
-    getCollaborators
+    getCollaborators,
+    getCollaborator
 }
 
 async function login(userCred) {
@@ -45,9 +46,19 @@ async function getLoggedInUser() {
 
 async function getCollaborators(collaborators) {
     try {
-        const userCollaborators = await HttpService.post('user', collaborators);
+        const userCollaborators = await HttpService.post('user/collaborators', collaborators);
         return userCollaborators;
     } catch (err) {
         console.log('UserService: err in getting user collaborators', err)
+    }
+}
+
+async function getCollaborator(filter) {
+    try {
+        const userCollaborator = await HttpService.post('user/collaborator', filter);
+        return userCollaborator;
+    } catch (err) {
+        err.message = window.i18nData.noCollaboratorError;
+        throw err;
     }
 }

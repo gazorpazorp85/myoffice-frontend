@@ -1,0 +1,15 @@
+.user-collaborators-container {
+    flex: 1;
+}
+
+.user-collaborators-list-container {
+    width: 35%;
+}
+
+.collabolator-container {
+    width: fit-content;
+}
+
+.collabolator-container:not(:last-child) {
+    margin-bottom: 10px;
+}

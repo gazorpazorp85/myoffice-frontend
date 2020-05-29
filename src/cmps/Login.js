@@ -58,18 +58,21 @@ class Login extends Component {
     }
 
     render() {
+
+        const { loginCred, signupCred } = this.state;
+
         let signupSection = (
             <form onSubmit={this.doSignup}>
                 <div className="capitalize form-title">{window.i18nData.signup}:</div>
-                <input type="text" name="firstName" value={this.state.signupCred.firstName} className="login-input"
+                <input type="text" name="firstName" value={signupCred.firstName} className="login-input"
                     onChange={this.signupHandleChange} placeholder={window.i18nData.firstName} />
-                <input type="text" name="lastName" value={this.state.signupCred.lastName} className="login-input"
+                <input type="text" name="lastName" value={signupCred.lastName} className="login-input"
                     onChange={this.signupHandleChange} placeholder={window.i18nData.lastName} />
-                <input type="text" name="username" value={this.state.signupCred.username} className="login-input"
+                <input type="text" name="username" value={signupCred.username} className="login-input"
                     onChange={this.signupHandleChange} placeholder={window.i18nData.username} />
-                <input type="text" name="email" value={this.state.signupCred.email} className="login-input"
+                <input type="text" name="email" value={signupCred.email} className="login-input"
                     onChange={this.signupHandleChange} placeholder={window.i18nData.email} />
-                <input type="password" name="password" value={this.state.signupCred.password} className="login-input"
+                <input type="password" name="password" value={signupCred.password} className="login-input"
                     onChange={this.signupHandleChange} placeholder={window.i18nData.password} />
                 <button>{window.i18nData.signup}</button>
             </form>
@@ -78,9 +81,9 @@ class Login extends Component {
         let loginSection = (
             <form onSubmit={this.doLogin}>
                 <div className="capitalize form-title">{window.i18nData.login}:</div>
-                <input type="text" name="email" value={this.state.loginCred.email} className="login-input"
+                <input type="text" name="email" value={loginCred.email} className="login-input"
                     onChange={this.loginHandleChange} placeholder={window.i18nData.email} />
-                <input type="password" name="password" value={this.state.loginCred.password} className="login-input"
+                <input type="password" name="password" value={loginCred.password} className="login-input"
                     onChange={this.loginHandleChange} placeholder={window.i18nData.password} />
                 <button>{window.i18nData.login}</button>
             </form>

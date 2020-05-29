@@ -110,4 +110,9 @@ export default {
     'deleteBoardWarningPt3': 'האם את/ה בטוח/ה שאת/ה רוצה לאשר את המחיקה?',
     'deleteBoardWarningPt4': 'פעולה זאת אינה ניתנת לביטול',
     'cancelDeleteBoard': 'ביטול',
+    'addCollaborators': 'הוספת משתתף',
+    'searchCollaborator': 'חיפוש משתתף',
+    'searchCollaboratorBy': 'חפש משתתף ע"י כתובת דואר אלקטרוני או שם משתמש',
+    'searchBy': 'חיפוש לפי: ',
+    'noCollaboratorError': 'לא נמצאו משתתפים, אנא בדוק/בדקי את פרטי החיפוש ונסה/י שנית.',
 }

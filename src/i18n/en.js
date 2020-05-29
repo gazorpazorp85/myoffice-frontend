@@ -110,4 +110,9 @@ export default {
     'deleteBoardWarningPt3': 'Are you sure you want to continue?',
     'deleteBoardWarningPt4': 'This action is undoable.',
     'cancelDeleteBoard': 'cancel',
+    'addCollaborators': 'add collaborator',
+    'searchCollaborator': 'search collaborator',
+    'searchCollaboratorBy': 'Search collaborator by e-mail or username',
+    'searchBy': 'Search By: ',
+    'noCollaboratorError': 'Couldn\'t find collaborator, please check details and try searching again.',
 }
