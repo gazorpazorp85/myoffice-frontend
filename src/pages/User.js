@@ -87,20 +87,21 @@ class User extends Component {
     }
 
     render() {
-        const { direction, collaborators } = this.props;
+        const { direction, collaborators, user } = this.props;
         const { addCollaboratorModalToggle, deleteBoardModalToggle, userBoards, userBoardsToggle, userCollaboratorsToggle } = this.state;
         const title = userBoardsToggle ? 'myBoards' : 'myCollaborators';
+        
         return (
-            [
-                <StatusBar key={'statusBar'} />,
-                <UserNavBar
+            <>
+                <StatusBar />
+                {user && <UserNavBar
                     direction={direction}
                     goBack={this.goBack}
-                    key={'userNavBar'}
                     toggle={this.toggleUserComponents}
+                    user={user}
                     userBoardsToggle={userBoardsToggle}
-                />,
-                <div key={'userContainer'} className="flex column user-container" dir={direction}>
+                />}
+                <div className="flex column user-container" dir={direction}>
                     <div className="flex column user-subcontainer">
                         <h1 className="capitalize">{window.i18nData[title]}</h1>
                         {userBoardsToggle &&
@@ -110,13 +111,12 @@ class User extends Component {
                                 openBoard={this.openBoard}
                                 userBoards={userBoards}
                             />}
-                        {userCollaboratorsToggle &&
-                            <UserCollaborators collaborators={collaborators} toggle={this.toggleAddCollaboratorModal} />}
+                        {userCollaboratorsToggle && <UserCollaborators collaborators={collaborators} toggle={this.toggleAddCollaboratorModal} user={user} />}
                     </div>
                     {deleteBoardModalToggle && <DeleteBoardModal deleteConfirmation={this.deleteConfirmation} />}
                     {addCollaboratorModalToggle && <AddCollaboratorModal toggle={this.toggleAddCollaboratorModal} />}
                 </div>
-            ]
+            </>
         )
     }
 }

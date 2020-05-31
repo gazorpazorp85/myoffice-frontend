@@ -7,6 +7,7 @@ export function login(userCreds) {
             dispatch(_setUser(user));
         } catch (err) {
             console.log('UserActions: err in login', err);
+            throw err;
         }
     };
 }

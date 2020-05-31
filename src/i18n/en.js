@@ -5,7 +5,7 @@ export default {
     'brandName': 'my office',
     'getStarted': 'get started',
     'slogan': 'Manage your tasks in a fun and easy way',
-    'loginError': 'Please enter username/password',
+    'loginError': 'Please check if username or password are correct and try again',
     'signupError': 'Please fill all the fields and try again',
     'firstName': 'First Name',
     'lastName': 'Last Name',
@@ -115,4 +115,8 @@ export default {
     'searchCollaboratorBy': 'Search collaborator by e-mail or username',
     'searchBy': 'Search By: ',
     'noCollaboratorError': 'Couldn\'t find collaborator, please check details and try searching again.',
+    'sendRequest': 'send request',
+    'requestSent': 'request sent',
+    'noCollaboratorsToShowPt1': 'You don\'t have any collaborators yet!',
+    'noCollaboratorsToShowPt2': 'Don\'t worry, you can search for friends and coworkers by clicking the add collaborator button!',
 }

@@ -2,8 +2,19 @@
     flex: 1;
 }
 
-.user-collaborators-list-container {
+.user-collaborators-list-container,
+.no-collaborators-container {
     width: 35%;
+}
+
+.no-collaborators-container {
+    font-size: 30px;
+    line-height: 37px;
+    word-break: break-word;
+}
+
+.no-collaborators-container div:first-child {
+    margin-bottom: 15px;
 }
 
 .collabolator-container {
@@ -12,4 +23,9 @@
 
 .collabolator-container:not(:last-child) {
     margin-bottom: 10px;
+}
+
+.requests-container {
+    margin-inline-start: 15px;
+    font-weight: 700;
 }

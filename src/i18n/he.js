@@ -5,7 +5,7 @@ export default {
     'brandName': 'המשרד שלי',
     'getStarted': 'התחל',
     'slogan': 'לנהל את המשימות שלך בקלילות וביעילות',
-    'loginError': 'נא להכניס שם משתמש וסיסמא',
+    'loginError': 'אנא בדקו אם שם משתמש ו/או סיסמא נכונים ונסו שנית',
     'signupError': 'נא למלא את כל השדות ולנסות שנית',
     'firstName': 'שם פרטי',
     'lastName': 'שם משפחה',
@@ -115,4 +115,8 @@ export default {
     'searchCollaboratorBy': 'חפש משתתף ע"י כתובת דואר אלקטרוני או שם משתמש',
     'searchBy': 'חיפוש לפי: ',
     'noCollaboratorError': 'לא נמצאו משתתפים, אנא בדוק/בדקי את פרטי החיפוש ונסה/י שנית.',
+    'sendRequest': 'שליחת בקשה',
+    'requestSent': 'בקשה נשלחה',
+    'noCollaboratorsToShowPt1': 'עדיין אין לך משתפי פעולה!',
+    'noCollaboratorsToShowPt2': 'אין מה לדאוג! תוכל/י לחפש ולהוסיף אותם/ן ע"י לחיצה על הכפתור הוספת משתתף!',
 }

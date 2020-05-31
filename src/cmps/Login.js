@@ -28,14 +28,20 @@ class Login extends Component {
 
     doLogin = async (ev) => {
         ev.preventDefault();
+        if (this.state.msg !== '') this.setState({ msg: '' });
         const { email, password } = this.state.loginCred;
         if (!email || !password) {
             return this.setState({ msg: window.i18nData.loginError });
         }
         const userCreds = { email, password };
-        this.props.login(userCreds);
-        this.props.getLoggedInUser();
-        this.setState({ loginCred: { email: '', password: '' } });
+        try {
+            await this.props.login(userCreds);
+            this.props.getLoggedInUser();
+        } catch (err) {
+            this.setState({ msg: window.i18nData.loginError });
+        }
+        this.setState({ loginCred: { email: '', password: '', msg: '' } });
+        setTimeout(() => this.props.toggleLogin(), 500);
     }
 
     doSignup = async (ev) => {

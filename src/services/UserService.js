@@ -6,7 +6,8 @@ export default {
     signup,
     getLoggedInUser,
     getCollaborators,
-    getCollaborator
+    getCollaborator,
+    sendCollaborationRequest
 }
 
 async function login(userCred) {
@@ -14,7 +15,8 @@ async function login(userCred) {
         const user = await HttpService.post('auth/login', userCred);
         return user;
     } catch (err) {
-        console.log('UserService: err in login', err);
+        console.log('UserService: err in logout', err);
+        throw err;
     }
 }
 
@@ -60,5 +62,13 @@ async function getCollaborator(filter) {
     } catch (err) {
         err.message = window.i18nData.noCollaboratorError;
         throw err;
+    }
+}
+
+async function sendCollaborationRequest(collaborator, request) {
+    try {
+        await HttpService.post('user/sendRequest', { collaborator, request });
+    } catch (err) {
+        console.log('UserService: err in sending collaboration request');
     }
 }

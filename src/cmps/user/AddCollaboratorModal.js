@@ -37,6 +37,31 @@ class AddCollaboratorModal extends Component {
         }
     }
 
+    sendRequestHandler = (collaborator) => {
+        const { user } = this.props;
+        const isRequestSent = collaborator.requests.some(request => request.senderId === user._id || request.receiverId === user._id);
+        if (isRequestSent) return;
+        const request = { senderId: user._id, receiverId: collaborator._id, status: 'pending' };
+        UserService.sendCollaborationRequest(collaborator, request);
+        this.setState(prevState => ({ collaborator: { ...prevState.collaborator, requests: collaborator.requests ? [...prevState.collaborator.requests, request] : [request] } }))
+    }
+
+    requestButtonStyleHandler = () => {
+        const { collaborator } = this.state;
+        const { user } = this.props;
+        if (collaborator.requests) {
+            const isRequestSent = collaborator.requests.some(request => request.senderId === user._id);
+            return isRequestSent ? 'request-sent' : 'send-request';
+        } else {
+            return user.collaborators.includes(collaborator._id) ? 'already-collaborator' : 'send-request';
+        }
+    }
+
+    requestButtonTextHandler = () => {
+        const classStyle = this.requestButtonStyleHandler();
+        return classStyle === 'send-request' ? window.i18nData.sendRequest : window.i18nData.requestSent;
+    }
+
     render() {
 
         const { direction, toggle } = this.props;
@@ -82,10 +107,14 @@ class AddCollaboratorModal extends Component {
                         </div>
                     </div>
                     {collaborator &&
-                        <div className="flex align-center">
+                        <div className="flex align-center collaborator-found-container">
                             <TeamMemberIcon user={collaborator} />
                             <div className="capitalize">
                                 {collaborator.firstName} {collaborator.lastName}
+                            </div>
+                            <div className={`btn ${this.requestButtonStyleHandler()}`}
+                                onClick={() => this.sendRequestHandler(collaborator)}>
+                                {this.requestButtonTextHandler()}
                             </div>
                         </div>}
                     {errorMessage && <div>{errorMessage}</div>}
@@ -97,7 +126,8 @@ class AddCollaboratorModal extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        direction: state.languageState.direction
+        direction: state.languageState.direction,
+        user: state.userState.user,
     };
 }
 
