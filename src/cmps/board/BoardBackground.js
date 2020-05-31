@@ -36,7 +36,7 @@ export default class BoardBackground extends Component {
 
     setBoardBackground = (imageUrl) => {
         const newBoard = { ...this.props.board };
-        newBoard.boardBgImage = imageUrl.full;
+        newBoard.boardBgImage = imageUrl.regular;
         newBoard.boardBgThumbnail = imageUrl.small;
         const historyItem = { user: this.props.user.username, key: 'changedImgMsg' };
         const msgBody = window.i18nData.changedImgMsg;

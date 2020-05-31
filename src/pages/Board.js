@@ -50,14 +50,19 @@ class Board extends Component {
 
         setTimeout(() => {
             this.setState({ isBoardLoading: false });
-        }, 2000);
+        }, 1000);
     }
 
     componentDidUpdate(prevProps) {
 
-        if (prevProps.user !== this.props.user || prevProps.board !== this.props.board) {
+        if (prevProps.user !== this.props.user) {
             let collaboratorsId = this.props.user ? this.props.user.collaborators : [];
             this.props.getUserCollaborators(collaboratorsId);
+        }
+        if (prevProps.board !== this.props.board) {
+            // setTimeout(() => {
+            //     this.setState({ isBoardLoading: false });
+            // }, 1000);
             this.isBgDark();
         }
     }
@@ -131,12 +136,11 @@ class Board extends Component {
         const { board, collaborators, direction, language, updateBoard, user } = this.props;
         const { isCardDetailsShown, selectedCardId, selectedCardList } = this.state;
         let { isBgDark, isBoardLoading, toggleBoardHistory, toggleBoardMembers, toggleListForm, toggleBoardBackground } = this.state;
-        let bgImage = board.boardBgImage;
         let directionHandler = direction === 'ltr' ? '' : 'row-reverse'
 
         return (
             isBoardLoading ? <LoadPage direction={direction} /> :
-                <div className="flex column board-container" style={{ backgroundImage: `url(${bgImage})` }}>
+                <div className="flex column board-container" style={{ backgroundImage: `url(${board.boardBgImage})` }}>
                     <StatusBar />
                     <BoardBar
                         direction={direction}
