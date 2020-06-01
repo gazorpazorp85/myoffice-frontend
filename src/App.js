@@ -14,7 +14,7 @@ function App() {
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/board/:id" component={Board} exact />
-        <Route path="/user/:url_id" component={User} exact />
+        <Route path="/user/:id" component={User} exact />
         <Route path="" component={PageNotFound} />
       </Switch>
     </Router>

@@ -8,6 +8,8 @@ import Login from './Login';
 import TeamMemberIcon from './TeamMemberIcon';
 import UserMenu from './UserMenu';
 
+import RequestService from '../services/RequestService';
+
 import { changeLanguage } from '../actions/LanguageActions';
 import { getLoggedInUser, logout } from '../actions/UserActions';
 
@@ -18,10 +20,6 @@ class StatusBar extends Component {
         toggleUserMenu: false,
     }
 
-    componentDidMount() {
-        this.props.getLoggedInUser();
-    }
-
     toggleHandler = (field) => {
         this.setState((prevState) => ({
             toggleLogin: field === 'toggleLogin' ? !prevState.toggleLogin : false,
@@ -29,11 +27,17 @@ class StatusBar extends Component {
         }))
     }
 
+    transitionClassNamesHandler = (direction) => {
+        return direction === 'ltr' ? 'modal-rtl' : 'modal-ltr';
+    }
+
     render() {
 
-        const { changeLanguage, direction, logout, user } = this.props;
+        const { changeLanguage, direction, logout, requests, user } = this.props;
         const { toggleLogin, toggleUserMenu } = this.state;
-        const cssTransitionClassNames = direction === 'ltr' ? 'modal-rtl' : 'modal-ltr';
+        const cssTransitionClassNames = this.transitionClassNamesHandler(direction);
+        const filteredRequests = RequestService.formatReceivedRequests(requests, user);
+
         const button = (user) ?
             <div className="flex pointer align-center" onClick={() => this.toggleHandler('toggleUserMenu')}>
                 <TeamMemberIcon user={user} />
@@ -51,7 +55,7 @@ class StatusBar extends Component {
             <div className="flex status-bar-container" dir={direction}>
                 {this.state.toggleLogin && <div className="screen status-bar" onClick={() => this.toggleHandler('toggleLogin')}></div>}
                 {button}
-                {toggleUserMenu && <UserMenu logout={logout} toggle={() => this.toggleHandler('toggleUserMenu')} user={user} />}
+                {toggleUserMenu && <UserMenu logout={logout} requests={filteredRequests} toggle={() => this.toggleHandler('toggleUserMenu')} user={user} />}
                 <div className="flex center align-center">
                     <div className="pointer flag-icon en" onClick={() => changeLanguage('en')}></div>
                     <div className="pointer flag-icon he" onClick={() => changeLanguage('he')}></div>
@@ -68,6 +72,7 @@ const mapStateToProps = (state) => {
     return {
         direction: state.languageState.direction,
         language: state.languageState.language,
+        requests: state.requestState.requests,
         user: state.userState.user
     };
 };

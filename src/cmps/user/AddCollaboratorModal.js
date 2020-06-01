@@ -6,6 +6,9 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import TeamMemberIcon from '../TeamMemberIcon';
 
+import { loadRequests } from '../../actions/RequestActions';
+
+import RequestService from '../../services/RequestService';
 import UserService from '../../services/UserService';
 
 class AddCollaboratorModal extends Component {
@@ -38,23 +41,19 @@ class AddCollaboratorModal extends Component {
     }
 
     sendRequestHandler = (collaborator) => {
-        const { user } = this.props;
-        const isRequestSent = collaborator.requests.some(request => request.senderId === user._id || request.receiverId === user._id);
-        if (isRequestSent) return;
+        const { requests, user } = this.props;
+        const isRequestSentAlready = requests.some(request => request.receiverId === collaborator._id || request.senderId === collaborator._id);
+        if (isRequestSentAlready) return;
         const request = { senderId: user._id, receiverId: collaborator._id, status: 'pending' };
-        UserService.sendCollaborationRequest(collaborator, request);
-        this.setState(prevState => ({ collaborator: { ...prevState.collaborator, requests: collaborator.requests ? [...prevState.collaborator.requests, request] : [request] } }))
+        RequestService.sendRequest(request);
+        this.props.loadRequests(user._id);
     }
 
     requestButtonStyleHandler = () => {
         const { collaborator } = this.state;
-        const { user } = this.props;
-        if (collaborator.requests) {
-            const isRequestSent = collaborator.requests.some(request => request.senderId === user._id);
-            return isRequestSent ? 'request-sent' : 'send-request';
-        } else {
-            return user.collaborators.includes(collaborator._id) ? 'already-collaborator' : 'send-request';
-        }
+        const { requests, user } = this.props;
+        const isRequestSentAlready = requests.some(request => request.receiverId === collaborator._id || request.senderId === collaborator._id);
+        return isRequestSentAlready ? 'request-sent' : user.collaborators.includes(collaborator._id) ? 'already-collaborator' : 'send-request';
     }
 
     requestButtonTextHandler = () => {
@@ -127,8 +126,13 @@ class AddCollaboratorModal extends Component {
 const mapStateToProps = (state) => {
     return {
         direction: state.languageState.direction,
+        requests: state.requestState.requests,
         user: state.userState.user,
     };
 }
 
-export default connect(mapStateToProps)(AddCollaboratorModal);
+const mapDispatchToProps = {
+    loadRequests
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddCollaboratorModal);

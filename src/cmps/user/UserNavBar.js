@@ -4,9 +4,9 @@ import BoardsIcon from '@material-ui/icons/DeveloperBoardOutlined';
 import CollaboratorsIcon from '@material-ui/icons/GroupOutlined';
 import HomeIcon from '@material-ui/icons/Home';
 
-export default function UserNavBar({ direction, goBack, toggle, user, userBoardsToggle }) {
+export default function UserNavBar({ direction, goBack, requests, toggle, userBoardsToggle }) {
 
-    const requestsNumber = user.requests ? ` (${user.requests.length})` : '';
+    const requestsNumber = requests.length > 0 ? ` (${requests.length})` : '';
 
     return (
         <div className="flex user-nav-bar-container" dir={direction}>
@@ -33,7 +33,7 @@ export default function UserNavBar({ direction, goBack, toggle, user, userBoards
                 onClick={() => toggle('userCollaboratorsToggle')}
             >
                 <CollaboratorsIcon />
-                <div style={{ marginInlineStart: '5px', fontWeight: user.requests ? '700' : '' }}>
+                <div style={{ marginInlineStart: '5px', fontWeight: requestsNumber ? '700' : '' }}>
                     {window.i18nData.collaboratorsBtn} {requestsNumber}
                 </div>
             </div>

@@ -10,11 +10,11 @@ export default {
   emitNotification
 }
 
-function getRandomId(idLength = 10) {
+function getRandomId() {
   const letters = '0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
   const max = letters.length;
   let id = '';
-  for (let i = 0; i < idLength; i++) {
+  for (let i = 0; i < 15; i++) {
     let idx = Math.floor(Math.random() * max);
     id += letters[idx];
   }
@@ -52,7 +52,7 @@ async function getImagesFromUnsplash(filterName) {
   }
 }
 
-function emitNotification(msg, type) {
+function emitNotification(msg, type, key = 'sendNotification') {
 
   const language = localStorage.getItem('language') || window.navigator.language.slice(0, 2);
 
@@ -67,5 +67,5 @@ function emitNotification(msg, type) {
       duration: 5000,
     }
   };
-  SocketService.emit('sendNotification', notification);
+  SocketService.emit(key, notification);
 }

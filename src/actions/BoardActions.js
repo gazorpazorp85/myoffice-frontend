@@ -7,8 +7,7 @@ export function loadBoards() {
         try {
             const boards = await BoardService.query();
             dispatch(_setBoards(boards));
-        }
-        catch (err) {
+        } catch (err) {
             console.log('BoardActions: err in loadBoards', err)
         }
     };
@@ -51,7 +50,7 @@ export function updateBoard(board, msg, notificationType, historyItem) {
             SocketService.emit('boardUpdate', board);
             utils.emitNotification(msg, notificationType);
         } catch (err) {
-            console.log('BoardActions: err in loadBoard', err);
+            console.log('BoardActions: err in updateBoard', err);
         }
     };
 }

@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { login, logout, signup, getLoggedInUser } from '../actions/UserActions';
-
-import utils from '../services/utils';
+import { login, signup } from '../actions/UserActions';
 
 class Login extends Component {
     state = {
         msg: '',
         loginCred: { email: '', password: '' },
         signupCred: { firstName: '', lastName: '', username: '', email: '', password: '' }
-    }
-
-    componentDidMount() {
-        this.props.getLoggedInUser();
     }
 
     loginHandleChange = (ev) => {
@@ -36,7 +30,6 @@ class Login extends Component {
         const userCreds = { email, password };
         try {
             await this.props.login(userCreds);
-            this.props.getLoggedInUser();
         } catch (err) {
             this.setState({ msg: window.i18nData.loginError });
         }
@@ -50,13 +43,13 @@ class Login extends Component {
         if (!firstName || !lastName || !username || !email || !password) {
             return this.setState({ msg: window.i18nData.signupError });
         }
-        const signupCreds = { firstName, lastName, username, email, password, url_id: utils.getRandomId(15) };
-        this.props.signup(signupCreds);
+        const signupCreds = { firstName, lastName, username, email, password };
+        try {
+            this.props.signup(signupCreds);
+        } catch (err) {
+            this.setState({ msg: window.i18nData.signupError });
+        }
         this.setState({ signupCred: { firstName: '', lastName: '', username: '', email: '', password: '' } });
-    }
-
-    doLogout = () => {
-        this.props.logout();
     }
 
     doStopPropagation = (ev) => {
@@ -65,55 +58,55 @@ class Login extends Component {
 
     render() {
 
-        const { loginCred, signupCred } = this.state;
+        const { loginCred, msg, signupCred } = this.state;
+        const { direction, user } = this.props;
+        const { firstName, lastName, username, email, password, signup, login, welcome } = window.i18nData;
 
         let signupSection = (
             <form onSubmit={this.doSignup}>
-                <div className="capitalize form-title">{window.i18nData.signup}:</div>
+                <div className="capitalize form-title">{signup}:</div>
                 <input type="text" name="firstName" value={signupCred.firstName} className="login-input"
-                    onChange={this.signupHandleChange} placeholder={window.i18nData.firstName} />
+                    onChange={this.signupHandleChange} placeholder={firstName} />
                 <input type="text" name="lastName" value={signupCred.lastName} className="login-input"
-                    onChange={this.signupHandleChange} placeholder={window.i18nData.lastName} />
+                    onChange={this.signupHandleChange} placeholder={lastName} />
                 <input type="text" name="username" value={signupCred.username} className="login-input"
-                    onChange={this.signupHandleChange} placeholder={window.i18nData.username} />
+                    onChange={this.signupHandleChange} placeholder={username} />
                 <input type="text" name="email" value={signupCred.email} className="login-input"
-                    onChange={this.signupHandleChange} placeholder={window.i18nData.email} />
+                    onChange={this.signupHandleChange} placeholder={email} />
                 <input type="password" name="password" value={signupCred.password} className="login-input"
-                    onChange={this.signupHandleChange} placeholder={window.i18nData.password} />
-                <button>{window.i18nData.signup}</button>
+                    onChange={this.signupHandleChange} placeholder={password} />
+                <button>{signup}</button>
             </form>
         );
 
         let loginSection = (
             <form onSubmit={this.doLogin}>
-                <div className="capitalize form-title">{window.i18nData.login}:</div>
+                <div className="capitalize form-title">{login}:</div>
                 <input type="text" name="email" value={loginCred.email} className="login-input"
-                    onChange={this.loginHandleChange} placeholder={window.i18nData.email} />
+                    onChange={this.loginHandleChange} placeholder={email} />
                 <input type="password" name="password" value={loginCred.password} className="login-input"
-                    onChange={this.loginHandleChange} placeholder={window.i18nData.password} />
-                <button>{window.i18nData.login}</button>
+                    onChange={this.loginHandleChange} placeholder={password} />
+                <button>{login}</button>
             </form>
         );
 
-        const loggedInUser = this.props.user;
-        const { direction } = this.props;
 
         return (
             <div className="flex column side-menu-container" onClick={this.doStopPropagation} dir={direction} style={{ right: direction === 'ltr' ? 0 : 'unset', left: direction === 'rtl' ? 0 : 'unset' }}>
-                <h2>{this.state.msg}</h2>
+                <h2>{msg}</h2>
                 <div>
-                    {loggedInUser && (
+                    {user ?
                         <div>
-                            <h2 className="capitalize">{window.i18nData.welcome} {loggedInUser.username} </h2>
-                            <div className="flex">
-                                <button className="logout" onClick={this.doLogout}>{window.i18nData.logout}</button>
-                            </div>
+                            <h2 className="capitalize">
+                                {welcome} {user.username}
+                            </h2>
                         </div>
-                    )}
-
-                    {!this.props.user && loginSection}
-                    <hr />
-                    {!this.props.user && signupSection}
+                        :
+                        <div>
+                            {loginSection}
+                            <hr />
+                            {signupSection}
+                        </div>}
                 </div>
             </div>
         );
@@ -129,9 +122,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     login,
-    logout,
-    signup,
-    getLoggedInUser
+    signup
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
