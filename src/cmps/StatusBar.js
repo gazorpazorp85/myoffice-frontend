@@ -8,16 +8,14 @@ import Login from './Login';
 import TeamMemberIcon from './TeamMemberIcon';
 import UserMenu from './UserMenu';
 
-import RequestService from '../services/RequestService';
-
 import { changeLanguage } from '../actions/LanguageActions';
-import { getLoggedInUser, logout } from '../actions/UserActions';
+import { logout } from '../actions/UserActions';
 
 class StatusBar extends Component {
 
     state = {
         toggleLogin: false,
-        toggleUserMenu: false,
+        toggleUserMenu: false
     }
 
     toggleHandler = (field) => {
@@ -33,10 +31,9 @@ class StatusBar extends Component {
 
     render() {
 
-        const { changeLanguage, direction, logout, requests, user } = this.props;
+        const { changeLanguage, direction, logout, user, userRequests } = this.props;
         const { toggleLogin, toggleUserMenu } = this.state;
         const cssTransitionClassNames = this.transitionClassNamesHandler(direction);
-        const filteredRequests = RequestService.formatReceivedRequests(requests, user);
 
         const button = (user) ?
             <div className="flex pointer align-center" onClick={() => this.toggleHandler('toggleUserMenu')}>
@@ -55,7 +52,8 @@ class StatusBar extends Component {
             <div className="flex status-bar-container" dir={direction}>
                 {this.state.toggleLogin && <div className="screen status-bar" onClick={() => this.toggleHandler('toggleLogin')}></div>}
                 {button}
-                {toggleUserMenu && <UserMenu logout={logout} requests={filteredRequests} toggle={() => this.toggleHandler('toggleUserMenu')} user={user} />}
+                {/* {toggleUserMenu && <UserMenu logout={logout} requests={userRequests} toggle={() => this.toggleHandler('toggleUserMenu')} userId={user._id} />} */}
+                {toggleUserMenu && <UserMenu logout={logout} toggle={() => this.toggleHandler('toggleUserMenu')} userId={user._id} />}
                 <div className="flex center align-center">
                     <div className="pointer flag-icon en" onClick={() => changeLanguage('en')}></div>
                     <div className="pointer flag-icon he" onClick={() => changeLanguage('he')}></div>
@@ -72,14 +70,12 @@ const mapStateToProps = (state) => {
     return {
         direction: state.languageState.direction,
         language: state.languageState.language,
-        requests: state.requestState.requests,
         user: state.userState.user
     };
 };
 
 const mapDispatchToProps = {
     changeLanguage,
-    getLoggedInUser,
     logout
 }
 

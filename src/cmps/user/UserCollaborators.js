@@ -5,9 +5,10 @@ import NewRequestIcon from '@material-ui/icons/PersonAddOutlined';
 
 import TeamMemberIcon from '../TeamMemberIcon';
 
-export default function UserCollaborators({ collaborators, requests, toggle }) {
+// export default function UserCollaborators({ collaborators, requests, toggle }) {
+export default function UserCollaborators({ collaborators, toggle }) {
 
-    const requestsNumber = requests.length > 0 ? requests.length : null;
+    // const requestsNumber = requests.length > 0 ? requests.length : null;
 
     return (
         <div className="flex user-collaborators-container">
@@ -35,13 +36,13 @@ export default function UserCollaborators({ collaborators, requests, toggle }) {
                         {window.i18nData.addCollaborators}
                     </div>
                 </div>
-                {requestsNumber &&
+                {/* {requestsNumber &&
                     <div className="flex align-center" style={{ marginTop: '20px' }}>
                         <NewRequestIcon />
                         <div className="pointer capitalize requests-container">
                             you have {requestsNumber} new request
                         </div>
-                    </div>}
+                    </div>} */}
             </div>
         </div>
     )

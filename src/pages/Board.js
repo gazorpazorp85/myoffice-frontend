@@ -59,10 +59,7 @@ class Board extends Component {
             let collaboratorsId = this.props.user ? this.props.user.collaborators : [];
             this.props.getUserCollaborators(collaboratorsId);
         }
-        if (prevProps.board !== this.props.board) {
-            // setTimeout(() => {
-            //     this.setState({ isBoardLoading: false });
-            // }, 1000);
+        if (prevProps.board.boardBgImage !== this.props.board.boardBgImage) {
             this.isBgDark();
         }
     }

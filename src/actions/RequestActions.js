@@ -1,9 +1,9 @@
 import RequestService from "../services/RequestService";
 
-export function loadRequests(userId) {
+export function loadRequests() {
     return async dispatch => {
         try {
-            const requests = await RequestService.query(userId);
+            const requests = await RequestService.query();
             dispatch(_setRequests(requests));
         } catch (err) {
             console.log('RequestActions: err in loadRequests', err);

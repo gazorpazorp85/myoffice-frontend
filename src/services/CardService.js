@@ -75,7 +75,7 @@ function saveCardTitleUrlHandler(props, id, value) {
     const cardFieldValue = board.cards[id][cardField];
     if (cardFieldValue === value) return;
     let newCard = { ...board.cards[id] };
-    newCard = cardField === 'title' ? _checkCardType(newCard, value) : newCard[cardField] = value;
+    cardField === 'title' ? _checkCardType(newCard, value) : newCard[cardField] = value;
     const historyItem = { user: user.username, item: newCard.title, key1: 'theCard', key2: 'cardEdited' };
     _saveBoardHandler(board, newCard, 'success', historyItem, updateBoard);
 }

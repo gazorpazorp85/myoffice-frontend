@@ -7,20 +7,23 @@ import { connect } from 'react-redux';
 import StatusBar from '../cmps/StatusBar';
 
 import { createBoard } from '../actions/BoardActions';
-import { loadRequests } from '../actions/RequestActions';
+// import { loadRequests } from '../actions/RequestActions';
 import { getLoggedInUser } from '../actions/UserActions';
+
+// import RequestService from '../services/RequestService';
 
 class Home extends Component {
 
-    componentDidMount() {
-        this.props.getLoggedInUser();
-    }
+    // componentDidMount() {
+    //     this.props.getLoggedInUser();
+    // }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.user !== this.props.user) {
-            if (this.props.user) this.props.loadRequests(this.props.user._id);
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     const { user } = this.props;
+    //     if (prevProps.user !== user) {
+    //         if (user) this.props.loadRequests();
+    //     }
+    // }
 
     // createBoard = async () => {
     //     const { direction, user } = this.props;
@@ -35,10 +38,13 @@ class Home extends Component {
     }
 
     render() {
-        const { direction } = this.props;
+        // const { direction, requests, user } = this.props;
+        const { direction, user } = this.props;
+        // const userRequests = user ? RequestService.receivedRequests(requests, user._id) : [];
 
         return (
             <div className="flex column home-container">
+                {/* <StatusBar userRequests={userRequests} /> */}
                 <StatusBar />
                 <div className="flex center hero-container">
                     <div className="flex column center align-center">
@@ -65,7 +71,7 @@ const mapStateToProps = (state) => {
     return {
         board: state.boardState.board,
         direction: state.languageState.direction,
-        requests: state.requestState.requests,
+        // requests: state.requestState.requests,
         user: state.userState.user
     };
 };
@@ -73,7 +79,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     createBoard,
     getLoggedInUser,
-    loadRequests
+    // loadRequests
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

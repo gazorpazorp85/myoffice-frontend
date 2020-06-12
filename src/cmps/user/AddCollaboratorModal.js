@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
@@ -11,7 +11,7 @@ import { loadRequests } from '../../actions/RequestActions';
 import RequestService from '../../services/RequestService';
 import UserService from '../../services/UserService';
 
-class AddCollaboratorModal extends Component {
+export default class AddCollaboratorModal extends Component {
     state = {
         collaborator: null,
         errorMessage: '',
@@ -42,17 +42,17 @@ class AddCollaboratorModal extends Component {
 
     sendRequestHandler = (collaborator) => {
         const { requests, user } = this.props;
-        const isRequestSentAlready = requests.some(request => request.receiverId === collaborator._id || request.senderId === collaborator._id);
+        const isRequestSentAlready = requests.some(request => request.receiverId === collaborator._id || request.senderId === user._id);
         if (isRequestSentAlready) return;
         const request = { senderId: user._id, receiverId: collaborator._id, status: 'pending' };
         RequestService.sendRequest(request);
-        this.props.loadRequests(user._id);
+        // this.props.setUserRequests();
     }
 
     requestButtonStyleHandler = () => {
         const { collaborator } = this.state;
         const { requests, user } = this.props;
-        const isRequestSentAlready = requests.some(request => request.receiverId === collaborator._id || request.senderId === collaborator._id);
+        const isRequestSentAlready = requests.some(request => request.receiverId === collaborator._id || request.senderId === user._id);
         return isRequestSentAlready ? 'request-sent' : user.collaborators.includes(collaborator._id) ? 'already-collaborator' : 'send-request';
     }
 
@@ -123,16 +123,16 @@ class AddCollaboratorModal extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        direction: state.languageState.direction,
-        requests: state.requestState.requests,
-        user: state.userState.user,
-    };
-}
+// const mapStateToProps = (state) => {
+//     return {
+//         direction: state.languageState.direction,
+//         requests: state.requestState.requests,
+//         user: state.userState.user,
+//     };
+// }
 
-const mapDispatchToProps = {
-    loadRequests
-}
+// const mapDispatchToProps = {
+//     loadRequests
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddCollaboratorModal);
+// export default connect(mapStateToProps, mapDispatchToProps)(AddCollaboratorModal);

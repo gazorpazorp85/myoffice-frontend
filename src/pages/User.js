@@ -10,12 +10,13 @@ import UserCollaborators from '../cmps/user/UserCollaborators';
 import UserNavBar from '../cmps/user/UserNavBar';
 
 import { createBoard, loadBoards, removeBoard } from '../actions/BoardActions';
-import { loadRequests } from '../actions/RequestActions';
+// import { loadRequests } from '../actions/RequestActions';
 import { getLoggedInUser, getUserCollaborators } from '../actions/UserActions';
 
 import BoardService from '../services/BoardService';
-import RequestService from '../services/RequestService';
+// import RequestService from '../services/RequestService';
 import SocketService from '../services/SocketService';
+import utils from '../services/utils';
 
 class User extends Component {
 
@@ -27,6 +28,7 @@ class User extends Component {
         userBoardsToggle: true,
         userCollaborators: [],
         userCollaboratorsToggle: false,
+        // userRequests: []
     }
 
     componentDidMount() {
@@ -34,29 +36,31 @@ class User extends Component {
 
         this.props.getLoggedInUser();
         this.props.loadBoards();
-        this.props.loadRequests(userId);
+        // this.props.loadRequests();
 
         SocketService.setup();
         SocketService.emit('userId', userId);
-        SocketService.on('sendRequest', (request) => this.props.loadRequests(request.receiverId));
-        SocketService.on('getCollaborationRequestNotification', (notification) => store.addNotification(notification));
+        // SocketService.on('receiverId', (receiverId) => console.log(receiverId));
+        SocketService.on('requestReceived', (notification) => store.addNotification(notification));
     }
 
     componentDidUpdate(prevProps) {
-        const { boards, getUserCollaborators, history, loadRequests, match, user } = this.props;
-        if (!match.params.id || match.params.id !== user._id) history.push('/');
+        const { boards, getUserCollaborators, history, loadRequests, match, requests, user } = this.props;
+        if (!match.params.id || !user || match.params.id !== user._id) return history.push('/');
         if (prevProps.boards !== boards) {
             this.setUserBoards();
         }
         if (prevProps.user !== user) {
             getUserCollaborators(user.collaborators);
-            if (user) loadRequests(user._id);
         }
+        // if (prevProps.requests !== requests) {
+        //     console.log('im here');
+        //     this.setUserRequests();
+        // }
     }
 
     componentWillUnmount() {
-        SocketService.off('sendRequest');
-        SocketService.off('getCollaborationRequestNotification');
+        SocketService.off('requestReceived');
         SocketService.terminate();
     }
 
@@ -65,6 +69,12 @@ class User extends Component {
         const userBoards = boards.filter(board => board.createdBy._id === user._id);
         this.setState({ userBoards });
     }
+
+    // setUserRequests = () => {
+    //     const { requests, user } = this.props;
+    //     const userRequests = RequestService.receivedRequests(requests, user);
+    //     this.setState({ userRequests });
+    // }
 
     duplicateBoard = (ev, board) => {
         ev.stopPropagation();
@@ -107,9 +117,9 @@ class User extends Component {
 
     render() {
         const { direction, collaborators, requests, user } = this.props;
-        const { addCollaboratorModalToggle, deleteBoardModalToggle, userBoards, userBoardsToggle, userCollaboratorsToggle } = this.state;
+        const { addCollaboratorModalToggle, deleteBoardModalToggle, userBoards, userBoardsToggle, userCollaboratorsToggle, userRequests } = this.state;
         const title = userBoardsToggle ? 'myBoards' : 'myCollaborators';
-        const filteredRequests = RequestService.formatReceivedRequests(requests, user);
+        // const filteredRequests = RequestService.formatReceivedRequests(requests, user);
 
         return (
             <>
@@ -117,10 +127,16 @@ class User extends Component {
                 {user && <UserNavBar
                     direction={direction}
                     goBack={this.goBack}
-                    requests={filteredRequests}
                     toggle={this.toggleUserComponents}
                     userBoardsToggle={userBoardsToggle}
                 />}
+                {/* {user && <UserNavBar
+                    direction={direction}
+                    goBack={this.goBack}
+                    requests={userRequests}
+                    toggle={this.toggleUserComponents}
+                    userBoardsToggle={userBoardsToggle}
+                />} */}
                 <div className="flex column user-container" dir={direction}>
                     <div className="flex column user-subcontainer">
                         <h1 className="capitalize">{window.i18nData[title]}</h1>
@@ -131,10 +147,12 @@ class User extends Component {
                                 openBoard={this.openBoard}
                                 userBoards={userBoards}
                             />}
-                        {userCollaboratorsToggle && <UserCollaborators collaborators={collaborators} requests={filteredRequests} toggle={this.toggleAddCollaboratorModal} />}
+                        {userCollaboratorsToggle && <UserCollaborators collaborators={collaborators} toggle={this.toggleAddCollaboratorModal} />}
+                        {/* {userCollaboratorsToggle && <UserCollaborators collaborators={collaborators} requests={userRequests} toggle={this.toggleAddCollaboratorModal} />} */}
                     </div>
                     {deleteBoardModalToggle && <DeleteBoardModal deleteConfirmation={this.deleteConfirmation} />}
-                    {addCollaboratorModalToggle && <AddCollaboratorModal toggle={this.toggleAddCollaboratorModal} />}
+                    {/* {addCollaboratorModalToggle && <AddCollaboratorModal direction={direction} requests={requests} setUserRequests={this.setUserRequests} toggle={this.toggleAddCollaboratorModal} user={user}/>} */}
+                    {addCollaboratorModalToggle && <AddCollaboratorModal direction={direction} toggle={this.toggleAddCollaboratorModal} user={user}/>}
                 </div>
             </>
         )
@@ -146,7 +164,7 @@ const mapStateToProps = state => {
         boards: state.boardState.boards,
         collaborators: state.userState.userCollaborators,
         direction: state.languageState.direction,
-        requests: state.requestState.requests,
+        // requests: state.requestState.requests,
         user: state.userState.user
     }
 }
@@ -156,7 +174,7 @@ const mapDispatchToProps = {
     getLoggedInUser,
     getUserCollaborators,
     loadBoards,
-    loadRequests,
+    // loadRequests,
     removeBoard
 }
 
