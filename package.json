@@ -13,7 +13,7 @@
     "fast-average-color": "^6.0.2",
     "moment": "2.25.3",
     "natural-drag-animation-rbdnd": "^2.0.2",
-    "node-sass": "^4.14.0",
+    "node-sass": "^7.0.0",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^12.2.0",
     "react-datepicker": "^2.14.1",
